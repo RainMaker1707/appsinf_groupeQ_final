@@ -8,7 +8,7 @@
     <div class="collapse navbar-collapse" id="left-menu">
         <menu class="navbar-nav">
             <li class="nav-item">
-                <button class="btn btn-dark btn-block nav-button">Accueil</button>
+                <button class="btn btn-dark btn-block nav-button" onclick="location.href='/'">Accueil</button>
             </li>
             <li class="nav-item">
                 <button class="btn btn-dark btn-block nav-button">Forum</button>
@@ -22,13 +22,53 @@
     <%if(!locals.user){%>
     <div class="" id="right-menu">
         <menu class="navbar-nav" id="user-menu">
-            <li class="nav-item">
-                <button class="btn btn-dark btn-block nav-button">Se connecter</button>
+            <li>
+                <div class="nav-item dropdown">
+                    <a class="btn btn-dark dropdown-toggle btn-custom-dd" href="#" role="button" id="loginB"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Se connecter
+                    </a>
+
+                    <div class="dropdown-menu drop-down-custom" aria-labelledby="loginB">
+                        <form method="post" action="/login">
+                            <label class="offscreen" for="pseudoIn">Pseudo: </label>
+                            <input class="dropdown-item text-center" type="text" placeholder="Pseudo"
+                                   name="pseudoIn" id="pseudoIn">
+                            <label class="offscreen" for="passIn">Password: </label>
+                            <input class="dropdown-item text-center" type="password" placeholder="Password"
+                                   name="passIn" id="passIn">
+                            <input class="dropdown-item btn btn-dark text-center" type="submit" value="Se connecter">
+                        </form>
+                    </div>
+                </div>
             </li>
-            <li class="nav-item">
-                <button class="btn btn-dark btn-block nav-button">S'inscrire</button>
+
+            <li>
+                <div class="nav-item dropdown">
+                    <a class="btn btn-dark dropdown-toggle btn-custom-dd" href="#" role="button" id="signupB"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        S'inscrire
+                    </a>
+
+                    <div class="dropdown-menu drop-down-custom" aria-labelledby="signupB">
+                        <form method="post" action="/signup">
+                            <label class="offscreen" for="pseudoIn">Email: </label>
+                            <input class="dropdown-item text-center" type="email" placeholder="Mail"
+                                   name="mailIn" id="pseudoIn">
+                            <label class="offscreen" for="passIn">Password: </label>
+                            <input class="dropdown-item text-center" type="password" placeholder="Password"
+                                   name="passIn" id="passIn">
+                            <label class="offscreen" for="passInC">Password2: </label>
+                            <input class="dropdown-item text-center" type="password" placeholder="Pass confirmation"
+                                   name="passInC" id="passInC">
+                            <input class="dropdown-item btn btn-dark text-center" type="submit" value="S'inscrire">
+                        </form>
+                    </div>
+                </div>
             </li>
         </menu>
     </div>
-    <%}else{}%>
+    <%}else{%>
+        <!-- add here the user component -->
+    <%}%>
 </nav>

@@ -38,6 +38,22 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
         app.get('/', (req, res)=>{
            res.render('../server/views/index.ejs');
         });
+
+        app.post('/login', (req, res)=>{
+            res.redirect('/userPage');
+        });
+
+        app.post('/signup', (req, res)=>{
+            res.redirect('/editUser');
+        });
+
+        app.get('/userPage', (req, res)=>{
+            res.render('../server/views/userPage.ejs', {user: "pseudo"});
+        });
+
+        app.get('/editUser', (req, res)=>{
+            res.render('../server/views/editUser.ejs', {user: "pseudo"});
+        });
     }
 });
 

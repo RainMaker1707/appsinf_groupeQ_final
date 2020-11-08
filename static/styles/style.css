@@ -1,0 +1,69 @@
+#left-menu menu:first-child{
+    margin-left: 100px;
+}
+#right-menu menu:last-child{
+    margin-right: 50px;
+}
+
+menu li{
+    margin-top: 0;
+    padding-top: 0;
+    margin-right: 20px;
+}
+
+body{
+    background-image: url('../images/amongus_eliminations_bg.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+menu{
+    margin-top: 0;
+}
+
+.offscreen{
+    display: none;
+}
+
+.drop-down-custom{
+    background-color: rgba(25, 26, 36, 0.94);
+    border-radius: 15px;
+    min-width: 100%;
+}
+
+.drop-down-custom input[type=text],
+.drop-down-custom input[type=email],
+.drop-down-custom input[type=password]
+{
+    color: white;
+    margin: 5% 5% 0 5%;
+    width: 90%;
+    border: 1px solid #203343;
+    border-radius: 5px;
+    padding: 5% 2% 5% 2%;
+}
+
+.drop-down-custom input[type=submit]{
+    color: white;
+    margin: 15% 5% 5% 5%;
+    width: 90%;
+    background-color: #203343;
+    border-radius: 10px;
+}
+
+.drop-down-custom input[type=text]:hover,
+.drop-down-custom input[type=email]:hover,
+.drop-down-custom input[type=password]:hover{
+    background-color: #203343;
+}
+
+.drop-down-custom input[type=text]:focus,
+.drop-down-custom input[type=email]:focus,
+.drop-down-custom input[type=password]:focus{
+    background-color: #5f6a7a;
+}
+
+.btn-custom-dd{
+    width: 200px;
+}
