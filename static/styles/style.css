@@ -67,3 +67,12 @@ menu{
 .btn-custom-dd{
     width: 200px;
 }
+
+/* Change the white to any color ;) */
+.drop-down-custom input:-webkit-autofill,
+.drop-down-custom input:-webkit-autofill:hover,
+.drop-down-custom input:-webkit-autofill:focus,
+.drop-down-custom input:-webkit-autofill:active  {
+    -webkit-box-shadow: 0 0 0 30px rgba(25, 26, 36, 0.94) inset !important;
+    -webkit-text-fill-color: white !important;
+}
