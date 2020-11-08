@@ -30,3 +30,15 @@ app.use(session({
     }
 }));
 
+MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
+    if(err) throw err;
+    else{
+        console.log("-------CONNECTED------");
+
+        app.get('/', (req, res)=>{
+           res.render('../server/views/index.ejs');
+        });
+    }
+});
+
+app.listen(8080);
