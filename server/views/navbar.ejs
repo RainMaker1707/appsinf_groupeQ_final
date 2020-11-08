@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light shadow fixed-top" id="menu">
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow" id="menu">
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#left-menu"
             aria-controls="left-menu" aria-expanded="false" aria-label="Toggle navigation">
@@ -68,7 +68,10 @@
             </li>
         </menu>
     </div>
-    <%}else{%>
-        <!-- add here the user component -->
     <%}%>
 </nav>
+<%if(locals.user){%>
+    <div class="user-menu">
+        <img src="images/userDefault.png" alt="user picture" class="user-image">
+    </div>
+<%}%>
