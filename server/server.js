@@ -2,12 +2,16 @@
 let express = require('express');
 let parser = require('body-parser');
 let session = require('express-session');
+let MongoClient = require('mongodb').MongoClient;
 const multer = require('multer');
 const upload = multer({});
-let MongoClient = require('mongodb').MongoClient;
 let http = require('http');
 let https = require('https');
 let fs= require('fs');
+
+//DIM modules
+let login = require('./res/login.js');
+let sign = require('./res/signup.js');
 
 // Global variables
 let app = express();
@@ -40,11 +44,11 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
         });
 
         app.post('/login', (req, res)=>{
-            res.redirect('/userPage');
+            login(req, res, db);
         });
 
         app.post('/signup', (req, res)=>{
-            res.redirect('/editUser');
+            sign(req, res, db);
         });
 
         app.get('/userPage', (req, res)=>{
