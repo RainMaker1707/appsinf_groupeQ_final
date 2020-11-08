@@ -1,6 +1,6 @@
-#APPSINF LINFO1212 Groupe Q Projet Final
-##A-Mag-Us
-####Table des matières
+# APPSINF LINFO1212 Groupe Q Projet Final
+## A-Mag-Us
+#### Table des matières
 <ol>
     <li>Résumé</li>
     <li>Installation des modules</li>
@@ -12,13 +12,13 @@
     <li>Fonctionnalitées</li>
 </ol>
 
-####Résumé
-####Installation des modules
-####Lancement du serveur
-####Préset de la base de données
-######1° Présets
-######2° Utilisateurs
-######3° News
-######4° Forum
-####Pages du sites
-####Fonctionnalitées
+#### Résumé
+#### Installation des modules
+#### Lancement du serveur
+#### Préset de la base de données
+###### 1° Présets
+###### 2° Utilisateurs
+###### 3° News
+###### 4° Forum
+#### Pages du sites
+#### Fonctionnalitées
