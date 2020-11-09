@@ -13,7 +13,7 @@ module.exports = function login(req, res, db){
                     console.log('bad password'); // TODO DEBUG
                     res.redirect('/');
                 }else {
-                    console.log('connected'); //TODO DEBUG
+                    console.log('connected as %s', req.body.pseudoIn); //TODO DEBUG
                     res.redirect('/userPage');
                 }
             })

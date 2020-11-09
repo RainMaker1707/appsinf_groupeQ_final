@@ -55,12 +55,15 @@
                             <label class="offscreen" for="mailIn">Email: </label>
                             <input class="dropdown-item text-center" type="email" placeholder="Mail"
                                    name="mailIn" id="mailIn" required>
+                            <label class="offscreen" for="pseudoIn">Pseudo: </label>
+                            <input class="dropdown-item text-center" type="text" placeholder="Pseudo"
+                                   name="pseudoIn" id="pseudoIn" required>
                             <label class="offscreen" for="passIn">Password: </label>
                             <input class="dropdown-item text-center" type="password" placeholder="Password"
-                                   name="passIn" id="passIn" required>
+                                   name="passIn" id="passIn" minlength="8" required>
                             <label class="offscreen" for="passInC">Password2: </label>
                             <input class="dropdown-item text-center" type="password" placeholder="Pass confirmation"
-                                   name="passInC" id="passInC" required>
+                                   name="passInC" id="passInC" minlength="8" required>
                             <input class="dropdown-item btn btn-dark text-center" type="submit" value="S'inscrire">
                         </form>
                     </div>
