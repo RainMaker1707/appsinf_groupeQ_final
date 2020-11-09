@@ -1,8 +1,12 @@
 .navbar{
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
+}
+
+#left-menu menu:nth-child(n){
+    padding: 2px 0 2px 0;
 }
 
 #left-menu menu:first-child{
@@ -79,17 +83,49 @@ menu{
 .circle{
     clip-path: circle(70px at center);
 }
-
-.user-image{
-    position: absolute;
+.user-menu{
+    z-index: 1;
+    position: fixed;
     top: 0;
     left: 70%;
-    z-index: 1;
+    display: inline-flex;
+}
+
+.user-info{
+    list-style: none;
+    margin-top: 1%;
+    padding-left: 3%;
+}
+.user-image{
     width: 70px;
     height: 70px;
     border: 3px solid rgba(30, 133, 232, 0.66);
     border-radius: 50%;
     margin-top: 5px;
+    margin-right: 0;
+}
+
+#user_id{
+    color: whitesmoke;
+    background-color: rgba(53, 58, 64, 0.94);
+    margin-top: 2%;
+    min-width: 150px;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.icon-bar{
+    display: inline-flex;
+    padding-left: 5%;
+    margin-top: -15px;
+    list-style: none;
+}
+
+.icon-bar-item{
+    max-width: 25px;
+    max-height: 25px;
+    margin: -30px 10px 0 10px;
+    cursor: pointer;
 }
 
 /* Change the white to any color ;) */
@@ -99,4 +135,12 @@ menu{
 .drop-down-custom input:-webkit-autofill:active  {
     -webkit-box-shadow: 0 0 0 30px rgba(25, 26, 36, 0.94) inset !important;
     -webkit-text-fill-color: white !important;
+}
+
+.no-select {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
 }

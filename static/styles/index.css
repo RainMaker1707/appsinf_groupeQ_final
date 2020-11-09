@@ -1,7 +1,13 @@
 #title_img{
+    z-index: -2;
     margin-top: 5%;
 }
 
 #buy-button{
+    z-index: -2;
     margin-top: 10%;
+}
+
+.scroll{ /*just to scroll on index without content*/
+    height: 200vh;
 }

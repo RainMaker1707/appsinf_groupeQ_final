@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light shadow" id="menu">
+<nav class="navbar navbar-expand-lg navbar-light bg-light" id="menu">
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#left-menu"
             aria-controls="left-menu" aria-expanded="false" aria-label="Toggle navigation">
@@ -52,9 +52,9 @@
 
                     <div class="dropdown-menu drop-down-custom" aria-labelledby="signupB">
                         <form method="post" action="/signup">
-                            <label class="offscreen" for="pseudoIn">Email: </label>
+                            <label class="offscreen" for="mailIn">Email: </label>
                             <input class="dropdown-item text-center" type="email" placeholder="Mail"
-                                   name="mailIn" id="pseudoIn" required>
+                                   name="mailIn" id="mailIn" required>
                             <label class="offscreen" for="passIn">Password: </label>
                             <input class="dropdown-item text-center" type="password" placeholder="Password"
                                    name="passIn" id="passIn" required>
@@ -73,5 +73,17 @@
 <%if(locals.user){%>
     <div class="user-menu">
         <img src="images/userDefault.png" alt="user picture" class="user-image">
+        <ul class="user-info">
+            <li>
+                <p id="user_id" class="no-select"><%=locals.user%></p>
+            </li>
+            <li>
+                <ul class="icon-bar">
+                    <li><img class="icon-bar-item" src="images/message.png" alt=""></li>
+                    <li><img class="icon-bar-item" src="images/notif.png" alt=""></li>
+                    <li><img class="icon-bar-item" src="images/param.png" alt=""></li>
+                </ul>
+            </li>
+        </ul>
     </div>
 <%}%>
