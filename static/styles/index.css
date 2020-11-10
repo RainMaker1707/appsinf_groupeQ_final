@@ -1,4 +1,5 @@
 #title_img{
+    max-height: 350px;
     z-index: -2;
     margin-top: 5%;
 }

@@ -11,7 +11,7 @@ let fs= require('fs');
 
 //DIM modules
 let login = require('./res/login.js');
-let sign = require('./res/signup.js');
+let sign = require('./res/sign.js');
 
 // Global variables
 let app = express();
@@ -51,12 +51,20 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
             sign(req, res, db);
         });
 
-        app.get('/userPage', (req, res)=>{
+        app.get('/user-page', (req, res)=>{
             res.render('../server/views/userPage.ejs', {user: "pseudo"});
         });
 
-        app.get('/editUser', (req, res)=>{
+        app.get('/edit-user', (req, res)=>{
             res.render('../server/views/editUser.ejs', {user: "pseudo"});
+        });
+
+        app.get('/forum', (req, res)=>{
+            res.render('../server/views/forum.ejs');
+        });
+
+        app.get('/about-us', (req,res)=>{
+            res.render('../server/views/aboutUs.ejs');
         });
     }
 });

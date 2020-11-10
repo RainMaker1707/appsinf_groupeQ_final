@@ -24,6 +24,7 @@ menu li{
 }
 
 body{
+    background-color: #1d1c1f;
     background-image: url('../images/amongus_eliminations_bg.jpg');
     background-size: cover;
     background-repeat: no-repeat;
@@ -80,9 +81,10 @@ menu{
     width: 200px;
 }
 
-.circle{
+.circle70{
     clip-path: circle(70px at center);
 }
+
 .user-menu{
     z-index: 1;
     position: fixed;
@@ -91,12 +93,12 @@ menu{
     display: inline-flex;
 }
 
-.user-info{
+.user-info-nav{
     list-style: none;
     margin-top: 1%;
     padding-left: 3%;
 }
-.user-image{
+.user-image-nav{
     width: 70px;
     height: 70px;
     border: 3px solid rgba(30, 133, 232, 0.66);
@@ -128,7 +130,7 @@ menu{
     cursor: pointer;
 }
 
-/* Change the white to any color ;) */
+/* Change the color for autocomplete color change */
 .drop-down-custom input:-webkit-autofill,
 .drop-down-custom input:-webkit-autofill:hover,
 .drop-down-custom input:-webkit-autofill:focus,

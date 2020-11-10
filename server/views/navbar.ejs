@@ -11,10 +11,10 @@
                 <button class="btn btn-dark btn-block nav-button" onclick="location.href='/'">Accueil</button>
             </li>
             <li class="nav-item">
-                <button class="btn btn-dark btn-block nav-button">Forum</button>
+                <button class="btn btn-dark btn-block nav-button" onclick="location.href='/forum'">Forum</button>
             </li>
             <li class="nav-item">
-                <button class="btn btn-dark btn-block nav-button">A propos</button>
+                <button class="btn btn-dark btn-block nav-button" onclick="location.href='/about-us'">A propos</button>
             </li>
         </menu>
     </div>
@@ -75,8 +75,8 @@
 </nav>
 <%if(locals.user){%>
     <div class="user-menu">
-        <img src="images/userDefault.png" alt="user picture" class="user-image">
-        <ul class="user-info">
+        <img src="images/userDefault.jpg" alt="user picture" class="user-image-nav circle70">
+        <ul class="user-info-nav">
             <li>
                 <p id="user_id" class="no-select"><%=locals.user%></p>
             </li>

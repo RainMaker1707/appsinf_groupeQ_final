@@ -14,7 +14,7 @@ module.exports = function login(req, res, db){
                     res.redirect('/');
                 }else {
                     console.log('connected as %s', req.body.pseudoIn); //TODO DEBUG
-                    res.redirect('/userPage');
+                    res.redirect('/user-page');
                 }
             })
         }

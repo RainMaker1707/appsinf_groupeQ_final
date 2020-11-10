@@ -37,7 +37,7 @@ module.exports = function sign(req, res, db){
                                 db.db('amagus').collection('users').insertOne(newUser, (err) => {
                                     if (err) throw err;
                                     console.log('logged in as %s', req.body.mailIn); // TODO remove after debug
-                                    res.redirect('/editUser');
+                                    res.redirect('/edit-user');
                                 });
                             })
                         });
