@@ -86,7 +86,7 @@ menu{
 }
 
 .circle{
-    clip-path: circle(400px at center);
+    clip-path: circle(250px at center);
 }
 
 .user-menu{

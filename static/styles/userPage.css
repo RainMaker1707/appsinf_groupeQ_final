@@ -1,0 +1,22 @@
+.user-image{
+    z-index: -1;
+    position: relative;
+    margin-top: 10%;
+    margin-left: 7%;
+    width: 250px;
+    height: 250px;
+    border: 5px solid rgba(30, 133, 232, 0.66);
+    border-radius: 50%;
+}
+
+.user-info{
+    z-index: -2;
+    position: absolute;
+    top: 25%;
+    background-color: rgba(20,25,46,0.91);
+    width: 80%;
+    margin-left: 10%;
+    min-width: 50%;
+    height: 70%;
+    border-radius: 15px;
+}
