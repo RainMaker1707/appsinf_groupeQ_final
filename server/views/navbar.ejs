@@ -82,9 +82,39 @@
             </li>
             <li>
                 <ul class="icon-bar">
-                    <li><img class="icon-bar-item" src="images/message.png" alt=""></li>
-                    <li><img class="icon-bar-item" src="images/notif.png" alt=""></li>
-                    <li><img class="icon-bar-item" src="images/param.png" alt=""></li>
+                    <li>
+                        <div class="dropdown">
+                            <a id="messImg" data-toggle="dropdown">
+                                <img class="icon-bar-item" src="images/message.png" alt="">
+                            </a>
+                            <ul class="dropdown-menu drop-down-custom" aria-labelledby="messImg">
+                                <li><button class="dropdown-item btn btn-dark" href="#">Menu item 1</button></li>
+                                <li><button class="dropdown-item btn btn-dark" href="#">Menu item 2</button></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="dropdown">
+                            <a id="notifImg" data-toggle="dropdown">
+                                <img class="icon-bar-item" src="images/notif.png" alt="">
+                            </a>
+                            <ul class="dropdown-menu drop-down-custom" aria-labelledby="notifImg">
+                                <li><button class="dropdown-item btn btn-dark" href="#">Menu item 1</button></li>
+                                <li><button class="dropdown-item btn btn-dark" href="#">Menu item 2</button></li>
+                                <li><button class="dropdown-item btn btn-dark" href="#">Menu item 3</button></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="dropdown">
+                            <a id="paramImg" data-toggle="dropdown">
+                                <img class="icon-bar-item" src="images/param.png" alt="">
+                            </a>
+                            <ul class="dropdown-menu drop-down-custom" aria-labelledby="paramImg">
+                                <li><button class="dropdown-item btn btn-dark" onclick="location.href='/disconnect';">Disconnect</button></li>
+                            </ul>
+                        </div>
+                    </li>
                 </ul>
             </li>
         </ul>
