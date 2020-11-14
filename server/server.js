@@ -70,6 +70,13 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
             res.render('../server/views/aboutUs.ejs');
         });
 
+        app.get('/disconnect', (req,res)=>{
+            delete req.session._id;
+            delete req.session.mail;
+            delete req.session.pseudo;
+            res.redirect('/');
+        });
+
         app.get('/*', (req, res)=>{
             res.render('../server/views/error404.ejs');
         });
