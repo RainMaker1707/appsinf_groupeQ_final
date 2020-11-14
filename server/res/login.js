@@ -1,6 +1,6 @@
 let bcrypt = require('bcrypt');
 
-module.exports = function login(req, res, db){
+module.exports = function login(req, res, db, justSigned=false){
     db.db('amagus').collection('users').findOne({pseudo: req.body.pseudoIn}, (err, doc)=>{
         if(err) throw err;
         else if(doc === null) {
@@ -13,8 +13,12 @@ module.exports = function login(req, res, db){
                     console.log('bad password'); // TODO DEBUG
                     res.redirect('/');
                 }else {
-                    console.log('connected as %s', req.body.pseudoIn); //TODO DEBUG
-                    res.redirect('/user-page');
+                    req.session._id = doc._id;
+                    req.session.mail = doc.mail;
+                    req.session.pseudo = doc.pseudo;
+                    req.session.cookieShow = true;
+                    if(!justSigned) res.redirect('/user-page');
+                    else res.redirect('/edit-user');
                 }
             })
         }

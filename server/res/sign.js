@@ -31,13 +31,13 @@ module.exports = function sign(req, res, db){
                                     "birthday": undefined,
                                     "publicKey": undefined,
                                     "privateKey": undefined,
-                                    "friends": {}, // {{"friend_id": request_state(0,1)},{"friend_id": request_state(0,1)}}
+                                    "friends": {},
                                     "favoriteMap": undefined
                                 };
                                 db.db('amagus').collection('users').insertOne(newUser, (err) => {
                                     if (err) throw err;
-                                    console.log('logged in as %s', req.body.mailIn); // TODO remove after debug
-                                    res.redirect('/edit-user');
+                                    //TODO send mail
+                                    login(req, res, db , true);
                                 });
                             })
                         });
