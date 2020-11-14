@@ -37,10 +37,11 @@ app.use(session({
 MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
     if(err) throw err;
     else{
-        console.log("-------CONNECTED------");
+        console.log("------- CONNECTED ------");
 
         app.get('/', (req, res)=>{
-           res.render('../server/views/index.ejs');
+            if(!req.session.pseudo) res.render('../server/views/index.ejs', {cookie: req.session.cookieShow});
+            else{res.render('../server/views/index.ejs', {user: req.session.pseudo, cookie: req.session.cookieShow})}
         });
 
         app.post('/login', (req, res)=>{
@@ -52,11 +53,13 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
         });
 
         app.get('/user-page', (req, res)=>{
-            res.render('../server/views/userPage.ejs', {user: "pseudo"});
+            if(!req.session.pseudo) res.redirect('/');
+            else res.render('../server/views/userPage.ejs', {user: req.session.pseudo});
         });
 
         app.get('/edit-user', (req, res)=>{
-            res.render('../server/views/editUser.ejs', {user: "pseudo"});
+            if(!req.session.pseudo) res.redirect('/');
+            else res.render('../server/views/editUser.ejs', {user: req.session.pseudo});
         });
 
         app.get('/forum', (req, res)=>{
@@ -66,7 +69,19 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
         app.get('/about-us', (req,res)=>{
             res.render('../server/views/aboutUs.ejs');
         });
+
+        app.get('/*', (req, res)=>{
+            res.render('../server/views/error404.ejs');
+        });
     }
 });
 
-app.listen(8080);
+https.createServer({
+    key: fs.readFileSync('./server/cert.key'),
+    cert: fs.readFileSync('./server/cert.crt')
+}, app).listen(443);
+
+http.createServer((req, res)=>{
+    res.writeHead(301, {"Location": "https://" + req.headers['host'] + req.url});
+    res.end();
+}).listen(80);
