@@ -66,15 +66,39 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
             res.render('../server/views/forum.ejs');
         });
 
-        app.get('/about-us', (req,res)=>{
+        app.get('/about-us', (req, res)=>{
             res.render('../server/views/aboutUs.ejs');
         });
 
-        app.get('/disconnect', (req,res)=>{
+        app.get('/disconnect', (req, res)=>{
             delete req.session._id;
             delete req.session.mail;
             delete req.session.pseudo;
             res.redirect('/');
+        });
+
+        app.get('/confirm', (req, res, next)=>{
+           if(req.query.user === undefined || req.query.key === undefined) res.redirect('/');
+           else{
+               db.db('amagus').collection('users').findOne({pseudo: req.query.user}, (err, doc)=>{
+                  if(err) throw err;
+                  if(doc === null || doc.activated) res.redirect('/');
+                  else if(! (doc.uniqKey === req.query.key)) {
+                      console.log(doc.uniqKey);
+                      console.log(req.query.key);
+                      next();
+                  }
+                  else{
+                      db.db('amagus').collection('users').updateOne(
+                          {_id: doc._id},
+                          {$set:{activated: true}}, (err)=>{
+                          if(err) throw err;
+                          else res.redirect('/user-page');
+                          }
+                      );
+                  }
+               });
+           }
         });
 
         app.get('/*', (req, res)=>{

@@ -31,7 +31,6 @@ class Mail{
 
         this.transporter.sendMail(this.options, (err, info)=>{
             if(err) throw err;
-            else console.log('mail sent: ' + info.response);
         });
     }
 }

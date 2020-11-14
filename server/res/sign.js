@@ -22,29 +22,33 @@ module.exports = function sign(req, res, db){
                         bcrypt.genSalt(10, (err, salt) => {
                             if (err) throw err;
                             bcrypt.hash(req.body.passIn, salt, (err, hash) => {
-                                if (err) throw err;
-                                let newUser = {
-                                    "activated": false,
-                                    "mail": req.body.mailIn,
-                                    "pseudo": req.body.pseudoIn,
-                                    "password": hash,
-                                    "picture": undefined,
-                                    "birthday": undefined,
-                                    "publicKey": undefined,
-                                    "privateKey": undefined,
-                                    "favoriteMap": undefined,
-                                    "friends": {}
-                                };
-                                db.db('amagus').collection('users').insertOne(newUser, (err) => {
+                                bcrypt.hash("AGAVr=xas6pDG9X6", salt, (err, key)=>{
                                     if (err) throw err;
-                                    let mail = new Mail();
-                                    mail.send(req.body.mailIn,
-                                        "Amagus Account confirmation",
-                                        "texte to test mailing systeme"
-                                        //TODO change text and add confirmation link for account
-                                    );
-                                    login(req, res, db , true);
-                                });
+                                    key = key.replace(/\$/g, '');
+                                    let newUser = {
+                                        "activated": false,
+                                        "mail": req.body.mailIn,
+                                        "pseudo": req.body.pseudoIn,
+                                        "password": hash,
+                                        "uniqKey": key,
+                                        "picture": undefined,
+                                        "birthday": undefined,
+                                        "publicKey": undefined,
+                                        "privateKey": undefined,
+                                        "favoriteMap": undefined,
+                                        "friends": {}
+                                    };
+                                    db.db('amagus').collection('users').insertOne(newUser, (err) => {
+                                        if (err) throw err;
+                                        let mail = new Mail();
+                                        mail.send(req.body.mailIn,
+                                            "Amagus Account confirmation",
+                                            "Please confirm your account register on A-Mag Us: \n" +
+                                                    "https://localhost/confirm?key=" + key + "&user=" + newUser.pseudo
+                                        );
+                                        login(req, res, db , true);
+                                    });
+                                })
                             })
                         });
                     }
