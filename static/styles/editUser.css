@@ -15,10 +15,6 @@
     border-radius: 50%;
 }
 
-.circle{
-    clip-path: circle(400px at center);
-}
-
 .user-info{
     background-color: rgba(20,25,46,0.91);
     margin-left: 30%;

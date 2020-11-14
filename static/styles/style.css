@@ -85,6 +85,10 @@ menu{
     clip-path: circle(70px at center);
 }
 
+.circle{
+    clip-path: circle(400px at center);
+}
+
 .user-menu{
     z-index: 1;
     position: fixed;
