@@ -1,5 +1,6 @@
 let bcrypt = require('bcrypt');
 let login = require('./login');
+let Mail = require('./mail');
 
 module.exports = function sign(req, res, db){
     if(req.body.passIn !== req.body.passInC){
@@ -31,12 +32,17 @@ module.exports = function sign(req, res, db){
                                     "birthday": undefined,
                                     "publicKey": undefined,
                                     "privateKey": undefined,
-                                    "friends": {},
-                                    "favoriteMap": undefined
+                                    "favoriteMap": undefined,
+                                    "friends": {}
                                 };
                                 db.db('amagus').collection('users').insertOne(newUser, (err) => {
                                     if (err) throw err;
-                                    //TODO send mail
+                                    let mail = new Mail();
+                                    mail.send(req.body.mailIn,
+                                        "Amagus Account confirmation",
+                                        "texte to test mailing systeme"
+                                        //TODO change text and add confirmation link for account
+                                    );
                                     login(req, res, db , true);
                                 });
                             })
