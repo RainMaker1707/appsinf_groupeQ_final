@@ -22,7 +22,8 @@ module.exports = function sign(req, res, db){
                         bcrypt.genSalt(10, (err, salt) => {
                             if (err) throw err;
                             bcrypt.hash(req.body.passIn, salt, (err, hash) => {
-                                bcrypt.hash("AGAVr=xas6pDG9X6", salt, (err, key)=>{
+                                bcrypt.hash(req.body.pseudo + Math.random() + req.body.mailIn + Math.random(), salt,
+                                    (err, key)=>{
                                     if (err) throw err;
                                     key = key.replace(/\$/g, '');
                                     let newUser = {
