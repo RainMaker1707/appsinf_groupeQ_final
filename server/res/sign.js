@@ -28,6 +28,7 @@ module.exports = function sign(req, res, db){
                                     key = key.replace(/\$/g, '');
                                     let newUser = {
                                         "activated": false,
+                                        "admin": false,
                                         "mail": req.body.mailIn,
                                         "pseudo": req.body.pseudoIn,
                                         "password": hash,

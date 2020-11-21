@@ -13,6 +13,7 @@ let fs= require('fs');
 let login = require('./res/login.js');
 let sign = require('./res/sign.js');
 let confirm = require('./res/confirm.js');
+let userPage = require('./res/userPage.js');
 
 // Global variables
 let app = express();
@@ -55,7 +56,8 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
 
         app.get('/user-page', (req, res)=>{
             if(!req.session.pseudo) res.redirect('/');
-            else res.render('../server/views/userPage.ejs', {user: req.session.pseudo, doc: {pseudo: "RainMaker"}});
+            else if(req.session.pseudo === req.query.user) userPage(req, res, db, true);
+            else userPage(req, res, db, false);
         });
 
         app.get('/edit-user', (req, res)=>{

@@ -16,7 +16,7 @@ module.exports = function login(req, res, db, justSigned=false){
                     req.session._id = doc._id;
                     req.session.mail = doc.mail;
                     req.session.pseudo = doc.pseudo;
-                    if(!justSigned) res.redirect('/user-page');
+                    if(!justSigned) res.redirect('/user-page?user=' + req.session.pseudo);
                     else res.redirect('/edit-user');
                 }
             })

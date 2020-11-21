@@ -57,7 +57,7 @@
                                    name="mailIn" id="mailIn" required>
                             <label class="offscreen" for="pseudoIn">Pseudo: </label>
                             <input class="dropdown-item text-center" type="text" placeholder="Pseudo"
-                                   name="pseudoIn" id="pseudoIn" required>
+                                   name="pseudoIn" id="pseudoIn" minlength="8" required>
                             <label class="offscreen" for="passIn">Password: </label>
                             <input class="dropdown-item text-center" type="password" placeholder="Password"
                                    name="passIn" id="passIn" minlength="8" required>
@@ -75,7 +75,8 @@
 </nav>
 <%if(locals.user){%>
     <div class="user-menu">
-        <img src="images/userDefault.jpg" alt="user picture" class="user-image-nav circle70" onclick="location.href='/user-page';">
+        <img src="images/userDefault.jpg" alt="user picture" class="user-image-nav circle70"
+             onclick="location.href='/user-page?user=<%=locals.user%>';">
         <ul class="user-info-nav">
             <li>
                 <p id="user_id" class="no-select"><%=locals.user%></p>
