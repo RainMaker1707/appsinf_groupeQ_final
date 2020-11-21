@@ -12,6 +12,7 @@ let fs= require('fs');
 //DIM modules
 let login = require('./res/login.js');
 let sign = require('./res/sign.js');
+let confirm = require('./res/confirm.js');
 
 // Global variables
 let app = express();
@@ -40,8 +41,8 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
         console.log("------- CONNECTED ------");
 
         app.get('/', (req, res)=>{
-            if(!req.session.pseudo) res.render('../server/views/index.ejs', {cookie: req.session.cookieShow});
-            else{res.render('../server/views/index.ejs', {user: req.session.pseudo, cookie: req.session.cookieShow})}
+            if(!req.session.pseudo) res.render('../server/views/index.ejs', {cookie: req.session.cookieShowed});
+            else{res.render('../server/views/index.ejs', {user: req.session.pseudo, cookie: req.session.cookieShowed})}
         });
 
         app.post('/login', (req, res)=>{
@@ -54,7 +55,7 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
 
         app.get('/user-page', (req, res)=>{
             if(!req.session.pseudo) res.redirect('/');
-            else res.render('../server/views/userPage.ejs', {user: req.session.pseudo});
+            else res.render('../server/views/userPage.ejs', {user: req.session.pseudo, doc: {pseudo: "RainMaker"}});
         });
 
         app.get('/edit-user', (req, res)=>{
@@ -74,31 +75,18 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
             delete req.session._id;
             delete req.session.mail;
             delete req.session.pseudo;
+            delete req.session.cookieShowed;
             res.redirect('/');
         });
 
-        app.get('/confirm', (req, res, next)=>{
+        app.get('/confirm', (req, res)=>{
            if(req.query.user === undefined || req.query.key === undefined) res.redirect('/');
-           else{
-               db.db('amagus').collection('users').findOne({pseudo: req.query.user}, (err, doc)=>{
-                  if(err) throw err;
-                  if(doc === null || doc.activated) res.redirect('/');
-                  else if(! (doc.uniqKey === req.query.key)) {
-                      console.log(doc.uniqKey);
-                      console.log(req.query.key);
-                      next();
-                  }
-                  else{
-                      db.db('amagus').collection('users').updateOne(
-                          {_id: doc._id},
-                          {$set:{activated: true}}, (err)=>{
-                          if(err) throw err;
-                          else res.redirect('/user-page');
-                          }
-                      );
-                  }
-               });
-           }
+           else confirm(req, res, db);
+        });
+
+        app.get('/cookieDump', (req, res)=>{
+            req.session.cookieShowed = true;
+            res.redirect('/');
         });
 
         app.get('/*', (req, res)=>{

@@ -34,9 +34,12 @@ module.exports = function sign(req, res, db){
                                         "uniqKey": key,
                                         "picture": undefined,
                                         "birthday": undefined,
-                                        "publicKey": undefined,
+                                        "publicKey": undefined, // TODO generate pair of SSL key
                                         "privateKey": undefined,
                                         "favoriteMap": undefined,
+                                        "favoriteColor": undefined,
+                                        "country": undefined,
+                                        "language" : undefined,
                                         "friends": {}
                                     };
                                     db.db('amagus').collection('users').insertOne(newUser, (err) => {

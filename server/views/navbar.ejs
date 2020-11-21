@@ -8,13 +8,13 @@
     <div class="collapse navbar-collapse" id="left-menu">
         <menu class="navbar-nav">
             <li class="nav-item">
-                <button class="btn btn-dark btn-block nav-button" onclick="location.href='/'">Accueil</button>
+                <button class="btn btn-dark btn-block nav-button" onclick="location.href='/'">Home</button>
             </li>
             <li class="nav-item">
                 <button class="btn btn-dark btn-block nav-button" onclick="location.href='/forum'">Forum</button>
             </li>
             <li class="nav-item">
-                <button class="btn btn-dark btn-block nav-button" onclick="location.href='/about-us'">A propos</button>
+                <button class="btn btn-dark btn-block nav-button" onclick="location.href='/about-us'">About us</button>
             </li>
         </menu>
     </div>
@@ -75,7 +75,7 @@
 </nav>
 <%if(locals.user){%>
     <div class="user-menu">
-        <img src="images/userDefault.jpg" alt="user picture" class="user-image-nav circle70">
+        <img src="images/userDefault.jpg" alt="user picture" class="user-image-nav circle70" onclick="location.href='/user-page';">
         <ul class="user-info-nav">
             <li>
                 <p id="user_id" class="no-select"><%=locals.user%></p>
@@ -111,6 +111,7 @@
                                 <img class="icon-bar-item" src="images/param.png" alt="">
                             </a>
                             <ul class="dropdown-menu drop-down-custom" aria-labelledby="paramImg">
+                                <li><button class="dropdown-item btn btn-dark" onclick="location.href='/edit-user';">Edit Profile</button></li>
                                 <li><button class="dropdown-item btn btn-dark" onclick="location.href='/disconnect';">Disconnect</button></li>
                             </ul>
                         </div>

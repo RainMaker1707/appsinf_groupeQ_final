@@ -1,6 +1,10 @@
+body{
+    color: white;
+}
+
 .user-image{
-    z-index: -1;
-    position: relative;
+    z-index: 1;
+    position: absolute;
     margin-top: 10%;
     margin-left: 7%;
     width: 250px;
@@ -10,8 +14,8 @@
 }
 
 .user-info{
-    z-index: -2;
     position: absolute;
+    display: block;
     top: 25%;
     background-color: rgba(20,25,46,0.91);
     width: 80%;
@@ -19,4 +23,50 @@
     min-width: 50%;
     height: 70%;
     border-radius: 15px;
+    padding-left: 20%;
+    padding-top: 2%;
+}
+.user-title{
+    display: inline-flex;
+}
+.user-name{
+    font-size: 5em;
+}
+
+.user-country,
+.user-language{
+    padding-top: 15%;
+    font-size: 1.5em;
+    margin-right: 5%;
+}
+
+
+.user-pref{
+    z-index: 1;
+    font-size: 2em;
+}
+
+.user-map,
+.user-colour{
+    margin-left: 5%;
+    margin-right: 10%;
+    display: inline;
+}
+
+.user-infos{
+    display: inline-flex;
+}
+
+.friend-buttons{
+    display: inline-flex;
+    max-height: 45px;
+    min-width: 50%;
+}
+
+.friend-btn{
+    margin-left: 25%;
+}
+
+.msg-btn{
+    margin-left: 5%;
 }

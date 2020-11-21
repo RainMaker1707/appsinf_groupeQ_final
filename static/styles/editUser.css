@@ -1,5 +1,5 @@
 .user-image{
-    z-index: -1;
+    cursor: pointer;
     position: relative;
     margin-top: 10%;
     margin-left: 7%;
@@ -10,7 +10,7 @@
 }
 
 .user-info{
-    z-index: -2;
+    z-index: -1;
     position: absolute;
     top: 25%;
     background-color: rgba(20,25,46,0.91);

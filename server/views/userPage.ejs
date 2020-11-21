@@ -11,6 +11,32 @@
     </header>
     <img src="images/userDefault.jpg" alt="" class="user-image circle">
     <div class="user-info">
+        <div class="user-title">
+            <div class="user-infos">
+                <h2 class="user-name"><%= locals.doc.pseudo%></h2>
+                <p class="user-country">
+                   Belgium,
+                <p class="user-language">
+                    FR
+                </p>
+            </div>
+            <%if(locals.doc.pseudo !== locals.user){%>
+            <div class="friend-buttons">
+                <button class="friend-btn btn btn-dark" onclick="#">Add Friend</button>
+                <button class="msg-btn btn btn-dark" onclick="#">Message</button>
+            </div>
+            <%}%>
+        </div>
+        <div class="user-pref">
+            <img class="btn-fav" src="" alt="">
+            <p class="user-map">
+                Unknown
+            </p>
+            <img class="btn-fav" src="" alt="">
+            <p class="user-colour">
+                Unknown
+            </p>
+        </div>
     </div>
 </body>
 </html>
