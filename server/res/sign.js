@@ -1,6 +1,7 @@
 let bcrypt = require('bcrypt');
 let login = require('./login');
 let Mail = require('./mail');
+let { generateKeyPair } = require('crypto');
 
 module.exports = function sign(req, res, db){
     if(req.body.passIn !== req.body.passInC){
@@ -26,32 +27,52 @@ module.exports = function sign(req, res, db){
                                     (err, key)=>{
                                     if (err) throw err;
                                     key = key.replace(/\$/g, '');
-                                    let newUser = {
-                                        "activated": false,
-                                        "admin": false,
-                                        "mail": req.body.mailIn,
-                                        "pseudo": req.body.pseudoIn,
-                                        "password": hash,
-                                        "uniqKey": key,
-                                        "picture": undefined,
-                                        "birthday": undefined,
-                                        "publicKey": undefined, // TODO generate pair of SSL key
-                                        "privateKey": undefined,
-                                        "favoriteMap": undefined,
-                                        "favoriteColor": undefined,
-                                        "country": undefined,
-                                        "language" : undefined,
-                                        "friends": {}
-                                    };
-                                    db.db('amagus').collection('users').insertOne(newUser, (err) => {
-                                        if (err) throw err;
-                                        let mail = new Mail();
-                                        mail.send(req.body.mailIn,
-                                            "Amagus Account confirmation",
-                                            "Please confirm your account register on A-Mag Us: \n" +
+                                    generateKeyPair('rsa', {
+                                        modulusLength: 8192,
+                                        publicKeyEncoding: {
+                                            type: 'spki',
+                                            format: 'pem'
+                                        },
+                                        privateKeyEncoding: {
+                                            type: 'pkcs8',
+                                            format: 'pem',
+                                            cipher: 'aes-256-cbc',
+                                            passphrase: key
+                                        }
+                                    },
+                                    (err, publicKey, privateKey) => {
+                                        if(err) throw err;
+                                        else {
+                                            console.log(publicKey, "\n   *******   \n", privateKey);
+                                            let newUser = {
+                                                "activated": false,
+                                                "master": false,
+                                                "admin": false,
+                                                "mail": req.body.mailIn,
+                                                "pseudo": req.body.pseudoIn,
+                                                "password": hash,
+                                                "uniqKey": key,
+                                                "picture": undefined,
+                                                "birthday": undefined,
+                                                "publicKey": publicKey,
+                                                "privateKey": privateKey,
+                                                "favoriteMap": undefined,
+                                                "favoriteColor": undefined,
+                                                "country": undefined,
+                                                "language": undefined,
+                                                "friends": {}
+                                            };
+                                            db.db('amagus').collection('users').insertOne(newUser, (err) => {
+                                                if (err) throw err;
+                                                let mail = new Mail();
+                                                mail.send(req.body.mailIn,
+                                                    "Amagus Account confirmation",
+                                                    "Please confirm your account register on A-Mag Us: \n" +
                                                     "https://localhost/confirm?key=" + key + "&user=" + newUser.pseudo
-                                        );
-                                        login(req, res, db , true);
+                                                );
+                                                login(req, res, db, true);
+                                            });
+                                        }
                                     });
                                 })
                             })

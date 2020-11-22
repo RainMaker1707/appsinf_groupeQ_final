@@ -14,6 +14,7 @@ let login = require('./res/login.js');
 let sign = require('./res/sign.js');
 let confirm = require('./res/confirm.js');
 let userPage = require('./res/userPage.js');
+let loadForum = require('./res/loadForum.js');
 
 // Global variables
 let app = express();
@@ -66,7 +67,7 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
         });
 
         app.get('/forum', (req, res)=>{
-            res.render('../server/views/forum.ejs');
+            loadForum(req, res, db);
         });
 
         app.get('/about-us', (req, res)=>{

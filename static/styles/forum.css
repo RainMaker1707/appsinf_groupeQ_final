@@ -1,0 +1,40 @@
+body{
+    margin-top: 5%;
+}
+h1{
+    color: white;
+    margin: 2% 0 2% 5%;
+    font-size: 4em;
+}
+
+table{
+    width: 80%;
+    color: white;
+    text-align: center;
+    margin-left: 10%;
+    border-collapse: separate;
+    border: 1px solid white;
+    border-radius:6px;
+}
+
+thead{
+    background-color: rgba(14, 20, 90, 0.82);
+}
+
+tbody{
+    background-color: rgba(50, 64, 90, 0.82);
+}
+
+td, th{
+    margin-left: 5%;
+    border-left:solid white 1px;
+    border-top:solid white 1px;
+}
+
+th{
+    border-top: none;
+}
+
+td:first-child, th:first-child {
+    border-left: none;
+}
