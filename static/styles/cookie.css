@@ -1,9 +1,9 @@
 .cookie-popup{
     position: absolute;
-    top: 90%;
+    top: 85%;
     left: 5%;
     background-color: rgba(10,41,55,0.71);
-    height: 10%;
+    height: 15%;
     width: 90%;
     border-radius: 15px;
 }

@@ -31,6 +31,9 @@ body{
 }
 .user-name{
     font-size: 5em;
+    max-height: 200px;
+    min-width: fit-content;
+    margin-right: 10px;
 }
 
 .user-country,
@@ -61,6 +64,9 @@ body{
     display: inline-flex;
     max-height: 45px;
     min-width: 50%;
+    position: absolute;
+    top: 5%;
+    left: 65%;
 }
 
 .friend-btn{

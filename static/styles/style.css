@@ -12,6 +12,7 @@
 #left-menu menu:first-child{
     margin-left: 100px;
 }
+
 #right-menu menu:last-child{
     margin-right: 50px;
     margin-top: 0;
