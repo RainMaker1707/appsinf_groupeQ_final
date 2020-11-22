@@ -27,6 +27,7 @@ module.exports = function sign(req, res, db){
                                     (err, key)=>{
                                     if (err) throw err;
                                     key = key.replace(/\$/g, '');
+
                                     generateKeyPair('rsa', {
                                         modulusLength: 8192,
                                         publicKeyEncoding: {
