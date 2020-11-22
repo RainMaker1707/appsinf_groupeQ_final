@@ -43,7 +43,6 @@ module.exports = function sign(req, res, db){
                                     (err, publicKey, privateKey) => {
                                         if(err) throw err;
                                         else {
-                                            console.log(publicKey, "\n   *******   \n", privateKey);
                                             let newUser = {
                                                 "activated": false,
                                                 "master": false,
