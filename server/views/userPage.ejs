@@ -22,7 +22,7 @@
             </div>
             <%if(locals.doc.pseudo !== locals.user){%>
             <div class="friend-buttons">
-                <button class="friend-btn btn btn-dark" onclick="#">Add Friend</button>
+                <button class="friend-btn btn btn-dark" onclick="location.href='/friendReq?user=<%= locals.doc.pseudo%>'">Add Friend</button>
                 <button class="msg-btn btn btn-dark" onclick="#">Message</button>
             </div>
             <%}%>

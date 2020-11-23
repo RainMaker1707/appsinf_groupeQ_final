@@ -3,10 +3,11 @@ let express = require('express');
 let parser = require('body-parser');
 let session = require('express-session');
 let MongoClient = require('mongodb').MongoClient;
-const multer = require('multer');
-const upload = multer({});
+let multer = require('multer');
+let upload = multer({});
 let http = require('http');
 let https = require('https');
+let path = require('path');
 let fs= require('fs');
 
 //DIM modules
@@ -15,36 +16,74 @@ let sign = require('./res/sign.js');
 let confirm = require('./res/confirm.js');
 let userPage = require('./res/userPage.js');
 let loadForum = require('./res/loadForum.js');
+let friends = require('./res/friendRequest.js');
 
 // Global variables
 let app = express();
 let dbUrl = 'mongodb://localhost:27017';
 
+
 // App configs
-app.use(express.static('static'));
-app.engine('ejs', require('ejs').renderFile);
-app.set('view engine', 'ejs');
-app.use(parser.urlencoded({extended: true}));
-app.use(session({
+let middleWare = session({
     secret : "not_s3cr3t_s3nt3nc3",
     resave : false,
     saveUninitialized : true,
     cookie : {
         path: '/',
         httpOnly: true,
-        maxAge: 1000 * 60 * 60 * 24 * 7 , //One week cookies lifetime
+        maxAge: 1000 * 60 * 60 * 24 * 7 , //One week cookie lifetime
         secure: true
     }
-}));
+});
 
+app.use(express.static('static'));
+app.engine('ejs', require('ejs').renderFile);
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, '../server/views'));
+app.use(parser.urlencoded({extended: true}));
+app.use(middleWare);
+
+// server and router (http to https) declaration and configuration
+let server = https.createServer({
+    key: fs.readFileSync('./server/cert.key'),
+    cert: fs.readFileSync('./server/cert.crt')
+}, app).listen(443);
+
+http.createServer((req, res)=>{
+    res.writeHead(301, {"Location": "https://" + req.headers['host'] + req.url});
+    res.end();
+}).listen(80);
+
+// declaration of socket module
+let io = require('socket.io')(server);
+io.use((socket, next)=>{
+    middleWare(socket.request, socket.request.res || {}, next);
+});
+
+// noinspection JSIgnoredPromiseFromCall
 MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
     if(err) throw err;
     else{
         console.log("------- CONNECTED ------");
 
+        io.on('connection', (socket)=>{
+            let ioSession = socket.request.session;
+           if(ioSession.pseudo !== undefined){
+               io.emit('message', '🔵 <i>' + ioSession.pseudo + ' joined the chat..</i>');
+
+               socket.on('disconnect', ()=>{
+                   io.emit('message', '🔴 <i>' + ioSession.pseudo + ' left the chat..</i>');
+               });
+
+               socket.on('message', (message)=>{
+                   io.emit('message', '<strong>' + ioSession.pseudo + '</strong>: ' + message);
+               });
+           }
+        });
+
         app.get('/', (req, res)=>{
-            if(!req.session.pseudo) res.render('../server/views/index.ejs', {cookie: req.session.cookieShowed});
-            else{res.render('../server/views/index.ejs', {user: req.session.pseudo, cookie: req.session.cookieShowed})}
+            if(!req.session.pseudo) res.render('index.ejs', {cookie: req.session.cookieShowed});
+            else{res.render('index.ejs', {user: req.session.pseudo, cookie: req.session.cookieShowed})}
         });
 
         app.post('/login', (req, res)=>{
@@ -63,7 +102,7 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
 
         app.get('/edit-user', (req, res)=>{
             if(!req.session.pseudo) res.redirect('/');
-            else res.render('../server/views/editUser.ejs', {user: req.session.pseudo});
+            else res.render('editUser.ejs', {user: req.session.pseudo});
         });
 
         app.get('/forum', (req, res)=>{
@@ -71,7 +110,7 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
         });
 
         app.get('/about-us', (req, res)=>{
-            res.render('../server/views/aboutUs.ejs');
+            res.render('aboutUs.ejs', {user: req.session.pseudo, cookie: req.session.cookieShowed});
         });
 
         app.get('/disconnect', (req, res)=>{
@@ -87,23 +126,25 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
            else confirm(req, res, db);
         });
 
+        app.get('/friendReq', (req, res)=>{
+            friends.requested(req, res, db);
+        });
+
+        app.get('/refuseFriend', (req, res)=>{
+            friends.refuse(req, res, db);
+        });
+
+        app.get('/acceptFriend', (req, res)=>{
+            friends.accept(req, res, db);
+        });
+
         app.get('/cookieDump', (req, res)=>{
             req.session.cookieShowed = true;
             res.redirect('/');
         });
 
         app.get('/*', (req, res)=>{
-            res.render('../server/views/error404.ejs');
+            res.render('error404.ejs');
         });
     }
 });
-
-https.createServer({
-    key: fs.readFileSync('./server/cert.key'),
-    cert: fs.readFileSync('./server/cert.crt')
-}, app).listen(443);
-
-http.createServer((req, res)=>{
-    res.writeHead(301, {"Location": "https://" + req.headers['host'] + req.url});
-    res.end();
-}).listen(80);
