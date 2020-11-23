@@ -60,7 +60,10 @@ module.exports = function sign(req, res, db){
                                                 "favoriteColor": undefined,
                                                 "country": undefined,
                                                 "language": undefined,
-                                                "friends": {}
+                                                "friends": [],
+                                                "friendRequests": [],
+                                                "friendReceived": [],
+                                                "notifications": []
                                             };
                                             db.db('amagus').collection('users').insertOne(newUser, (err) => {
                                                 if (err) throw err;

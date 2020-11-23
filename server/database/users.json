@@ -21,7 +21,8 @@
     }
   ],
   "friendRequests": [],
-  "friendReceived": []
+  "friendReceived": [],
+  "notifications": []
 }
 {
   "activated" : true,
@@ -46,5 +47,6 @@
     }
   ],
   "friendRequests": [],
-  "friendReceived": []
+  "friendReceived": [],
+  "notifications": []
 }

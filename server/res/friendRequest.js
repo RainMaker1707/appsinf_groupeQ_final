@@ -14,12 +14,21 @@ module.exports = friends = {
                     "pseudo": doc.pseudo,
                     "publicKey": doc.publicKey,
                 };
-                dbo.updateOne({pseudo: doc.pseudo}, {$addToSet:{friendReceived: receiver}}, (err)=>{
+                let notif = {
+                    "type": "friendRequest",
+                    "content": {
+                        "pseudo": data.pseudo,
+                        "picture": data.picture,
+                        "date": new Date().toISOString(),
+                    }
+                };
+
+                dbo.updateOne({pseudo: doc.pseudo}, {$addToSet:{friendReceived: receiver, notifications: notif}}, (err)=>{
                     if(err) throw err;
                     dbo.updateOne({pseudo: data.pseudo}, {$addToSet:{friendRequests: requester}}, (err)=>{
                         if(err) throw err;
                         //TODO add message to confirm the friend request
-                        res.redirect('/');
+                        res.render('index.ejs', {user: data.pseudo});
                     });
                 });
             });
