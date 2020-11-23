@@ -1,0 +1,25 @@
+<script src="../../node_modules/socket.io/socket.io.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+<div class="chat-box">
+    <ul id="messages"></ul>
+    <form action="/" method="get" id="chatGlobal">
+        <input id="inputMessage" autocomplete="off" autofocus="on"
+               oninput="isTyping()"
+               placeholder="type your message here..." />
+        <button>Send</button>
+    </form>
+</div>
+<script>
+    let socket = io();
+    $('#chatGlobal').submit((e)=>{
+        e.preventDefault();
+        socket.emit('message', $('#inputMessage').val());
+        $('#inputMessage').val('');
+    });
+
+    socket.on('message', (msg)=>{
+        console.log('here');
+        $('#messages').append($('<li>').html(msg));
+    });
+</script>
