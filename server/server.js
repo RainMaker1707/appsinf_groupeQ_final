@@ -81,7 +81,7 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
                 });
 
                 socket.on('notif', (notif, to)=>{
-                    if (notif.type === "friendRequest"){
+                    if (notif.type === "friendRequest" || notif.type === "friendAcceptation"){
                         io.to(to).emit('notif', notif); //don't work idk why
                     }
                     else console.log('notif error');

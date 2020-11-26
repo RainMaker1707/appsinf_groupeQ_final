@@ -127,14 +127,11 @@
         window.onload =  ()=> {
             let notif = {
                 type: "<%= locals.notif.type%>",
-                content : {
-                    pseudo: "<%=locals.notif.content.pseudo%>",
-                    picture: "<%=locals.notif.content.picture%>",
-                    date: "<%=locals.notif.content.date%>",
-                }
+                pseudo: "<%=locals.notif.pseudo%>",
+                picture: "<%=locals.notif.picture%>",
+                date: "<%=locals.notif.date%>",
             }
             let to = "<%=locals.to%>";
-            console.log(notif, to);
             socket.emit('notif', notif, to);
         };
     </script>
@@ -145,11 +142,23 @@
     }
     socket.on('notif', (notif) => {
         if(document.getElementById('to-remove') !== null) document.getElementById('to-remove').remove();
-        $('#notif-dd').append($('<li>').append($('<div class=\"dropdown-item friend-request\" id=\"'+ notif.content.pseudo +'\">')));
-        let newDiv = $('#' + notif.content.pseudo);
-        newDiv.append($('<p style=\"color:white;\">').html(notif.content.pseudo));
-        newDiv.append($('<button class=\"dropdown-item btn btn-dark\" onclick=\"location.href=\'/acceptFriend?user='+ notif.content.pseudo +'\'\">').html("Accept"));
-        newDiv.append($('<button class=\"dropdown-item btn btn-dark\" onclick=\"location.href=\'/refuseFriend?user='+ notif.content.pseudo +'\'\">').html("Refuse"));
-        // TODO modify notification design and
+        let list = $('#notif-dd li').get();
+        if(notif.type === "friendRequest") {
+            $('#notif-dd').empty().append($('<li>').append($('<div class=\"dropdown-item friend-request\" id=\"' +
+                notif.pseudo + '\">')));
+            let newDiv = $('#' + notif.pseudo);
+            newDiv.append($('<p style=\"color:white;\">').html(notif.pseudo));
+            newDiv.append($('<button class=\"dropdown-item btn btn-dark\" onclick=\"location.href=\'/acceptFriend?user=' + notif.pseudo + '\'\">').html("Accept"));
+            newDiv.append($('<button class=\"dropdown-item btn btn-dark\" onclick=\"location.href=\'/refuseFriend?user=' + notif.pseudo + '\'\">').html("Refuse"));
+            // TODO modify notification design and
+        }else if(notif.type === "friendAcceptation"){
+            $('#notif-dd').empty().append($('<li>').append($('<div class=\"dropdown-item friend-accept\" id=\"' +
+                notif.pseudo + '\">')));
+            let newDiv = $('#' + notif.pseudo);
+            newDiv.append($('<p style=\"color:white;\">').html(notif.pseudo + " accepted your invitation"));
+        }
+        $.each(list, (i)=>{
+            $('#notif-dd').append($('<li>').html(list[i]));
+        });
     });
 </script>
