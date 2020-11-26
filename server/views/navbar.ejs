@@ -89,6 +89,7 @@
                                 <img class="icon-bar-item" src="images/message.png" alt="">
                             </a>
                             <ul class="dropdown-menu drop-down-custom" aria-labelledby="messImg">
+                                <!-- TODO message system -->
                                 <li><button class="dropdown-item btn btn-dark" href="#">Menu item 1</button></li>
                                 <li><button class="dropdown-item btn btn-dark" href="#">Menu item 2</button></li>
                             </ul>
@@ -99,11 +100,7 @@
                             <a id="notifImg" data-toggle="dropdown">
                                 <img class="icon-bar-item" src="images/notif.png" alt="">
                             </a>
-                            <ul class="dropdown-menu drop-down-custom" aria-labelledby="notifImg">
-                                <li><button class="dropdown-item btn btn-dark" href="#">Menu item 1</button></li>
-                                <li><button class="dropdown-item btn btn-dark" href="#">Menu item 2</button></li>
-                                <li><button class="dropdown-item btn btn-dark" href="#">Menu item 3</button></li>
-                            </ul>
+                            <ul class="dropdown-menu drop-down-custom" aria-labelledby="notifImg" id="notif-dd"></ul>
                         </div>
                     </li>
                     <li>
@@ -122,3 +119,37 @@
         </ul>
     </div>
 <%}%>
+<script>
+    let socket = io();
+</script>
+<% if(locals.notif !== undefined){%>
+    <script>
+        window.onload =  ()=> {
+            let notif = {
+                type: "<%= locals.notif.type%>",
+                content : {
+                    pseudo: "<%=locals.notif.content.pseudo%>",
+                    picture: "<%=locals.notif.content.picture%>",
+                    date: "<%=locals.notif.content.date%>",
+                }
+            }
+            let to = "<%=locals.to%>";
+            console.log(notif, to);
+            socket.emit('notif', notif, to);
+        };
+    </script>
+<%}%>
+<script>
+    if(document.getElementById('notif-dd').childElementCount === 0){
+        $('#notif-dd').append($('<li id=\"to-remove\">').append($('<p style=\"color:white;\">').html("No notification")));
+    }
+    socket.on('notif', (notif) => {
+        if(document.getElementById('to-remove') !== null) document.getElementById('to-remove').remove();
+        $('#notif-dd').append($('<li>').append($('<div class=\"dropdown-item friend-request\" id=\"'+ notif.content.pseudo +'\">')));
+        let newDiv = $('#' + notif.content.pseudo);
+        newDiv.append($('<p style=\"color:white;\">').html(notif.content.pseudo));
+        newDiv.append($('<button class=\"dropdown-item btn btn-dark\" onclick=\"location.href=\'/acceptFriend?user='+ notif.content.pseudo +'\'\">').html("Accept"));
+        newDiv.append($('<button class=\"dropdown-item btn btn-dark\" onclick=\"location.href=\'/refuseFriend?user='+ notif.content.pseudo +'\'\">').html("Refuse"));
+        // TODO modify notification design and
+    });
+</script>

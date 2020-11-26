@@ -68,16 +68,24 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
 
         io.on('connection', (socket)=>{
             let ioSession = socket.request.session;
-           if(ioSession.pseudo !== undefined){
-               io.emit('message', '🔵 <i>' + ioSession.pseudo + ' joined the chat..</i>');
+            if(ioSession.pseudo !== undefined){
+                socket.join(ioSession.pseudo);
+                io.emit('message', '🔵 <i>' + ioSession.pseudo + ' joined the chat..</i>');
 
-               socket.on('disconnect', ()=>{
-                   io.emit('message', '🔴 <i>' + ioSession.pseudo + ' left the chat..</i>');
-               });
+                socket.on('disconnect', ()=>{
+                    io.emit('message', '🔴 <i>' + ioSession.pseudo + ' left the chat..</i>');
+                });
 
-               socket.on('message', (message)=>{
-                   io.emit('message', '<strong>' + ioSession.pseudo + '</strong>: ' + message);
-               });
+                socket.on('message', (message)=>{
+                    io.emit('message', '<strong>' + ioSession.pseudo + '</strong>: ' + message);
+                });
+
+                socket.on('notif', (notif, to)=>{
+                    if (notif.type === "friendRequest"){
+                        io.to(to).emit('notif', notif); //don't work idk why
+                    }
+                    else console.log('notif error');
+                });
            }
         });
 
@@ -118,7 +126,10 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
             delete req.session.mail;
             delete req.session.pseudo;
             delete req.session.cookieShowed;
-            res.redirect('/');
+            delete req.session.friends;
+            delete req.session.friendRequests;
+            delete req.session.friendReceived;
+            delete res.redirect('/');
         });
 
         app.get('/confirm', (req, res)=>{
