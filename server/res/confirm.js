@@ -3,8 +3,6 @@ module.exports = function confirm(req, res, db){
         if(err) throw err;
         if(doc === null || doc.activated) res.redirect('/');
         else if(! (doc.uniqKey === req.query.key)) {
-            console.log(doc.uniqKey);
-            console.log(req.query.key);
             res.redirect('/err404');
         }
         else{
@@ -13,6 +11,7 @@ module.exports = function confirm(req, res, db){
                 {$set:{activated: true}}, (err)=>{
                     if(err) throw err;
                     else res.redirect('/user-page');
+                    //TODO display message to inform about activation success
                 }
             );
         }
