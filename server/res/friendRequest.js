@@ -14,6 +14,7 @@ module.exports = friends = {
                     "pseudo": doc.pseudo,
                     "publicKey": doc.publicKey,
                 };
+
                 let notif = {
                     "type": "friendRequest",
                     "content": {
@@ -27,17 +28,19 @@ module.exports = friends = {
                     if(err) throw err;
                     dbo.updateOne({pseudo: data.pseudo}, {$addToSet:{friendRequests: requester}}, (err)=>{
                         if(err) throw err;
-                        //TODO add message to confirm the friend request
-                        res.render('index.ejs', {user: data.pseudo});
+                        res.url ='/';
+                        res.render('index.ejs', {user: data.pseudo, notif: notif, to: doc.pseudo});
                     });
                 });
             });
         });
     },
     accept: (req, res, db)=>{
-
+        res.url = '/';
+        res.redirect('/');
     },
     refuse: (req, res, db)=>{
-
+        res.url = '/';
+        res.redirect('/');
     }
 };
