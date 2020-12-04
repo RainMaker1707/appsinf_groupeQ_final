@@ -1,5 +1,4 @@
 module.exports = friends = {
-
     requested: (req, res, db)=>{
         let dbo = db.db('amagus').collection('users');
         dbo.findOne({pseudo: req.session.pseudo}, (err, requesterData)=>{
@@ -27,7 +26,16 @@ module.exports = friends = {
                     dbo.updateOne({pseudo: requesterData.pseudo}, {$addToSet:{friendRequests: requester}}, (err)=>{
                         if(err) throw err;
                         res.url ='/';
-                        res.render('index.ejs', {user: requesterData.pseudo, notif: notif, to: receiverData.pseudo});
+                        dbo.findOne({pseudo: req.session.pseudo}, (err, doc)=> {
+                            if (err) throw err;
+                            req.session.friendRequests = doc.friendRequests;
+                            res.render('userPage.ejs', {
+                                user: requesterData.pseudo,
+                                doc: receiverData,
+                                notif: notif,
+                                to: receiverData.pseudo,
+                            });
+                        });
                     });
                 });
             });
@@ -59,7 +67,16 @@ module.exports = friends = {
                             "picture": receiverData.picture,
                             "date": new Date().toISOString()
                         };
-                        res.render('index.ejs', {user: receiverData.pseudo, notif: notif, to: requesterData.pseudo});
+                        dbo.findOne({pseudo: req.session.pseudo}, (err, doc)=> {
+                            if (err) throw err;
+                            req.session.friendReceived = doc.friendReceived;
+                            req.session.friends = doc.friends;
+                            res.render('index.ejs', {
+                                user: receiverData.pseudo,
+                                notif: notif,
+                                to: requesterData.pseudo
+                            });
+                        });
                     })
                 });
             });
@@ -74,7 +91,11 @@ module.exports = friends = {
             dbo.updateOne({pseudo: receiver}, {$pull:{friendReceived: {pseudo: requester},
                     notifications:{pseudo: requester}}}, (err)=>{
                     if(err) throw err;
+                dbo.findOne({pseudo: req.session.pseudo}, (err, doc)=> {
+                    if (err) throw err;
+                    req.session.friendReceived = doc.friendReceived;
                     res.redirect('/');
+                });
             });
         });
     }
