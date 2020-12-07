@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <%- include('allLink'); -%>
     <title>A-Mag Us | <%= locals.user%></title>
@@ -20,7 +20,7 @@
                     FR
                 </p>
             </div>
-            <%if(locals.doc.pseudo !== locals.user){%>
+            <%if(locals.doc.pseudo !== locals.user.pseudo){%>
             <div class="friend-buttons">
                     <button class="friend-btn btn btn-dark"
                             onclick="location.href='/friendReq?user=<%= locals.doc.pseudo%>'">
@@ -30,6 +30,12 @@
                     <button class="msg-btn btn btn-dark" onclick="location.href='/message?user=<%=locals.doc.pseudo%>'">
                         Message
                     </button>
+            </div>
+            <%}else{%>
+            <div>
+                <button class="edit-btn btn btn-dark" onclick="location.href='/edit-user'">
+                    Edit
+                </button>
             </div>
             <%}%>
         </div>

@@ -30,7 +30,7 @@ module.exports = friends = {
                             if (err) throw err;
                             req.session.friendRequests = doc.friendRequests;
                             res.render('userPage.ejs', {
-                                user: requesterData.pseudo,
+                                user: req.session,
                                 doc: receiverData,
                                 notif: notif,
                                 to: receiverData.pseudo,
@@ -71,10 +71,14 @@ module.exports = friends = {
                             if (err) throw err;
                             req.session.friendReceived = doc.friendReceived;
                             req.session.friends = doc.friends;
-                            res.render('index.ejs', {
-                                user: receiverData.pseudo,
-                                notif: notif,
-                                to: requesterData.pseudo
+                            db.db('amagus').collection('news').find({}).toArray((err, news)=>{
+                                if(err) throw err;
+                                res.render('index.ejs', {
+                                    user: req.session,
+                                    notif: notif,
+                                    to: requesterData.pseudo,
+                                    news: news
+                                });
                             });
                         });
                     })

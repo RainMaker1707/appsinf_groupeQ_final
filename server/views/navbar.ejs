@@ -76,10 +76,10 @@
 <%if(locals.user){%>
     <div class="user-menu">
         <img src="images/userDefault.jpg" alt="user picture" class="user-image-nav circle70"
-             onclick="location.href='/user-page?user=<%=locals.user%>';">
+             onclick="location.href='/user-page?user=<%=locals.user.pseudo%>';">
         <ul class="user-info-nav">
             <li>
-                <p id="user_id" class="no-select"><%=locals.user%></p>
+                <p id="user_id" class="no-select"><%=locals.user.pseudo%></p>
             </li>
             <li>
                 <ul class="icon-bar">
@@ -137,7 +137,8 @@
     </script>
 <%}%>
 <script>
-    if(document.getElementById('notif-dd').childElementCount === 0){
+    if(document.getElementById('notif-dd') &&
+        document.getElementById('notif-dd').childElementCount === 0){
         $('#notif-dd').append($('<li id=\"to-remove\">').append($('<p style=\"color:white;\">').html("No notification")));
     }
     socket.on('notif', (notif) => {
