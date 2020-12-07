@@ -21,8 +21,8 @@
 }
 {
   "activated" : true,
-  "master" : true,
-  "admin" : true,
+  "master" : false,
+  "admin" : false,
   "mail" : "hadrienallegaert@gmail.com",
   "pseudo" : "RainMaker17",
   "password" : "$2b$10$LxVnjHZ3AVVE4x1VAlePD.ypfijRPpSw35U4N5unJbnxso5.iBEQy",

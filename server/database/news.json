@@ -1,3 +1,8 @@
 {
-
+  "author": "The session admin pseudo",
+  "title": "News title",
+  "resume": "Here type a little resume of your article",
+  "content": "Here type your article text content",
+  "date": "Here the date is setup from server",
+  "picture": "Here select a picture file ",
 }
