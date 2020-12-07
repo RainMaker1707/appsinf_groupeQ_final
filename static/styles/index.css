@@ -16,21 +16,47 @@
 }
 
 .news-container:first-child{
-    margin-left: 2%;
+    margin-left: 4%;
 }
 
 .news-container{
     color: white;
     width: 300px;
     height: 350px;
-    background-color: rgba(8, 10, 31, 0.84);
+    background-color: rgba(2, 2, 30, 0.81);
     margin-top: -3%;
     margin-right: 2%;
     padding: 2% 2% 2% 2%;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
 .news-img{
     width: 100%;
+}
+
+.news-title{
+    max-height: 8%;
+    overflow: hidden;
+}
+
+.news-date{
+    position: absolute;
+    top: 55%;
+    height: 8%;
+    overflow: hidden;
+}
+
+.news-resume{
+    position: absolute;
+    top: 65%;
+    max-height: 20%;
+    overflow: hidden;
+}
+
+.news-author{
+    position: absolute;
+    top: 90%;
 }
 
 .remove-news{
