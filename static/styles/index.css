@@ -1,10 +1,39 @@
 #title_img{
     max-height: 350px;
-    z-index: -2;
     margin-top: 5%;
 }
 
 #buy-button{
-    z-index: -2;
     margin-top: 10%;
+}
+
+.admin-news-btn{
+    color: white;
+    position: absolute;
+    top: 10%;
+    left: 80%;
+    margin-bottom: 5%;
+}
+
+.news-container:first-child{
+    margin-left: 2%;
+}
+
+.news-container{
+    color: white;
+    width: 300px;
+    height: 350px;
+    background-color: rgba(8, 10, 31, 0.84);
+    margin-top: -3%;
+    margin-right: 2%;
+    padding: 2% 2% 2% 2%;
+}
+
+.news-img{
+    width: 100%;
+}
+
+.remove-news{
+    margin-top: -10%;
+    margin-right: -10%;
 }

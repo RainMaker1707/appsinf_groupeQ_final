@@ -17,6 +17,7 @@ let confirm = require('./res/confirm.js');
 let userPage = require('./res/userPage.js');
 let loadForum = require('./res/loadForum.js');
 let friends = require('./res/friendRequest.js');
+let news = require('./res/news.js');
 
 // Global variables
 let app = express();
@@ -90,8 +91,13 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
         });
 
         app.get('/', (req, res)=>{
-            if(!req.session.pseudo) res.render('index.ejs', {cookie: req.session.cookieShowed});
-            else{res.render('index.ejs', {user: req.session.pseudo, cookie: req.session.cookieShowed})}
+            db.db('amagus').collection('news').find({}).toArray((err, news)=>{
+                if (err) throw err;
+                if(!req.session.pseudo) res.render('index.ejs', {cookie: req.session.cookieShowed, news: news});
+                else{
+                    res.render('index.ejs', {user: req.session, cookie: req.session.cookieShowed, news: news})
+                }
+            });
         });
 
         app.post('/login', (req, res)=>{
@@ -110,7 +116,7 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
 
         app.get('/edit-user', (req, res)=>{
             if(!req.session.pseudo) res.redirect('/');
-            else res.render('editUser.ejs', {user: req.session.pseudo});
+            else res.render('editUser.ejs', {user: req.session});
         });
 
         app.get('/forum', (req, res)=>{
@@ -118,18 +124,21 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
         });
 
         app.get('/about-us', (req, res)=>{
-            res.render('aboutUs.ejs', {user: req.session.pseudo, cookie: req.session.cookieShowed});
+            res.render('aboutUs.ejs', {user: req.session, cookie: req.session.cookieShowed});
         });
 
         app.get('/disconnect', (req, res)=>{
             delete req.session._id;
+            delete req.session.master;
+            delete req.session.admin;
             delete req.session.mail;
             delete req.session.pseudo;
             delete req.session.cookieShowed;
+            delete req.session.notification;
             delete req.session.friends;
             delete req.session.friendRequests;
             delete req.session.friendReceived;
-            delete res.redirect('/');
+            res.redirect('/');
         });
 
         app.get('/confirm', (req, res)=>{
@@ -138,14 +147,17 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
         });
 
         app.get('/friendReq', (req, res)=>{
+            if(!req.session.pseudo) res.redirect('/'); //TODO render message 'login please'
             friends.requested(req, res, db);
         });
 
         app.get('/refuseFriend', (req, res)=>{
+            if(!req.session.pseudo) res.redirect('/'); //TODO render message 'login please'
             friends.refuse(req, res, db);
         });
 
         app.get('/acceptFriend', (req, res)=>{
+            if(!req.session.pseudo) res.redirect('/'); //TODO render message 'login please'
             friends.accept(req, res, db);
         });
 
@@ -154,8 +166,25 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
             res.redirect('/');
         });
 
+        app.get('/news', (req, res)=>{
+            if(req.session.master || req.session.admin) res.render('news.ejs', {user: req.session});
+            else res.redirect('/');
+        });
+
+        app.post('/add-news', upload.single('image'), (req, res)=>{
+            if(!req.session.pseudo) res.redirect('/');
+            else if(!(req.session.master || res.session.admin)) res.redirect('/err404');
+            else news.addNews(req, res, db);
+        });
+
+        app.get('/remove-news', (req, res)=>{
+            if(!req.session.pseudo) res.redirect('/');
+            else if (!(req.session.admin || req.session.master)) res.redirect('/err404');
+            else news.removeNews(req, res, db);
+        });
+
         app.get('/*', (req, res)=>{
-            res.render('error404.ejs');
+            res.render('error404.ejs', {user: req.session});
         });
     }
 });

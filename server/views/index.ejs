@@ -10,6 +10,9 @@
         <%- include('navbar') -%>
     </header>
     <section class="main">
+        <%if(locals.user && locals.user.admin){%>
+            <button class="admin-news-btn btn btn-dark" onclick="location.href='/news';">Add news</button>
+        <%}%>
         <div class="row">
             <img class="col-6" src="images/A-Mag_Us.png" id="title_img" alt="A-Mag-Us Title">
             <iframe class="col-5"
@@ -17,7 +20,26 @@
                     frameborder="0" id="buy-button" width="646" height="190">
             </iframe>
         </div>
-
+        <!-- TODO mapping news and news div dynamically appear-->
+    </section>
+    <section class="news-block row" id="carousel-news">
+        <%if(locals.news){%>
+            <%locals.news.reverse().map((item)=>{%>
+                <div class="news-container col-2" id="<%=item._id%>">
+                    <%if(locals.user && locals.user.admin){%>
+                        <button type="button" class="remove-news close"
+                                onclick="location.href='/remove-news?data=<%=item._id%>'">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    <%}%>
+                    <p class="news-title"><%=item.title%></p>
+                    <img src="<%=item.picture%>" alt="news picture" class="news-img">
+                    <p class="news-date"><%=item.date%></p>
+                    <p class="news-resume"><%=item.resume%></p>
+                    <p class="news-author"><%=item.author%></p>
+                </div>
+            <%});%>
+        <%}%>
     </section>
     <%- include('cookiePopup') -%>
 </body>
