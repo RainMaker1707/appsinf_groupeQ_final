@@ -15,6 +15,8 @@ module.exports = function login(req, res, db, justSigned=false){
                 }else {
                     req.session._id = doc._id;
                     req.session.mail = doc.mail;
+                    req.session.master = doc.master;
+                    req.session.admin = doc.admin;
                     req.session.pseudo = doc.pseudo;
                     req.session.notifications = doc.notifications;
                     req.session.friends = doc.friends;
