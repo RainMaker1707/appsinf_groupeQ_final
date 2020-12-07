@@ -23,6 +23,7 @@ module.exports = {
             res.redirect('/'); //TODO add mesage 'correctly add or something like
         });
     },
+
     removeNews: (req, res, db)=>{
         let id = req.query.data;
         db.db('amagus').collection('news').deleteOne({_id: ObjectId(id)}, (err)=>{
