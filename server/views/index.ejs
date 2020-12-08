@@ -22,19 +22,17 @@
         </div>
     </section>
     <script>
-        function display(id){
-            document.getElementById(id + '-popup').style.display = 'block';
-        }
-        function offscreen(id){
-            document.getElementById(id + '-popup').style.display = 'none';
+        function display(id, displayed){
+            let data = document.getElementById(id + '-popup');
+            displayed?data.style.display = 'none':data.style.display = 'block';
         }
     </script>
     <section class="news-block row" id="carousel-news">
         <!-- TODO carousel with news and popup-->
         <%if(locals.news){%>
-            <%locals.news.reverse().map((item)=>{%>
-                <div class="news-container col-2" id="<%=item._id%>"
-                     onclick="display('<%=item._id%>');">
+            <%locals.news.reverse().map((item, index)=>{%>
+                <div class="news-container col-2 <%if(index > 4){%>offscreen<%}%>" id="<%=item._id%>"
+                     onclick="display('<%=item._id%>', false);">
                     <%if(locals.user && (locals.user.admin || locals.user.master)){%>
                         <button type="button" class="remove-news close"
                                 onclick="location.href='/remove-news?data=<%=item._id%>'">
@@ -49,7 +47,7 @@
                 </div>
                 <div class="news-popup text-center" id="<%=item._id%>-popup">
                     <button type="button" class="close close-popup"
-                            onclick="offscreen('<%=item._id%>')">
+                            onclick="display('<%=item._id%>', true)">
                         <span aria-hidden="true">&times;</span>
                     </button>
                     <h2 class="news-popup-title"><%=item.title%></h2>
