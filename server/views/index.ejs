@@ -21,11 +21,21 @@
             </iframe>
         </div>
     </section>
+    <script>
+        function display(id){
+            document.getElementById(id + '-popup').style.display = 'block';
+        }
+        function offscreen(id){
+            document.getElementById(id + '-popup').style.display = 'none';
+        }
+    </script>
     <section class="news-block row" id="carousel-news">
+        <!-- TODO carousel with news and popup-->
         <%if(locals.news){%>
             <%locals.news.reverse().map((item)=>{%>
-                <div class="news-container col-2" id="<%=item._id%>">
-                    <%if(locals.user && locals.user.admin){%>
+                <div class="news-container col-2" id="<%=item._id%>"
+                     onclick="display('<%=item._id%>');">
+                    <%if(locals.user && (locals.user.admin || locals.user.master)){%>
                         <button type="button" class="remove-news close"
                                 onclick="location.href='/remove-news?data=<%=item._id%>'">
                             <span aria-hidden="true">&times;</span>
@@ -36,6 +46,17 @@
                     <p class="news-date"><%=item.date%></p>
                     <p class="news-resume"><%=item.resume%></p>
                     <p class="news-author"><%=item.author%></p>
+                </div>
+                <div class="news-popup text-center" id="<%=item._id%>-popup">
+                    <button type="button" class="close close-popup"
+                            onclick="offscreen('<%=item._id%>')">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h2 class="news-popup-title"><%=item.title%></h2>
+                    <img src="<%=item.picture%>" alt="" class="news-popup-img">
+                    <p class="news-popup-date"><%=item.date%></p>
+                    <p class="news-popup-content"><%=item.content%></p>
+                    <p class="news-popup-author"><%=item.author%></p>
                 </div>
             <%});%>
         <%}%>

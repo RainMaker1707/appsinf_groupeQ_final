@@ -63,3 +63,20 @@
     margin-top: -10%;
     margin-right: -10%;
 }
+
+.news-popup{
+    z-index: 10;
+    display: none;
+    color: white;
+    position: fixed;
+    top: 15%;
+    left: 5%;
+    width: 90%;
+    height: 80%;
+    background-color: black;
+}
+
+.news-popup-img{
+    max-width: 100%;
+    max-height: 40%;
+}
