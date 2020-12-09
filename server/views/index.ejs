@@ -4,6 +4,8 @@
     <%- include('allLink'); -%>
     <title>Accueil | A-Mag Us</title>
     <link rel="stylesheet" type="text/css" href="/styles/index.css"/>
+    <link rel="stylesheet" type="text/css" href="/styles/responsiveCarousel.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jcarousel/0.3.5/jquery.jcarousel.min.js"></script>
 </head>
 <body class="container-fluid">
     <header>
@@ -27,12 +29,12 @@
             displayed?data.style.display = 'none':data.style.display = 'block';
         }
     </script>
-    <section class="news-block row" id="carousel-news">
-        <!-- TODO carousel with news and popup-->
+    <section class="row carousel slide w-100" id="carousel-news" data-ride="carousel">
+        <!-- TODO carousel with news-->
         <%if(locals.news){%>
+        <div class="news-block carousel-inner">
             <%locals.news.reverse().map((item, index)=>{%>
-                <div class="news-container col-2 <%if(index > 4){%>offscreen<%}%>" id="<%=item._id%>"
-                     onclick="display('<%=item._id%>', false);">
+                <div class="news-container col-2 carousel-item <%if(index === 0){%>active<%}%>" id="<%=item._id%>" onclick="display('<%=item._id%>', false);">
                     <%if(locals.user && (locals.user.admin || locals.user.master)){%>
                         <button type="button" class="remove-news close"
                                 onclick="location.href='/remove-news?data=<%=item._id%>'">
@@ -45,20 +47,53 @@
                     <p class="news-resume"><%=item.resume%></p>
                     <p class="news-author"><%=item.author%></p>
                 </div>
-                <div class="news-popup text-center" id="<%=item._id%>-popup">
-                    <button type="button" class="close close-popup"
-                            onclick="display('<%=item._id%>', true)">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h2 class="news-popup-title"><%=item.title%></h2>
-                    <img src="<%=item.picture%>" alt="" class="news-popup-img">
-                    <p class="news-popup-date"><%=item.date%></p>
-                    <p class="news-popup-content"><%=item.content%></p>
-                    <p class="news-popup-author"><%=item.author%></p>
-                </div>
             <%});%>
+        </div>
+        <a class="carousel-control-prev" href="#carousel-news" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Prev</span>
+        </a>
+        <a class="carousel-control-next" href="#carousel-news" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+        <%locals.news.map((item)=>{%>
+            <div class="news-popup text-center" id="<%=item._id%>-popup">
+                <button type="button" class="close close-popup"
+                        onclick="display('<%=item._id%>', true)">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h2 class="news-popup-title"><%=item.title%></h2>
+                <img src="<%=item.picture%>" alt="" class="news-popup-img">
+                <p class="news-popup-date"><%=item.date%></p>
+                <p class="news-popup-content"><%=item.content%></p>
+                <p class="news-popup-author"><%=item.author%></p>
+            </div>
+        <%});%>
         <%}%>
     </section>
+    <script>
+        $('#carousel-news').carousel({
+            interval: false
+        })
+        $('#carousel-example').on('slide.bs.carousel', function (e) {
+            /*
+                CC 2.0 License Iatek LLC 2018 - Attribution required
+            */
+            let $e = $(e.relatedTarget);
+            let idx = $e.index();
+            let itemsPerSlide = 5;
+            let car = $('.carousel-item');
+            let totalItems = car.length;
+            if (idx >= totalItems-(itemsPerSlide-1)) {
+                let it = itemsPerSlide - (totalItems - idx);
+                for (let i = 0; i<it; i++) {
+                    if (e.direction === "left")  car.eq(i).appendTo('.carousel-inner');
+                    else car.eq(0).appendTo('.carousel-inner');
+                }
+            }
+        });
+    </script>
     <%- include('cookiePopup') -%>
 </body>
 </html>
