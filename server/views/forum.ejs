@@ -12,7 +12,18 @@
 
     <section class="main">
         <h1>Forum</h1>
-
+        <div class="subjects-block">
+        <%locals.subjects.reverse().map((subject)=>{%>
+            <div class="subject-container" id="<%=subject._id%>">
+                <h2><%=subject.subject%></h2>
+                <%subject.conversations.reverse().map((conv)=>{ %>
+                    <div class="conv-container" onclick="location.href='/forum/page?subject=<%=subject.subject.replace(/\s/g, '_')%>&conv=<%=conv.title.replace(/\s/g, '_').replace(/'/g, '<')%>+<%=conv.author.replace(/\s/g, '_')%>+<%=conv.date.replace(/\s/g, '_')%>'">
+                        <p class="conv-title"><%=conv.title%></p>
+                    </div>
+                <%})%>
+            </div>
+        <%})%>
+        </div>
     </section>
 </body>
 </html>

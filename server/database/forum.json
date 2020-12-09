@@ -1,47 +1,69 @@
 {
-  "subject": "",
+  "subject": "To Read",
   "conversations": [
     {
+      "title" : "Forum Rules",
       "mainContent": "",
-      "author": "",
-      "date": "",
-      "answer": [
-        {
-          "author": "",
-          "date": "",
-          "up": 0,
-          "down": 0,
-          "text": "",
-        },
-        {
-          "author": "",
-          "date": "",
-          "up": 0,
-          "down": 0,
-          "text": "",
-        }
-      ]
+      "author": "RainMaker",
+      "date": "09 December 2020",
+      "up": 0,
+      "down": 0,
+      "answers": []
     },
     {
+      "title": "How to add an idea",
       "mainContent": "",
-      "author": "",
-      "date": "",
-      "answer": [
-        {
-          "author": "",
-          "date": "",
-          "up": 0,
-          "down": 0,
-          "text": "",
-        },
-        {
-          "author": "",
-          "date": "",
-          "up": 0,
-          "down": 0,
-          "text": "",
-        }
-      ]
+      "author": "RainMaker",
+      "date": "09 December 2020",
+      "up": 0,
+      "down": 0,
+      "answers": []
+    }
+  ]
+}
+{
+  "subject": "Idea Box",
+  "conversations": [
+    {
+      "title": "I've an idea",
+      "mainContent": "",
+      "author": "RainMaker",
+      "date": "09 December 2020",
+      "up": 0,
+      "down": 0,
+      "answers": []
+    }
+  ]
+}
+{
+  "subject": "Pub / Tavern",
+  "conversations": [
+    {
+      "title": "Conversation",
+      "mainContent": "",
+      "author": "RainMaker",
+      "date": "09 December 2020",
+      "up": 0,
+      "down": 0,
+      "answers": []
+    },
+    {
+      "title": "I don't like the impostor gameplay",
+      "mainContent": "",
+      "author": "RainMaker",
+      "date": "09 December 2020",
+      "up": 0,
+      "down": 0,
+      "answers": []
+    },
+    {
+      "title": "Among Us impostor null",
+      "mainContent": "",
+      "author": "RainMaker",
+      "date": "09 December 2020",
+      "up": 0,
+      "down": 0,
+      "answers": []
     }
   ]
 }
