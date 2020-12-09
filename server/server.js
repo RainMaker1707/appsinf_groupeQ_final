@@ -72,9 +72,11 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
             if(ioSession.pseudo !== undefined){
                 socket.join(ioSession.pseudo);
                 io.emit('message', '🔵 <i>' + ioSession.pseudo + ' joined the chat..</i>');
+                // TODO connection in friends's online friends list
 
                 socket.on('disconnect', ()=>{
                     io.emit('message', '🔴 <i>' + ioSession.pseudo + ' left the chat..</i>');
+                    // TODO disconnection in friend's online friends list
                 });
 
                 socket.on('message', (message)=>{
@@ -124,7 +126,7 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
         });
 
         app.get('/about-us', (req, res)=>{
-            res.render('aboutUs.ejs', {user: req.session, cookie: req.session.cookieShowed});
+            res.render('aboutUs.ejs', {user: req.session.pseudo?req.session:undefined, cookie: req.session.cookieShowed});
         });
 
         app.get('/disconnect', (req, res)=>{
