@@ -2,10 +2,15 @@
 <html lang="en">
 <head>
     <%- include('allLink'); -%>
-    <link rel="stylesheet" type="text/css" href="styles/forum.css">
-    <title>Forum | A-Mag Us</title>
+    <link rel="stylesheet" type="text/css" href="styles/forumPage.css">
+    <title><%=locals.doc.title%> | A-Mag Us</title>
 </head>
 <body>
-
+    <header>
+        <%- include('navbar'); -%>
+    </header>
+    <section class="main">
+        <h1 class="conv-title"><%=locals.doc.title%></h1>
+    </section>
 </body>
 </html>

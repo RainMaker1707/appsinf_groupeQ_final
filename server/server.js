@@ -126,8 +126,9 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
             loadForum(req, res, db);
         });
 
-        app.get('/forum/page', (req, res)=>{
-            forumPage(req, res, db);
+        app.get('/forum-page', (req, res)=>{
+            if(req.query.subject && req.query.conv) forumPage(req, res, db);
+            else res.redirect('/forum');
         });
 
         app.get('/about-us', (req, res)=>{
