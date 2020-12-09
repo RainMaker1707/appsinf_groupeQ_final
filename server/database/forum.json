@@ -1,3 +1,47 @@
 {
-
+  "subject": "",
+  "conversations": [
+    {
+      "mainContent": "",
+      "author": "",
+      "date": "",
+      "answer": [
+        {
+          "author": "",
+          "date": "",
+          "up": 0,
+          "down": 0,
+          "text": "",
+        },
+        {
+          "author": "",
+          "date": "",
+          "up": 0,
+          "down": 0,
+          "text": "",
+        }
+      ]
+    },
+    {
+      "mainContent": "",
+      "author": "",
+      "date": "",
+      "answer": [
+        {
+          "author": "",
+          "date": "",
+          "up": 0,
+          "down": 0,
+          "text": "",
+        },
+        {
+          "author": "",
+          "date": "",
+          "up": 0,
+          "down": 0,
+          "text": "",
+        }
+      ]
+    }
+  ]
 }
