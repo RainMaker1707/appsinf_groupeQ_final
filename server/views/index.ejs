@@ -30,11 +30,11 @@
         }
     </script>
     <section class="row carousel slide w-100" id="carousel-news" data-ride="carousel">
-        <!-- TODO carousel with news-->
         <%if(locals.news){%>
         <div class="news-block carousel-inner">
             <%locals.news.reverse().map((item, index)=>{%>
-                <div class="news-container col-2 carousel-item <%if(index === 0){%>active<%}%>" id="<%=item._id%>" onclick="display('<%=item._id%>', false);">
+                <div class="news-container carousel-item <%if(index === 0){%>active<%}%>" id="<%=item._id%>"
+                     onclick="display('<%=item._id%>', false);" >
                     <%if(locals.user && (locals.user.admin || locals.user.master)){%>
                         <button type="button" class="remove-news close"
                                 onclick="location.href='/remove-news?data=<%=item._id%>'">
@@ -70,17 +70,27 @@
                 <p class="news-popup-author"><%=item.author%></p>
             </div>
         <%});%>
+        <script>
+            let car = $('#carousel-news');
+            car.carousel({
+                interval: false,
+                wrap: true
+            });
+            car.on('slid.bs.carousel', (e)=>{
+                console.log(e.direction);
+                if(e.direction === 'left') {
+                    let temp = document.getElementsByClassName('news-block')[0].children[0]
+                    document.getElementsByClassName('news-block')[0].children[0].remove()
+                    document.getElementsByClassName('news-block')[0].appendChild(temp);
+                }else if(e.direction === 'right'){
+                    let arr = document.getElementsByClassName('news-block')[0]
+                    let temp = arr.children[arr.children.length - 1]
+                    arr.insertBefore(temp, arr.firstChild);
+                }
+            });
+        </script>
         <%}%>
     </section>
-    <script>
-        $('#carousel-news').carousel({
-            interval: false
-        });
-
-        $('#carousel-example').on('slide.bs.carousel', function (e) {
-            //todo move item on list in carousel-inner
-        });
-    </script>
     <%- include('cookiePopup') -%>
 </body>
 </html>
