@@ -75,23 +75,10 @@
     <script>
         $('#carousel-news').carousel({
             interval: false
-        })
+        });
+
         $('#carousel-example').on('slide.bs.carousel', function (e) {
-            /*
-                CC 2.0 License Iatek LLC 2018 - Attribution required
-            */
-            let $e = $(e.relatedTarget);
-            let idx = $e.index();
-            let itemsPerSlide = 5;
-            let car = $('.carousel-item');
-            let totalItems = car.length;
-            if (idx >= totalItems-(itemsPerSlide-1)) {
-                let it = itemsPerSlide - (totalItems - idx);
-                for (let i = 0; i<it; i++) {
-                    if (e.direction === "left")  car.eq(i).appendTo('.carousel-inner');
-                    else car.eq(0).appendTo('.carousel-inner');
-                }
-            }
+            //todo move item on list in carousel-inner
         });
     </script>
     <%- include('cookiePopup') -%>
