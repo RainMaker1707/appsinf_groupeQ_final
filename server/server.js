@@ -16,6 +16,7 @@ let sign = require('./res/sign.js');
 let confirm = require('./res/confirm.js');
 let userPage = require('./res/userPage.js');
 let loadForum = require('./res/loadForum.js');
+let forumPage = require('./res/forumPage.js');
 let friends = require('./res/friendRequest.js');
 let news = require('./res/news.js');
 
@@ -126,7 +127,7 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
         });
 
         app.get('/forum/page', (req, res)=>{
-            res.redirect('/forum');
+            forumPage(req, res, db);
         });
 
         app.get('/about-us', (req, res)=>{
