@@ -31,13 +31,46 @@ h1{
 .conv-container{
     border-bottom: 1px solid rgba(110, 110, 110, 0.82);
     cursor: pointer;
+    width: 100%;
 }
 
 .conv-container:last-child{
     border-bottom: none;
     padding-bottom: .1%;
+    justify-content: center;
+    align-items: center;
 }
 
 .conv-title{
     padding: 1% 0 0 5%;
+    width: 30%;
+}
+.conv-author,
+.conv-answer{
+    padding-top: 1%;
+}
+
+.before{
+    display: inline-flex;
+    width: 95%;
+    margin-right: 5%;
+    justify-content: center;
+    align-items: center;
+}
+
+.like-bar{
+    margin-right: 5%;
+    color: #d0d0d0;
+}
+
+.fa-thumbs-up{
+    color: rgb(17, 78, 174);
+}
+
+.fa-thumbs-down{
+    color: #991f1c;
+}
+
+.post-btn{
+    height: 50px;
 }
