@@ -131,6 +131,10 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
             else res.redirect('/forum');
         });
 
+        app.get('/forum-post', (req, res)=>{
+            res.render('forumPost.ejs', {user: req.session.pseudo?req.session:undefined})
+        });
+
         app.get('/about-us', (req, res)=>{
             res.render('aboutUs.ejs', {user: req.session.pseudo?req.session:undefined, cookie: req.session.cookieShowed});
         });
