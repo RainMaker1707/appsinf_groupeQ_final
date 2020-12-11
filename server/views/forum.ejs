@@ -23,15 +23,15 @@
                     <div class="conv-container row" onclick="location.href='/forum-page?subject=<%=subject.subject.replace(/\s/g, '_')%>&conv=<%=conv.title.replace(/\s/g, '_').replace(/'/g, '<')%>+<%=conv.author.replace(/\s/g, '_')%>+<%=conv.date.replace(/\s/g, '_')%>'">
                         <p class="conv-title"><%=conv.title%></p>
                         <p class="conv-author "><%=conv.author%></p>
-                        <p class="conv-answer ml-auto">Answers: <%=conv.answers.length%></p>
-                        <div class="ml-auto like-bar">
+                        <p class="conv-answer">Answers: <%=conv.answers.length%></p>
+                        <div class="like-bar">
                             <div class="like">
-                                <span class="fa fa-thumbs-up" aria-hidden="true"></span>
-                                <span>0</span>
+                                <span class="fa fa-thumbs-o-up" aria-hidden="true"></span>
+                                <span><%=conv.up%></span>
                             </div>
                             <div class="unlike">
-                                <span class="fa fa-thumbs-down" aria-hidden="true"></span>
-                                <span>0</span>
+                                <span class="fa fa-thumbs-o-down" aria-hidden="true"></span>
+                                <span><%=conv.down%></span>
                             </div>
                         </div>
                         <p class="conv-date"><%=conv.date%></p>
