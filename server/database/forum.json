@@ -3,20 +3,27 @@
   "conversations": [
     {
       "title" : "Forum Rules",
-      "mainContent": "",
+      "content": "Here is a text to test my div is working or not\nMaybe I'll try to wrap this over a little image but no think i'll have time for these tiny things",
       "author": "RainMaker",
       "date": "09 December 2020",
-      "up": 50,
-      "down": 2,
-      "answers": []
+      "answers": [
+        {
+          "content": "Wow nice test,\nshould be awesome with real rules...",
+          "author": "GGisOnline",
+          "date": "11 December 2020"
+        },
+        {
+          "content": "Nothing to write but i'm there",
+          "author": "Cezary",
+          "date": "11 December 2020"
+        }
+      ]
     },
     {
       "title": "How to add an idea",
-      "mainContent": "",
+      "content": "",
       "author": "RainMaker",
       "date": "09 December 2020",
-      "up": 12,
-      "down": 5,
       "answers": []
     }
   ]
@@ -26,11 +33,9 @@
   "conversations": [
     {
       "title": "I've an idea",
-      "mainContent": "",
+      "content": "",
       "author": "RainMaker",
       "date": "09 December 2020",
-      "up": 10,
-      "down": 1,
       "answers": []
     }
   ]
@@ -40,29 +45,23 @@
   "conversations": [
     {
       "title": "Conversation",
-      "mainContent": "",
+      "content": "",
       "author": "RainMaker",
       "date": "09 December 2020",
-      "up": 0,
-      "down": 0,
       "answers": []
     },
     {
       "title": "I don't like the impostor gameplay",
-      "mainContent": "",
+      "content": "",
       "author": "RainMaker",
       "date": "09 December 2020",
-      "up": 10,
-      "down": 2,
       "answers": []
     },
     {
       "title": "Among Us impostor null",
-      "mainContent": "",
+      "content": "",
       "author": "RainMaker",
       "date": "09 December 2020",
-      "up": 3,
-      "down": 7,
       "answers": []
     }
   ]

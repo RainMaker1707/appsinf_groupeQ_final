@@ -9,7 +9,7 @@ module.exports = (req, res, db)=>{
             let date = today.getDate() + " " + months[today.getMonth()] + " " + today.getFullYear();
             let newPost={
                 "title" : req.body.title,
-                "mainContent": req.body.content,
+                "content": req.body.content,
                 "author": req.session.pseudo,
                 "date": date,
                 "up": 0,

@@ -40,16 +40,25 @@ h1{
 }
 
 .conv-title{
-    padding: 1% 2% 0 5%;
-    width: 40%;
+    padding: 1% 15% 0 5%;
+    width: 55%;
     overflow: hidden;
 }
 .conv-author,
 .conv-answer,
 .conv-date{
-    padding-top: 1%;
+    padding: 1% 1% 0 1%;
     overflow: hidden;
     width: 15%;
+}
+
+.conv-answer{
+    display: inline-flex;
+}
+
+.fa-indent{
+    padding-top: 2%;
+    margin-right: 5%;
 }
 
 
@@ -62,24 +71,6 @@ h1{
 .before button{
     align-self: center;
     justify-self: center;
-}
-
-.like-bar{
-    width: 10%;
-    color: #d0d0d0;
-    margin-left: 5%;
-}
-
-.fa{
-    margin-right: 5%;
-}
-
-.fa-thumbs-up{
-    color: rgb(17, 78, 174);
-}
-
-.fa-thumbs-down{
-    color: #991f1c;
 }
 
 .post-btn{

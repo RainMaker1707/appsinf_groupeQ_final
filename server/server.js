@@ -18,6 +18,7 @@ let userPage = require('./res/userPage.js');
 let loadForum = require('./res/loadForum.js');
 let forumPage = require('./res/forumPage.js');
 let forumPost = require('./res/forumPost.js');
+let answerPost = require('./res/answerPost.js');
 let friends = require('./res/friendRequest.js');
 let news = require('./res/news.js');
 
@@ -130,6 +131,12 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
         app.get('/forum-page', (req, res)=>{
             if(req.query.subject && req.query.conv) forumPage(req, res, db);
             else res.redirect('/forum'); //TODO display 'no post found'
+        });
+
+        app.post('/answer-post', (req, res)=>{
+            if(!req.session.pseudo) res.redirect('/forum'); // TODO display message 'login please'
+            else if(!(req.query.subject && req.query.title && req.query.author && req.query.date)) res.redirect('/err404');
+            else answerPost(req, res, db);
         });
 
         app.get('/forum-post', (req, res)=>{
