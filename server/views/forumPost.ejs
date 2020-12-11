@@ -3,14 +3,30 @@
 <head>
     <%- include('allLink') -%>
     <link rel="stylesheet" type="text/css" href="styles/forumPost.css">
-    <title>Your Post | A-Mag Us</title>
+    <title>Forum Post | A-Mag Us</title>
 </head>
 <body>
     <header>
         <%- include('navbar') -%>
     </header>
     <section class="main">
-
+        <h1>Add a new post</h1>
+        <div class="inner text-center">
+            <form method="post" action="#">
+                <!--TODO subject chooser -->
+                <label for="title-in"></label>
+                <input class="title-in" name="title-in" id="title-in" placeholder="Title"
+                       type="text" minlength="" maxlength="" required>
+                <label for="content-in"></label>
+                <input class="content-in" name="content-in" id="content-in" placeholder="Your text"
+                       type="text" minlength="" maxlength="" required>
+                <div class="checker-container">
+                    <input type="checkbox" id="checker" required>
+                    <label for="checker">I've read the chart rules before I post this</label>
+                </div>
+                <input class="btn btn-dark" type="submit" value="Send">
+            </form>
+        </div>
     </section>
 </body>
 </html>
