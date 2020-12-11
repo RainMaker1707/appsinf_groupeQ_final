@@ -57,8 +57,11 @@ h1{
     display: inline-flex;
     width: 95%;
     margin-right: 5%;
-    justify-content: center;
-    align-items: center;
+}
+
+.before button{
+    align-self: center;
+    justify-self: center;
 }
 
 .like-bar{
@@ -71,11 +74,11 @@ h1{
     margin-right: 5%;
 }
 
-.fa-thumbs-o-up{
+.fa-thumbs-up{
     color: rgb(17, 78, 174);
 }
 
-.fa-thumbs-o-down{
+.fa-thumbs-down{
     color: #991f1c;
 }
 

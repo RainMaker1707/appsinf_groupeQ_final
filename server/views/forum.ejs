@@ -13,7 +13,13 @@
     <section class="main">
         <section class="before">
             <h1>Forum</h1>
-            <button class="post-btn btn btn-dark ml-auto" type="button" onclick="location.href='/forum-post'" >Add post</button>
+            <%if(locals.user){%>
+                <%if(locals.user.admin || locals.user.master){%>
+                    <button class="post-btn btn btn-dark ml-auto" type="button" onclick="location.href='#'">Add subject</button>
+                <%}%>
+                <button class="post-btn btn btn-dark <%if(!(locals.user.admin || locals.user.master)){%>ml-auto<%}else{%>ml-5<%}%>"
+                        type="button" onclick="location.href='/forum-post'" >Add post</button>
+            <%}%>
         </section>
         <div class="subjects-block">
         <%locals.subjects.reverse().map((subject)=>{%>
@@ -26,11 +32,11 @@
                         <p class="conv-answer">Answers: <%=conv.answers.length%></p>
                         <div class="like-bar">
                             <div class="like">
-                                <span class="fa fa-thumbs-o-up" aria-hidden="true"></span>
+                                <span class="fa fa-thumbs-up" aria-hidden="true"></span>
                                 <span><%=conv.up%></span>
                             </div>
                             <div class="unlike">
-                                <span class="fa fa-thumbs-o-down" aria-hidden="true"></span>
+                                <span class="fa fa-thumbs-down" aria-hidden="true"></span>
                                 <span><%=conv.down%></span>
                             </div>
                         </div>

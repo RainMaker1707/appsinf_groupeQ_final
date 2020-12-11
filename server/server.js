@@ -128,11 +128,12 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
 
         app.get('/forum-page', (req, res)=>{
             if(req.query.subject && req.query.conv) forumPage(req, res, db);
-            else res.redirect('/forum');
+            else res.redirect('/forum'); //TODO display 'no post found'
         });
 
         app.get('/forum-post', (req, res)=>{
-            res.render('forumPost.ejs', {user: req.session.pseudo?req.session:undefined})
+            if(!req.session.pseudo) res.redirect('/forum'); //TODO display message 'please login'
+            else res.render('forumPost.ejs', {user: req.session.pseudo?req.session:undefined})
         });
 
         app.get('/about-us', (req, res)=>{
