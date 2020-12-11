@@ -22,7 +22,7 @@ module.exports = function login(req, res, db, justSigned=false){
                     req.session.friends = doc.friends;
                     req.session.friendRequests = doc.friendRequests;
                     req.session.friendReceived = doc.friendReceived;
-                    justSigned?res.redirect('/edit-user'):res.redirect('/user-page?user=' + req.session.pseudo);
+                    justSigned?res.redirect('/edit-user'):res.redirect('back');
                 }
             })
         }

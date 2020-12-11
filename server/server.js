@@ -136,6 +136,7 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
             if(!req.session.pseudo) res.redirect('/forum'); //TODO display message 'please login'
             else {
                 db.db('amagus').collection('forum').find({}).toArray((err, doc)=> {
+                    if(err) throw err;
                     res.render('forumPost.ejs', {user: req.session.pseudo ? req.session : undefined, subjects: doc})
                 });
             }
