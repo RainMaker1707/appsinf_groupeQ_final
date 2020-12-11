@@ -17,6 +17,7 @@ let confirm = require('./res/confirm.js');
 let userPage = require('./res/userPage.js');
 let loadForum = require('./res/loadForum.js');
 let forumPage = require('./res/forumPage.js');
+let forumPost = require('./res/forumPost.js');
 let friends = require('./res/friendRequest.js');
 let news = require('./res/news.js');
 
@@ -133,7 +134,15 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
 
         app.get('/forum-post', (req, res)=>{
             if(!req.session.pseudo) res.redirect('/forum'); //TODO display message 'please login'
-            else res.render('forumPost.ejs', {user: req.session.pseudo?req.session:undefined})
+            else {
+                db.db('amagus').collection('forum').find({}).toArray((err, doc)=> {
+                    res.render('forumPost.ejs', {user: req.session.pseudo ? req.session : undefined, subjects: doc})
+                });
+            }
+        });
+
+        app.post('/forum-post', (req, res)=>{
+            forumPost(req, res, db);
         });
 
         app.get('/about-us', (req, res)=>{

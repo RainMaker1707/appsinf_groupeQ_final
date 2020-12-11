@@ -12,13 +12,18 @@
     <section class="main">
         <h1>Add a new post</h1>
         <div class="inner text-center">
-            <form method="post" action="#">
-                <!--TODO subject chooser -->
-                <label for="title-in"></label>
-                <input class="title-in" name="title-in" id="title-in" placeholder="Title"
+            <form method="post" action="/forum-post">
+                <label for="subject">Choose a subject:</label>
+                <select id="subject" name="subject">
+                    <%locals.subjects.map((item)=>{%>
+                        <option value="<%=item.subject%>"><%=item.subject%></option>
+                    <%})%>
+                </select>
+                <label for="title"></label>
+                <input class="title" name="title" id="title" placeholder="Title"
                        type="text" minlength="" maxlength="" required>
-                <label for="content-in"></label>
-                <input class="content-in" name="content-in" id="content-in" placeholder="Your text"
+                <label for="content"></label>
+                <input class="content" name="content" id="content" placeholder="Your text"
                        type="text" minlength="" maxlength="" required>
                 <div class="checker-container">
                     <input type="checkbox" id="checker" required>
