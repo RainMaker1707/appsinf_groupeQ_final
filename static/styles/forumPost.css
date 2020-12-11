@@ -21,13 +21,26 @@
     margin-left: 5%;
 }
 
+.inner form select{
+    margin-bottom: 2%;
+}
+
 .inner form input[type='text']{
     width: 100%;
     text-align: center;
     background-color: rgba(148, 148, 148, 0.23);
     border: none;
     border-radius: 5px;
-   color: white;
+    color: white;
+}
+
+.inner form textarea{
+    width: 100%;
+    background-color: rgba(148, 148, 148, 0.23);
+    border: none;
+    border-radius: 5px;
+    color: white;
+    text-align: left;
 }
 
 .checker-container{
