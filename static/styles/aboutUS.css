@@ -1,0 +1,45 @@
+.main{
+    margin-top: 5%;
+    width: 100%;
+    min-height: 95vh;
+    overflow: hidden;
+}
+
+#displayer{
+    width: 3%;
+    position: fixed;
+    left: 95%;
+}
+
+.sidebar{
+    height: 85vh;
+    width: 20%;
+    position: fixed;
+    top: 12%;
+    left: 100%;
+}
+
+.sidebar iframe{
+    min-height: 600px;
+    min-width: 200px;
+    height: 100%;
+    width: 100%;
+}
+
+.opening{
+    transform: translate3d(-100%, 0, 0);
+    transition: transform 1s ease-in-out;
+}
+
+.open{
+    left: 80%;
+}
+
+.closing{
+    transform: translate3d(100%, 0, 0);
+    transition: transform 1s ease-in-out;
+}
+
+.closed{
+    left: 100%;
+}

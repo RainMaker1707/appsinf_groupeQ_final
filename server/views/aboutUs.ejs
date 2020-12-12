@@ -3,10 +3,42 @@
 <head>
     <%- include('allLink'); -%>
     <title>About Us | A-Mag Us</title>
+    <link rel="stylesheet" type="text/css" href="styles/aboutUs.css">
 </head>
 <body>
 <header>
     <%- include('navbar'); -%>
 </header>
+<section class="main">
+    <button id="displayer" onclick="sideDisplay()" type="button" class="btn btn-dark"><span class="fa fa-bars"></span></button>
+    <div class="sidebar closed" id="sidebar">
+        <iframe src="https://discord.com/widget?id=775810814950113331&theme=dark"
+                allowtransparency="true" frameborder="0"
+                sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+    </div>
+    <script>
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        async function sideDisplay(){
+            let id = document.getElementById('sidebar');
+            if(id.classList.contains('open')){
+                id.classList.add('closing');
+                await sleep(1000);
+                id.classList.remove('open');
+                id.classList.remove('closing');
+                id.classList.add('closed');
+            }else{
+                id.classList.add('opening');
+                id.classList.remove('closed');
+                await sleep(1000)
+                id.classList.add('open')
+                id.classList.remove('opening');
+
+            }
+        };
+    </script>
+</section>
 </body>
 </html>

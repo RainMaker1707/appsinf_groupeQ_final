@@ -28,7 +28,7 @@
                         <p class="answer-author"><%=answer.author%></p>
                         <p class="answer-date ml-auto"><%=answer.date%></p>
                     </div>
-                    <p class="answer-content"><%=answer.content.replace(/(?:\r\n|\r|\n)/g, ' <br> ')%></p>
+                    <p class="answer-content"><%-answer.content.replace(/(?:\r\n|\r|\n)/g, ' <br> ')%></p>
 
                 </div>
             <%});}%>
