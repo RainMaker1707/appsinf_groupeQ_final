@@ -10,7 +10,10 @@
     <%- include('navbar'); -%>
 </header>
 <section class="main">
-    <button id="displayer" onclick="sideDisplay()" type="button" class="btn btn-dark"><span class="fa fa-bars"></span></button>
+    <button id="displayer" onclick="sideDisplay()" type="button" class="btn btn-dark">
+        <span class="fa fa-bars"></span>
+        Discord
+    </button>
     <div class="sidebar closed" id="sidebar">
         <iframe src="https://discord.com/widget?id=775810814950113331&theme=dark"
                 allowtransparency="true" frameborder="0"
@@ -23,8 +26,11 @@
 
         async function sideDisplay(){
             let id = document.getElementById('sidebar');
+            let icon = document.getElementById('displayer');
             if(id.classList.contains('open')){
                 id.classList.add('closing');
+                icon.classList.remove('rotate')
+                icon.classList.add('rotate2');
                 await sleep(1000);
                 id.classList.remove('open');
                 id.classList.remove('closing');
@@ -32,12 +38,13 @@
             }else{
                 id.classList.add('opening');
                 id.classList.remove('closed');
+                icon.classList.remove('rotate2')
+                icon.classList.add('rotate')
                 await sleep(1000)
                 id.classList.add('open')
                 id.classList.remove('opening');
-
             }
-        };
+        }
     </script>
 </section>
 </body>

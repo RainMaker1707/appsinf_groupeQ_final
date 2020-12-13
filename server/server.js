@@ -134,7 +134,7 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
         });
 
         app.post('/answer-post', (req, res)=>{
-            if(!req.session.pseudo) res.redirect('/forum'); // TODO display message 'login please'
+            if(!req.session.pseudo) res.redirect('back'); // TODO display message 'login please'
             else if(!(req.query.subject && req.query.title && req.query.author && req.query.date)) res.redirect('/err404');
             else answerPost(req, res, db);
         });
@@ -144,7 +144,7 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
             else {
                 db.db('amagus').collection('forum').find({}).toArray((err, doc)=> {
                     if(err) throw err;
-                    res.render('forumPost.ejs', {user: req.session.pseudo ? req.session : undefined, subjects: doc})
+                    res.render('forumPost.ejs', {user: req.session.pseudo?req.session:undefined, subjects: doc})
                 });
             }
         });

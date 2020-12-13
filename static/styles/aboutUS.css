@@ -6,16 +6,21 @@
 }
 
 #displayer{
-    width: 3%;
+    width: 8%;
     position: fixed;
-    left: 95%;
+    left: 90%;
+    display: inline;
+}
+
+#displayer .fa{
+    margin-right: 15%;
 }
 
 .sidebar{
-    height: 85vh;
+    height: 80vh;
     width: 20%;
     position: fixed;
-    top: 12%;
+    top: 17%;
     left: 100%;
 }
 
@@ -42,4 +47,16 @@
 
 .closed{
     left: 100%;
+}
+
+.rotate .fa{
+    transition: transform 1s ease-in-out;
+    transform: rotate(90deg);
+    transform-origin: center center;
+}
+
+.rotate2 .fa{
+    transition: transform 1s ease-in-out;
+    transform: rotate(0);
+    transform-origin: center center;
 }
