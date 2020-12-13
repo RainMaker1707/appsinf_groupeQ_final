@@ -135,12 +135,14 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
 
         app.post('/answer-post', (req, res)=>{
             if(!req.session.pseudo) res.redirect('back'); // TODO display message 'login please'
+            else if(!req.session.activated) res.redirect('back'); // TODO display message 'active your account please' + resend mail link
             else if(!(req.query.subject && req.query.title && req.query.author && req.query.date)) res.redirect('/err404');
             else answerPost(req, res, db);
         });
 
         app.get('/forum-post', (req, res)=>{
             if(!req.session.pseudo) res.redirect('/forum'); //TODO display message 'please login'
+            else if(!req.session.activated) res.redirect('back'); // TODO display message 'active your account please' + resend mail link
             else {
                 db.db('amagus').collection('forum').find({}).toArray((err, doc)=> {
                     if(err) throw err;
@@ -150,7 +152,9 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
         });
 
         app.post('/forum-post', (req, res)=>{
-            forumPost(req, res, db);
+            if(!req.session.pseudo) res.redirect('/forum'); //TODO display message 'please login'
+            else if(!req.session.activated) res.redirect('back'); // TODO display message 'active your account please' + resend mail link
+            else forumPost(req, res, db);
         });
 
         app.get('/about-us', (req, res)=>{
@@ -178,16 +182,19 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
 
         app.get('/friendReq', (req, res)=>{
             if(!req.session.pseudo) res.redirect('/'); //TODO render message 'login please'
+            else if(!req.session.activated) res.redirect('back'); // TODO display message 'active your account please' + resend mail link
             friends.requested(req, res, db);
         });
 
         app.get('/refuseFriend', (req, res)=>{
             if(!req.session.pseudo) res.redirect('/'); //TODO render message 'login please'
+            else if(!req.session.activated) res.redirect('back'); // TODO display message 'active your account please' + resend mail link
             friends.refuse(req, res, db);
         });
 
         app.get('/acceptFriend', (req, res)=>{
             if(!req.session.pseudo) res.redirect('/'); //TODO render message 'login please'
+            else if(!req.session.activated) res.redirect('back'); // TODO display message 'active your account please'
             friends.accept(req, res, db);
         });
 

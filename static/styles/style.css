@@ -37,10 +37,6 @@ menu{
     margin-top: 0;
 }
 
-.offscreen{
-    display: none;
-}
-
 .drop-down-custom{
     background-color: rgba(25, 26, 36, 0.94);
     border-radius: 15px;
@@ -105,6 +101,10 @@ menu{
     clip-path: circle(70px at center);
 }
 
+.circle50{
+    clip-path: circle(30px at center);
+}
+
 .circle{
     clip-path: circle(250px at center);
 }
@@ -153,6 +153,47 @@ menu{
     max-height: 25px;
     margin: -30px 10px 0 10px;
     cursor: pointer;
+}
+
+.online-friend{
+    display: flex;
+    color: white;
+    background-color: rgba(27, 37, 99, 0.67);
+    width: 70px;
+    height: 70px;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid white;
+    border-radius: 50%;
+    position: fixed;
+    top: 85%;
+    left: 92%;
+    cursor: pointer;
+}
+
+.online-friend:hover{
+    box-shadow: 0 0 8px lightgoldenrodyellow;
+}
+
+#online-list{
+    padding: 2% 1% 2% 1%;
+    color: white;
+    display: flex;
+    background-color: rgba(27, 37, 99, 0.67);
+    border-radius: 15px;
+    min-height: 300px;
+    min-width: 200px;
+    position: fixed;
+    left: 85%;
+    top: 40%;
+}
+
+.fa-users{
+    font-size: 1.5rem;
+}
+
+.offscreen{
+    display: none;
 }
 
 /* Change the color for autocomplete color change */

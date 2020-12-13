@@ -1,3 +1,5 @@
+let login = require('./login.js');
+
 module.exports = function confirm(req, res, db){
     db.db('amagus').collection('users').findOne({pseudo: req.query.user}, (err, doc)=>{
         if(err) throw err;
@@ -6,11 +8,10 @@ module.exports = function confirm(req, res, db){
             res.redirect('/err404');
         }
         else{
-            db.db('amagus').collection('users').updateOne(
-                {_id: doc._id},
+            db.db('amagus').collection('users').updateOne({_id: doc._id},
                 {$set:{activated: true}}, (err)=>{
                     if(err) throw err;
-                    else res.redirect('/user-page');
+                    else login(req, res, db);
                     //TODO display message to inform about activation success
                 }
             );
