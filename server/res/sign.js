@@ -5,19 +5,19 @@ let { generateKeyPair } = require('crypto');
 
 module.exports = function sign(req, res, db){
     if(req.body.passIn !== req.body.passInC){
-        console.log("Passwords don't matches"); //TODO remove after debug
+        console.log("Passwords don't matches"); //TODO display message instead of log
         res.redirect('/');
     }else{
         db.db('amagus').collection('users').findOne({"mail": req.body.mailIn}, (err, doc)=>{
             if(err) throw err;
             if(doc !== null) {
-                console.log('mail already registered');// TODO remove after debug
+                console.log('mail already registered');// TODO display message instead of log
                 res.redirect('/');
             }else{
                 db.db('amagus').collection('users').findOne({"pseudo": req.body.pseudoIn}, (err, doc)=>{
                     if(err) throw err;
                     else if(doc !== null){
-                        console.log('pseudo already taken'); //TODO remove after debug
+                        console.log('pseudo already taken'); //TODO display message instead of log
                         res.redirect('/')
                     }else {
                         bcrypt.genSalt(10, (err, salt) => {

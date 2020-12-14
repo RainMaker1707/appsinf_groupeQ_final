@@ -28,8 +28,7 @@ class Mail{
 
     send(mail, subject, content){
         this.setOptions(mail, subject, content);
-
-        this.transporter.sendMail(this.options, (err, info)=>{
+        this.transporter.sendMail(this.options, (err)=>{
             if(err) throw err;
         });
     }

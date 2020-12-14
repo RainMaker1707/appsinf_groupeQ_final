@@ -4,13 +4,13 @@ module.exports = function login(req, res, db, justSigned=false){
     db.db('amagus').collection('users').findOne({pseudo: req.body.pseudoIn}, (err, doc)=>{
         if(err) throw err;
         else if(doc === null) {
-            console.log('pseudo not registered'); // TODO DEBUG
+            console.log('pseudo not registered'); // TODO display message instead of log
             res.redirect('/');
         }else{
             bcrypt.compare(req.body.passIn, doc.password, (err, check)=>{
                 if(err) throw err;
                 else if (!check) {
-                    console.log('bad password'); // TODO DEBUG
+                    console.log('bad password'); // TODO display message instead of log
                     res.redirect('/');
                 }else {
                     req.session._id = doc._id;

@@ -98,7 +98,7 @@ module.exports = friends = {
                 dbo.findOne({pseudo: req.session.pseudo}, (err, doc)=> {
                     if (err) throw err;
                     req.session.friendReceived = doc.friendReceived;
-                    res.redirect('/');
+                    res.redirect('back');
                 });
             });
         });
