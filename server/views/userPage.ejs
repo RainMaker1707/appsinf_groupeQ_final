@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <%- include('allLink'); -%>
-    <title>A-Mag Us | <%= locals.user%></title>
+    <title><%= locals.user.pseudo%> | A-Mag Us </title>
     <link rel="stylesheet" type="text/css" href="/styles/userPage.css">
 </head>
 <body>
@@ -25,16 +25,19 @@
                     <button class="friend-btn btn btn-dark"
                             onclick="location.href='/friendReq?user=<%= locals.doc.pseudo%>'">
                         Add Friend
+                        <span class="fa fa-user-plus"></span>
                     </button>
 
                     <button class="msg-btn btn btn-dark" onclick="location.href='/message?user=<%=locals.doc.pseudo%>'">
                         Message
+                        <span class="fa fa-comment"></span>
                     </button>
             </div>
             <%}else{%>
-            <div>
-                <button class="edit-btn btn btn-dark" onclick="location.href='/edit-user'">
+            <div class="edit-btn">
+                <button class="btn btn-dark" onclick="location.href='/edit-user'">
                     Edit
+                    <span class="far fa-user-edit"></span>
                 </button>
             </div>
             <%}%>

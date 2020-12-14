@@ -23,11 +23,12 @@ body{
     min-width: 50%;
     height: 70%;
     border-radius: 15px;
-    padding-left: 20%;
+    padding-left: 15%;
     padding-top: 2%;
 }
 .user-title{
     display: inline-flex;
+    width: 95%;
 }
 .user-name{
     font-size: 5em;
@@ -58,21 +59,20 @@ body{
 
 .user-infos{
     display: inline-flex;
+    width: 65%;
 }
 
 .friend-buttons{
     display: inline-flex;
-    max-height: 45px;
-    min-width: 50%;
-    position: absolute;
-    top: 5%;
-    left: 65%;
-}
-
-.friend-btn{
-    margin-left: 25%;
+    width: 35%;
+    max-height: 50px;
 }
 
 .msg-btn{
     margin-left: 5%;
+}
+
+.edit-btn{
+    width: 35%;
+    margin-left: 10%;
 }
