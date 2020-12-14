@@ -2,7 +2,9 @@
     <div class="cookie-popup alert" role="alert" id="cookie-popup">
         <button id="cookieBtn" type="button" class="close"
                 data-dismiss="alert" aria-label="Close"
-                onclick="cookieDump()">
+                onclick="()=>{
+                    $.post('/cookieDump');
+                }">
             <span aria-hidden="true">&times;</span>
         </button>
         <p class="cookie-content">
@@ -10,9 +12,4 @@
             No data will be shared with third party.<br/>
         </p>
     </div>
-<script>
-    function cookieDump(){
-        $.post('/cookieDump');
-    }
-</script>
 <%}%>
