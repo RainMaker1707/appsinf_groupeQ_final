@@ -33,10 +33,10 @@
                         <form method="post" action="/login">
                             <label class="offscreen" for="pseudoIn">Pseudo: </label>
                             <input class="dropdown-item text-center" type="text" placeholder="Pseudo"
-                                   name="pseudoIn" id="pseudoIn" required>
+                                   name="pseudoIn" id="pseudoIn" autocomplete="off" required>
                             <label class="offscreen" for="passIn">Password: </label>
                             <input class="dropdown-item text-center" type="password" placeholder="Password"
-                                   name="passIn" id="passIn" required>
+                                   name="passIn" id="passIn" autocomplete="off" required>
                             <input class="dropdown-item btn btn-dark text-center" type="submit" value="Se connecter">
                         </form>
                     </div>
@@ -54,16 +54,16 @@
                         <form method="post" action="/signup">
                             <label class="offscreen" for="mailIn">Email: </label>
                             <input class="dropdown-item text-center" type="email" placeholder="Mail"
-                                   name="mailIn" id="mailIn" required>
-                            <label class="offscreen" for="pseudoIn">Pseudo: </label>
+                                   name="mailIn" id="mailIn" autocomplete="off" required>
+                            <label class="offscreen" for="pseudoIn2">Pseudo: </label>
                             <input class="dropdown-item text-center" type="text" placeholder="Pseudo"
-                                   name="pseudoIn" id="pseudoIn" minlength="8" required>
-                            <label class="offscreen" for="passIn">Password: </label>
+                                   name="pseudoIn" id="pseudoIn2" minlength="8" autocomplete="off" required>
+                            <label class="offscreen" for="passIn2">Password: </label>
                             <input class="dropdown-item text-center" type="password" placeholder="Password"
-                                   name="passIn" id="passIn" minlength="8" required>
+                                   name="passIn" id="passIn2" minlength="8" autocomplete="off" required>
                             <label class="offscreen" for="passInC">Password2: </label>
                             <input class="dropdown-item text-center" type="password" placeholder="Pass confirmation"
-                                   name="passInC" id="passInC" minlength="8" required>
+                                   name="passInC" id="passInC" minlength="8" autocomplete="off" required>
                             <input class="dropdown-item btn btn-dark text-center" type="submit" value="S'inscrire">
                         </form>
                     </div>
@@ -145,6 +145,15 @@
         if(document.getElementById('to-remove') !== null) document.getElementById('to-remove').remove();
         let list = $('#notif-dd li').get();
         if(notif.type === "friendRequest") {
+            $.post('/update-friends',
+                {
+
+                }
+            , (data, status)=>{
+                if(status === 'success'){
+
+                }
+            });
             $('#notif-dd').empty().append($('<li>').append($('<div class=\"dropdown-item friend-request\" id=\"' +
                 notif.pseudo + '\">')));
             let newDiv = $('#' + notif.pseudo);
@@ -153,6 +162,7 @@
             newDiv.append($('<button class=\"dropdown-item btn btn-dark\" onclick=\"location.href=\'/refuseFriend?user=' + notif.pseudo + '\'\">').html("Refuse"));
             // TODO modify notification design and
         }else if(notif.type === "friendAcceptation"){
+            //TODO add request to update friends list in session
             $('#notif-dd').empty().append($('<li>').append($('<div class=\"dropdown-item friend-accept\" id=\"' +
                 notif.pseudo + '\">')));
             let newDiv = $('#' + notif.pseudo);

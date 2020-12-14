@@ -198,9 +198,11 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
             friends.accept(req, res, db);
         });
 
-        app.get('/cookieDump', (req, res)=>{
-            req.session.cookieShowed = true;
-            res.redirect('/');
+        app.post('/cookieDump', (req, res)=>{
+            if(!req.session.cookieShowed){
+                req.session.cookieShowed = true;
+                res.status(200).send('ok');
+            }else res.status(300).send('error');
         });
 
         app.get('/news', (req, res)=>{
@@ -221,7 +223,7 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
         });
 
         app.get('/*', (req, res)=>{
-            res.render('error404.ejs', {user: req.session});
+            res.render('error404.ejs', {user: req.session.pseudo?req.session:undefined});
         });
     }
 });

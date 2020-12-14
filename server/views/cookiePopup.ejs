@@ -1,8 +1,8 @@
 <%if(!locals.cookie){%>
-    <div class="cookie-popup">
+    <div class="cookie-popup alert" role="alert" id="cookie-popup">
         <button id="cookieBtn" type="button" class="close"
-                data-dismiss="cookie-popup" aria-label="Close"
-                onclick="location.href='/cookieDump'">
+                data-dismiss="alert" aria-label="Close"
+                onclick="cookieDump()">
             <span aria-hidden="true">&times;</span>
         </button>
         <p class="cookie-content">
@@ -10,4 +10,9 @@
             No data will be shared with third party.<br/>
         </p>
     </div>
+<script>
+    function cookieDump(){
+        $.post('/cookieDump');
+    }
+</script>
 <%}%>
