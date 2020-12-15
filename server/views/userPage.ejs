@@ -20,27 +20,40 @@
                     FR
                 </p>
             </div>
-            <%if(locals.doc.pseudo !== locals.user.pseudo){%>
-            <div class="friend-buttons">
-                    <button class="friend-btn btn btn-dark"
-                            onclick="location.href='/friendReq?user=<%= locals.doc.pseudo%>'">
-                        Add Friend
-                        <span class="fa fa-user-plus"></span>
+            <div class="friend-buttons" id="user-btn-container">
+                <% if(locals.doc.pseudo !== locals.user.pseudo){%>
+                    <%if(locals.isFriend){%>
+                        <button class="msg-btn btn btn-dark"
+                                onclick="location.href='/message?user=<%=locals.doc.pseudo%>'">
+                            Message
+                            <span class="fa fa-comment"></span>
+                        </button>
+                    <%}else if(locals.isRequested){%>
+                        <button class="cancel-btn btn btn-dark"
+                                onclick="location.href='#'"> <!--TODO here todo real cancel-->
+                            Cancel request
+                            <span class="far fa-user-times"></span>
+                        </button>
+                    <%}else if(locals.isReceived){%>
+                        <button class="accept-btn btn btn-dark"
+                                onclick="location.href='/acceptFriend?user=<%=locals.doc.pseudo%>'">
+                            Accept invitation
+                            <span class="fa fa-user-plus"></span>
+                        </button>
+                    <%}else {%>
+                        <button class="friend-btn btn btn-dark"
+                                onclick="location.href='/friendReq?user=<%=locals.doc.pseudo%>'">
+                            Add Friend
+                            <span class="fa fa-user-plus"></span>
+                        </button>
+                    <%}%>
+                <%}else{%>
+                    <button class="edit-btn btn btn-dark" onclick="location.href='/edit-user'">
+                        Edit
+                        <span class="far fa-user-edit"></span>
                     </button>
-
-                    <button class="msg-btn btn btn-dark" onclick="location.href='/message?user=<%=locals.doc.pseudo%>'">
-                        Message
-                        <span class="fa fa-comment"></span>
-                    </button>
+                <%}%>
             </div>
-            <%}else{%>
-            <div class="edit-btn">
-                <button class="btn btn-dark" onclick="location.href='/edit-user'">
-                    Edit
-                    <span class="far fa-user-edit"></span>
-                </button>
-            </div>
-            <%}%>
         </div>
         <div class="user-pref">
             <img class="btn-fav" src="" alt="">

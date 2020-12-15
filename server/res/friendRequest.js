@@ -1,3 +1,5 @@
+let userPage = require('./userPage.js');
+
 function update(req, res, db){
     if(!req.session.pseudo) res.redirect('back');
     else{
@@ -7,6 +9,7 @@ function update(req, res, db){
                     req.session.friendReceived = doc.friendReceived;
                     req.session.friendRequests = doc.friendRequests;
                     req.session.friends = doc.friends;
+                    console.log(req.session.pseudo + " : updated");
                     res.status(200).send(doc);
                 }
             })
@@ -44,12 +47,7 @@ module.exports = friends = {
                         dbo.findOne({pseudo: req.session.pseudo}, (err, doc)=> {
                             if (err) throw err;
                             req.session.friendRequests = doc.friendRequests;
-                            res.render('userPage.ejs', {
-                                user: req.session,
-                                doc: receiverData,
-                                notif: notif,
-                                to: receiverData.pseudo,
-                            });
+                            userPage(req, res, db, false, notif, receiverData.pseudo);
                         });
                     });
                 });
@@ -86,15 +84,7 @@ module.exports = friends = {
                             if (err) throw err;
                             req.session.friendReceived = doc.friendReceived;
                             req.session.friends = doc.friends;
-                            db.db('amagus').collection('news').find({}).toArray((err, news)=>{
-                                if(err) throw err;
-                                res.render('index.ejs', {
-                                    user: req.session,
-                                    notif: notif,
-                                    to: requesterData.pseudo,
-                                    news: news
-                                });
-                            });
+                            userPage(req, res, db, false, notif, requesterData.pseudo);
                         });
                     })
                 });
