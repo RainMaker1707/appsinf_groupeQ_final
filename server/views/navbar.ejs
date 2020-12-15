@@ -145,15 +145,7 @@
         if(document.getElementById('to-remove') !== null) document.getElementById('to-remove').remove();
         let list = $('#notif-dd li').get();
         if(notif.type === "friendRequest") {
-            $.post('/update-friends',
-                {
-
-                }
-            , (data, status)=>{
-                if(status === 'success'){
-
-                }
-            });
+            $.post('/update-friends');
             $('#notif-dd').empty().append($('<li>').append($('<div class=\"dropdown-item friend-request\" id=\"' +
                 notif.pseudo + '\">')));
             let newDiv = $('#' + notif.pseudo);
@@ -162,7 +154,7 @@
             newDiv.append($('<button class=\"dropdown-item btn btn-dark\" onclick=\"location.href=\'/refuseFriend?user=' + notif.pseudo + '\'\">').html("Refuse"));
             // TODO modify notification design and
         }else if(notif.type === "friendAcceptation"){
-            //TODO add request to update friends list in session
+            $.post('/update-friend')
             $('#notif-dd').empty().append($('<li>').append($('<div class=\"dropdown-item friend-accept\" id=\"' +
                 notif.pseudo + '\">')));
             let newDiv = $('#' + notif.pseudo);
