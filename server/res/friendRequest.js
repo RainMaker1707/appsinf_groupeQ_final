@@ -9,7 +9,6 @@ function update(req, res, db){
                     req.session.friendReceived = doc.friendReceived;
                     req.session.friendRequests = doc.friendRequests;
                     req.session.friends = doc.friends;
-                    console.log(req.session.pseudo + " : updated");
                     res.status(200).send(doc);
                 }
             })
