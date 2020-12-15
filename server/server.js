@@ -115,8 +115,7 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
 
         app.get('/user-page', (req, res)=>{
             if(!req.session.pseudo) res.redirect('back');
-            else if(req.session.pseudo === req.query.user) userPage(req, res, db, true);
-            else userPage(req, res, db, false);
+            else userPage(req, res, db, req.session.pseudo===req.query.user);
         });
 
         app.get('/edit-user', (req, res)=>{
