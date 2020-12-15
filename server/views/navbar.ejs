@@ -148,20 +148,25 @@
             $.post('/update-friends', {}, (data, status)=>{
                 if(status === 'success'){
                     let div = document.getElementById('user-btn-container');
-                    if(div) div.innerHTML = "<button class=\"msg-btn btn btn-dark\" onclick=\"location.href='/acceptFriend?user=<%= locals.doc.pseudo %>'\">Accept Friend <span class=\"fa fa-user-plus\"></span> </button>";
+                    if(div) div.innerHTML = "<button class=\"msg-btn btn btn-dark\" onclick=\"location.href='" +
+                        "/acceptFriend?user=<%= locals.doc.pseudo %>'\">Accept Friend <span class=\"fa fa-user-plus\">" +
+                        "</span> </button>";
                 }
             });
             $('#notif-dd').empty().append($('<li>').append($('<div class=\"dropdown-item friend-request\" id=\"' +
                 notif.pseudo + '\">')));
             let newDiv = $('#' + notif.pseudo);
             newDiv.append($('<p style=\"color:white;\">').html(notif.pseudo));
-            newDiv.append($('<button class=\"dropdown-item btn btn-dark\" onclick=\"location.href=\'/acceptFriend?user=' + notif.pseudo + '\'\">').html("Accept"));
-            newDiv.append($('<button class=\"dropdown-item btn btn-dark\" onclick=\"location.href=\'/refuseFriend?user=' + notif.pseudo + '\'\">').html("Refuse"));
+            newDiv.append($('<button class=\"dropdown-item btn btn-dark\" onclick=\"location.href=\'/acceptFriend?user=' +
+                notif.pseudo + '\'\">').html("Accept"));
+            newDiv.append($('<button class=\"dropdown-item btn btn-dark\" onclick=\"location.href=\'/refuseFriend?user=' +
+                notif.pseudo + '\'\">').html("Refuse"));
         }else if(notif.type === "friendAcceptation"){
             $.post('/update-friends', {}, (data, status)=>{
                 if(status === 'success'){
                     let div = document.getElementById('user-btn-container');
-                    if(div) div.innerHTML = "<button class=\"msg-btn btn btn-dark\" onclick=\"location.href='/message?user=<%=locals.doc.pseudo%>'\">Message <span class=\"fa fa-comment\"></span></button>";
+                    if(div) div.innerHTML = "<button class=\"msg-btn btn btn-dark\" onclick=\"location.href='" +
+                        "/message?user=<%=locals.doc.pseudo%>'\">Message <span class=\"fa fa-comment\"></span></button>";
                 }
             })
             $('#notif-dd').empty().append($('<li>').append($('<div class=\"dropdown-item friend-accept\" id=\"' +

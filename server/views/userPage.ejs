@@ -29,10 +29,9 @@
                             <span class="fa fa-comment"></span>
                         </button>
                     <%}else if(locals.isRequested){%>
-                        <button class="cancel-btn btn btn-dark"
-                                onclick="location.href='#'"> <!--TODO here todo real cancel-->
-                            Cancel request
-                            <span class="far fa-user-times"></span>
+                        <button class="cancel-btn btn btn-dark disabled">
+                            Invitation sent
+                            <span class="far fa-user-clock"></span>
                         </button>
                     <%}else if(locals.isReceived){%>
                         <button class="accept-btn btn btn-dark"
