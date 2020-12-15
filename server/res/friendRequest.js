@@ -1,3 +1,18 @@
+function update(req, res, db){
+    if(!req.session.pseudo) res.redirect('back');
+    else{
+        db.db('amagus').collection('users').findOne({pseudo: req.session.pseudo}, (err, doc)=>{
+                if(err) throw err;
+                else{
+                    req.session.friendReceived = doc.friendReceived;
+                    req.session.friendRequests = doc.friendRequests;
+                    req.session.friends = doc.friends;
+                    res.status(200).send(doc);
+                }
+            })
+    }
+}
+
 module.exports = friends = {
     requested: (req, res, db)=>{
         let dbo = db.db('amagus').collection('users');
@@ -102,5 +117,6 @@ module.exports = friends = {
                 });
             });
         });
-    }
+    },
+    update: update
 };

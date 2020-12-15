@@ -114,13 +114,13 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
         });
 
         app.get('/user-page', (req, res)=>{
-            if(!req.session.pseudo) res.redirect('/');
+            if(!req.session.pseudo) res.redirect('back');
             else if(req.session.pseudo === req.query.user) userPage(req, res, db, true);
             else userPage(req, res, db, false);
         });
 
         app.get('/edit-user', (req, res)=>{
-            if(!req.session.pseudo) res.redirect('/');
+            if(!req.session.pseudo) res.redirect('back');
             else res.render('editUser.ejs', {user: req.session});
         });
 
@@ -203,6 +203,11 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
                 req.session.cookieShowed = true;
                 res.status(200).send('ok');
             }else res.status(300).send('error');
+        });
+
+        app.post('/update-friends', (req,res)=>{
+            if(!req.session.pseudo) res.redirect('back');
+            else friends.update(req, res, db);
         });
 
         app.get('/news', (req, res)=>{
