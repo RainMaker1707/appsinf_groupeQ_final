@@ -181,21 +181,27 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
         });
 
         app.get('/friendReq', (req, res)=>{
-            if(!req.session.pseudo) res.redirect('/'); //TODO render message 'login please'
+            if(!req.session) res.redirect('/');
+            else if(!req.session.pseudo) res.redirect('/'); //TODO render message 'login please'
             else if(!req.session.activated) res.redirect('back'); // TODO display message 'active your account please' + resend mail link
-            friends.requested(req, res, db);
+            else if(req.query===undefined || req.query.user===undefined) res.redirect('back');
+            else friends.requested(req, res, db);
         });
 
         app.get('/refuseFriend', (req, res)=>{
-            if(!req.session.pseudo) res.redirect('/'); //TODO render message 'login please'
+            if(!req.session) res.redirect('/');
+            else if(!req.session.pseudo) res.redirect('/'); //TODO render message 'login please'
             else if(!req.session.activated) res.redirect('back'); // TODO display message 'active your account please' + resend mail link
-            friends.refuse(req, res, db);
+            else if(req.query===undefined || req.query.user===undefined) res.redirect('back');
+            else friends.refuse(req, res, db);
         });
 
         app.get('/acceptFriend', (req, res)=>{
-            if(!req.session.pseudo) res.redirect('/'); //TODO render message 'login please'
+            if(!req.session) res.redirect('/');
+            else if(!req.session.pseudo) res.redirect('/'); //TODO render message 'login please'
             else if(!req.session.activated) res.redirect('back'); // TODO display message 'active your account please'
-            friends.accept(req, res, db);
+            else if(req.query===undefined || req.query.user===undefined) res.redirect('back');
+            else friends.accept(req, res, db);
         });
 
         app.post('/cookieDump', (req, res)=>{
