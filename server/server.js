@@ -69,6 +69,11 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
     if(err) throw err;
     else{
         console.log("------- CONNECTED ------");
+
+        function roomName(user, friend){
+            return (user+friend).toLowerCase().split('').sort().join();
+        }
+
         io.on('connection', (socket)=>{
             let ioSession = socket.request.session;
             if(ioSession.pseudo !== undefined){
@@ -79,6 +84,7 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
                         'pseudo': ioSession.pseudo,
                         'date': new Date().toISOString()
                     };
+                    socket.join(roomName(ioSession.pseudo, friend.pseudo));
                     io.to(friend.pseudo).emit('notif', notif);
                 });
 
@@ -93,13 +99,21 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
                     });
                 });
 
-                socket.on('message', (message)=>{
-                    io.emit('message', '<strong>' + ioSession.pseudo + '</strong>: ' + message);
+                socket.on('message', (message, recipient)=>{
+                    let data = {
+                        pseudo: ioSession.pseudo,
+                        picture: ioSession.picture,
+                        message: message
+                    };
+                    io.to(roomName(ioSession.pseudo, recipient.pseudo)).emit('message', data);
                 });
 
                 socket.on('notif', (notif, to)=>{
                     ioSession = socket.request.session;
-                    if (notif.type === "friendRequest" || notif.type === "friendAcceptation" || notif.type === "onlineResponse") {
+                    ioSession.friends.map((friend)=>{socket.join(roomName(ioSession.pseudo, friend.pseudo));});
+                    if (notif.type === "friendRequest" ||
+                        notif.type === "friendAcceptation" ||
+                        notif.type === "onlineResponse") {
                         io.to(to).emit('notif', notif);
                     }else console.log('notif error');
                 });
