@@ -69,13 +69,18 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
     if(err) throw err;
     else{
         console.log("------- CONNECTED ------");
-
         io.on('connection', (socket)=>{
             let ioSession = socket.request.session;
             if(ioSession.pseudo !== undefined){
                 socket.join(ioSession.pseudo);
-                io.emit('message', '🔵 <i>' + ioSession.pseudo + ' joined the chat..</i>');
-                // TODO connection in friends's online friends list
+                ioSession.friends.map((friend)=>{
+                    let notif = {
+                        'type': "onlineFriend",
+                        'pseudo': ioSession.pseudo,
+                        'date': new Date().toISOString()
+                    };
+                    io.to(friend.pseudo).emit('notif', notif);
+                });
 
                 socket.on('disconnect', ()=>{
                     io.emit('message', '🔴 <i>' + ioSession.pseudo + ' left the chat..</i>');
@@ -87,10 +92,11 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
                 });
 
                 socket.on('notif', (notif, to)=>{
-                    if (notif.type === "friendRequest" || notif.type === "friendAcceptation"){
-                        io.to(to).emit('notif', notif); //don't work idk why
-                    }
-                    else console.log('notif error');
+                    ioSession = socket.request.session;
+                    console.log(notif.type);
+                    if (notif.type === "friendRequest" || notif.type === "friendAcceptation" || notif.type === "onlineResponse") {
+                        io.to(to).emit('notif', notif);
+                    }else console.log('notif error');
                 });
            }
         });
