@@ -83,7 +83,6 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
                 });
 
                 socket.on('disconnect', ()=>{
-                    console.log(ioSession.pseudo);
                     ioSession.friends.map((friend)=>{
                         let notif = {
                             'type': "disconnection",
