@@ -100,7 +100,30 @@
                             <a id="notifImg" data-toggle="dropdown">
                                 <img class="icon-bar-item" src="images/notif.png" alt="">
                             </a>
-                            <ul class="dropdown-menu drop-down-custom" aria-labelledby="notifImg" id="notif-dd"></ul>
+                            <ul class="dropdown-menu drop-down-custom" aria-labelledby="notifImg" id="notif-dd">
+                                <%locals.user.notifications.reverse().map((notif)=>{%>
+                                    <li>
+                                        <div class="notif <%=notif.type%>">
+                                            <img class="notif-img" src="<%=notif.picture%>" alt="">
+                                            <% if(notif.type === 'friendRequest'){%>
+                                                <p class="notif-p"><%=notif.pseudo%> invited you as friend!</p>
+                                                <button class="btn btn-dark"
+                                                        onclick="location.href='/acceptFriend?user=<%=notif.pseudo%>'" >
+                                                    Accept
+                                                </button>
+                                                <button class="btn btn-dark"
+                                                        onclick="location.href='/refuse?user=<%=notif.pseudo%>'" >
+                                                    Refuse
+                                                </button>
+                                            <%}else if(notif.type === "friendAcceptation"){%>
+                                                <p class="notif-p"><%=notif.pseudo%> accepted your invitation!</p>
+                                            <%}else if(notif.type === "acceptTrace"){%>
+                                                <p class="notif-p"><%=notif.pseudo%> and you are friend now!</p>
+                                            <%}%>
+                                        </div>
+                                    </li>
+                                <%})%>
+                            </ul>
                         </div>
                     </li>
                     <li>
@@ -118,6 +141,12 @@
             </li>
         </ul>
     </div>
+    <script>
+        if(document.getElementById('notif-dd') &&
+            document.getElementById('notif-dd').childElementCount === 0){
+            $('#notif-dd').append($('<li id=\"to-remove\">').append($('<p style=\"color:white;\">').html("No notification")));
+        }
+    </script>
 <%}%>
 <script>
     let socket = io();
@@ -135,48 +164,61 @@
             socket.emit('notif', notif, to);
         };
     </script>
-<%}if (locals.user && locals.doc){%>
+<%}if (locals.user){%>
 <script>
-    if(document.getElementById('notif-dd') &&
-        document.getElementById('notif-dd').childElementCount === 0){
-        $('#notif-dd').append($('<li id=\"to-remove\">').append($('<p style=\"color:white;\">').html("No notification")));
-    }
     socket.on('notif', (notif) => {
         if(document.getElementById('to-remove') !== null) document.getElementById('to-remove').remove();
-        let list = $('#notif-dd li').get();
         if(notif.type === "friendRequest") {
             $.post('/update-friends', {}, (data, status)=>{
                 if(status === 'success'){
                     let div = document.getElementById('user-btn-container');
                     if(div) div.innerHTML = "<button class=\"msg-btn btn btn-dark\" onclick=\"location.href='" +
-                        "/acceptFriend?user=<%= locals.doc.pseudo %>'\">Accept Friend <span class=\"fa fa-user-plus\">" +
+                        "/acceptFriend?user="+notif.pseudo+"'\">Accept Friend <span class=\"fa fa-user-plus\">" +
                         "</span> </button>";
+                    let li = "<li>" +
+                        "<div class=\"notif"+ notif.type+"\">\n"+
+                        "    <img class=\"notif-img\" src=\""+notif.picture+"\" alt=\"\">\n"+
+                        "    <p class=\"notif-p\">"+notif.pseudo+" invited you as friend</p>\n"+
+                        "    <button class=\"btn btn-dark\"\n" +
+                        "             onclick=\"location.href='/acceptFriend?user="+notif.pseudo+"'\" >\n" +
+                        "             Accept\n" +
+                        "    </button>\n" +
+                        "    <button class=\"btn btn-dark\"\n" +
+                        "            onclick=\"location.href='/refuse?user="+notif.pseudo+"'\" >\n" +
+                        "            Refuse\n" +
+                        "    </button>\n"+
+                        "</div>\n"+
+                        "</li>\n";
+                    document.getElementById('notif-dd').insertAdjacentHTML('afterbegin', li);
                 }
             });
-            $('#notif-dd').empty().append($('<li>').append($('<div class=\"dropdown-item friend-request\" id=\"' +
-                notif.pseudo + '\">')));
-            let newDiv = $('#' + notif.pseudo);
-            newDiv.append($('<p style=\"color:white;\">').html(notif.pseudo));
-            newDiv.append($('<button class=\"dropdown-item btn btn-dark\" onclick=\"location.href=\'/acceptFriend?user=' +
-                notif.pseudo + '\'\">').html("Accept"));
-            newDiv.append($('<button class=\"dropdown-item btn btn-dark\" onclick=\"location.href=\'/refuseFriend?user=' +
-                notif.pseudo + '\'\">').html("Refuse"));
         }else if(notif.type === "friendAcceptation"){
             $.post('/update-friends', {}, (data, status)=>{
                 if(status === 'success'){
                     let div = document.getElementById('user-btn-container');
                     if(div) div.innerHTML = "<button class=\"msg-btn btn btn-dark\" onclick=\"location.href='" +
-                        "/message?user=<%=locals.doc.pseudo%>'\">Message <span class=\"fa fa-comment\"></span></button>";
+                        "/message?user="+ notif.pseudo+"'\">Message <span class=\"fa fa-comment\"></span></button>";
+                    let li = "<li>\n"+
+                        "<div class=\"notif"+ notif.type+"\">\n"+
+                        "    <img class=\"notif-img\" src=\""+notif.picture+"\" alt=\"\">\n"+
+                        "    <p class=\"notif-p\">"+notif.pseudo+" accepted your invitation</p>\n"+
+                        "</div>\n"+
+                        "</li>\n"
+                    document.getElementById('notif-dd').insertAdjacentHTML('afterbegin', li);
                 }
-            })
-            $('#notif-dd').empty().append($('<li>').append($('<div class=\"dropdown-item friend-accept\" id=\"' +
-                notif.pseudo + '\">')));
-            let newDiv = $('#' + notif.pseudo);
-            newDiv.append($('<p style=\"color:white;\">').html(notif.pseudo + " accepted your invitation"));
+            });
         }
-        $.each(list, (i)=>{
-            $('#notif-dd').append($('<li>').html(list[i]));
-        });
     });
 </script>
 <%}%>
+<!--
+notif friend accept
+    "<li>\n"+
+    "<div class=\"notif"+ notif.type+"\">\n"+
+    "    <img class=\"notif-img\" src=\""+notif.picture+"\" alt=\"\">\n"+
+    "    <p class=\"notif-p\">"+notif.pseudo+" accepted your invitation</p>\n"+
+    "</div>\n"+
+    "</li>\n"
+-->
+
+

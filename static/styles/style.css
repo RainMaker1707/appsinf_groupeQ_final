@@ -39,7 +39,7 @@ menu{
 
 .drop-down-custom{
     background-color: rgba(25, 26, 36, 0.94);
-    border-radius: 15px;
+    border-radius: 5px;
     width: 100%;
     min-width: 150px;
     text-align: center;
@@ -192,17 +192,10 @@ menu{
     font-size: 1.5rem;
 }
 
+
+
 .offscreen{
     display: none;
-}
-
-/* Change the color for autocomplete color change */
-.drop-down-custom input:-webkit-autofill,
-.drop-down-custom input:-webkit-autofill:hover,
-.drop-down-custom input:-webkit-autofill:focus,
-.drop-down-custom input:-webkit-autofill:active{
-    -webkit-box-shadow: 0 0 0 30px rgba(25, 26, 36, 0.94) inset !important;
-    -webkit-text-fill-color: white !important;
 }
 
 .no-select {
@@ -211,4 +204,27 @@ menu{
     -moz-user-select: none; /* Old versions of Firefox */
     -ms-user-select: none; /* Internet Explorer/Edge */
     user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+}
+
+#notif-dd{
+    min-width: 200px;
+}
+
+#notif-dd li{
+    padding: 4%;
+    width: 100%;
+}
+
+.notif{
+    width: 100%;
+}
+
+.notif button{
+    margin-top: 5px;
+}
+
+.notif-p{
+    color: white;
+    width: 100%;
+    height: auto;
 }

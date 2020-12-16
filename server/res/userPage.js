@@ -22,7 +22,7 @@ module.exports = function userPage(req, res, db, owner=false, notif=undefined, t
                   user: req.session,
                   doc: doc,
                   notif: notif,
-                  to:to,
+                  to: to,
                   isFriend: isFriend,
                   isRequested: isRequested,
                   isReceived: isReceived
