@@ -150,22 +150,18 @@
 <%}%>
 <script>
     let socket = io();
-</script>
-<% if(locals.notif !== undefined){%>
-    <script>
-        window.onload =  ()=> {
-            let notif = {
-                type: "<%= locals.notif.type%>",
-                pseudo: "<%=locals.notif.pseudo%>",
-                picture: "<%=locals.notif.picture%>",
-                date: "<%=locals.notif.date%>",
-            }
-            let to = "<%=locals.to%>";
-            socket.emit('notif', notif, to);
-        };
-    </script>
-<%}if (locals.user){%>
-<script>
+    <% if(locals.notif !== undefined){%>
+    window.onload =  ()=> {
+        let notif = {
+            type: "<%= locals.notif.type%>",
+            pseudo: "<%=locals.notif.pseudo%>",
+            picture: "<%=locals.notif.picture%>",
+            date: "<%=locals.notif.date%>",
+        }
+        let to = "<%=locals.to%>";
+        socket.emit('notif', notif, to);
+    };
+    <%}if (locals.user){%>
     socket.on('notif', (notif) => {
         if(document.getElementById('to-remove') !== null) document.getElementById('to-remove').remove();
         if(notif.type === "friendRequest") {
@@ -209,16 +205,7 @@
             });
         }
     });
+    <%}%>
 </script>
-<%}%>
-<!--
-notif friend accept
-    "<li>\n"+
-    "<div class=\"notif"+ notif.type+"\">\n"+
-    "    <img class=\"notif-img\" src=\""+notif.picture+"\" alt=\"\">\n"+
-    "    <p class=\"notif-p\">"+notif.pseudo+" accepted your invitation</p>\n"+
-    "</div>\n"+
-    "</li>\n"
--->
 
 
