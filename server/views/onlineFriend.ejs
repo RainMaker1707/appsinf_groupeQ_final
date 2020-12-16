@@ -2,9 +2,6 @@
     <div id="online-list" class="offscreen" style="display: none;">
         <!-- TODO online friends ul list -->
         <ul id="inner-list">
-            <li>RainMaker</li>
-            <li>GGisOnline</li>
-            <li>LSoke</li>
         </ul>
     </div>
     <section class="online-friend" onclick="displayFriend()">
@@ -20,6 +17,10 @@
                 div.classList.add('offscreen');
                 div.style.display = 'none';
             }
+        }
+
+        if(document.getElementById('inner-list') && document.getElementById('inner-list').childElementCount === 0){
+            $('#inner-list').append($('<li id=\"to-remove-online\">').append($('<p>').html("No friend online yet...")));
         }
     </script>
 <%}%>

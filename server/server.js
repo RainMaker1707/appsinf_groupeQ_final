@@ -83,8 +83,15 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
                 });
 
                 socket.on('disconnect', ()=>{
-                    io.emit('message', '🔴 <i>' + ioSession.pseudo + ' left the chat..</i>');
-                    // TODO disconnection in friend's online friends list
+                    console.log(ioSession.pseudo);
+                    ioSession.friends.map((friend)=>{
+                        let notif = {
+                            'type': "disconnection",
+                            'pseudo': ioSession.pseudo,
+                            'date': new Date().toISOString()
+                        };
+                        io.to(friend.pseudo).emit('notif', notif);
+                    });
                 });
 
                 socket.on('message', (message)=>{
@@ -93,7 +100,6 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
 
                 socket.on('notif', (notif, to)=>{
                     ioSession = socket.request.session;
-                    console.log(notif.type);
                     if (notif.type === "friendRequest" || notif.type === "friendAcceptation" || notif.type === "onlineResponse") {
                         io.to(to).emit('notif', notif);
                     }else console.log('notif error');

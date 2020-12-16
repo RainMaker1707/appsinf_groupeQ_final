@@ -142,8 +142,7 @@
         </ul>
     </div>
     <script>
-        if(document.getElementById('notif-dd') &&
-            document.getElementById('notif-dd').childElementCount === 0){
+        if(document.getElementById('notif-dd') && document.getElementById('notif-dd').childElementCount === 0){
             $('#notif-dd').append($('<li id=\"to-remove\">').append($('<p style=\"color:white;\">').html("No notification")));
         }
     </script>
@@ -163,8 +162,8 @@
     };
     <%}if (locals.user){%>
     socket.on('notif', (notif) => {
-        if(document.getElementById('to-remove') !== null) document.getElementById('to-remove').remove();
         if(notif.type === "friendRequest") {
+            if(document.getElementById('to-remove') !== null) document.getElementById('to-remove').remove();
             $.post('/update-friends', {}, (data, status)=>{
                 if(status === 'success'){
                     let div = document.getElementById('user-btn-container');
@@ -189,6 +188,7 @@
                 }
             });
         }else if(notif.type === "friendAcceptation"){
+            if(document.getElementById('to-remove')) document.getElementById('to-remove').remove();
             $.post('/update-friends', {}, (data, status)=>{
                 if(status === 'success'){
                     let div = document.getElementById('user-btn-container');
@@ -203,6 +203,30 @@
                     document.getElementById('notif-dd').insertAdjacentHTML('afterbegin', li);
                 }
             });
+        }else if(notif.type === "disconnection"){
+            document.getElementById(notif.pseudo).remove();
+            if(document.getElementById('inner-list') && document.getElementById('inner-list').childElementCount === 0){
+                $('#inner-list').append($('<li id=\"to-remove-online\">').append($('<p>').html("No friend online yet...")));
+            }
+        }else if(notif.type === "onlineFriend" || notif.type === "onlineResponse"){
+            if(document.getElementById('to-remove-online')) document.getElementById('to-remove-online').remove();
+            let picture = notif.picture?notif.picture:"images/userDefault.jpg"
+            let li = "<li id=\""+ notif.pseudo+ "\" >\n" +
+                "    <div class=\"online-friend-container\" >\n" +
+                "        <img class=\"online-friend-picture\" src=\"" + picture +"\" alt=\"\">\n" +
+                "        <p class=\"online-friend-pseudo\">" + notif.pseudo + "</p>\n" +
+                "    </div>\n" +
+                "</li>\n";
+            document.getElementById('inner-list').insertAdjacentHTML('afterbegin', li);
+            if(notif.type === "onlineFriend" ) {
+                let to = notif.pseudo;
+                let response = {
+                    'type': "onlineResponse",
+                    'pseudo': "<%= locals.user.pseudo %>",
+                    'date': new Date().toISOString()
+                }
+                socket.emit('notif', response, to);
+            }
         }
     });
     <%}%>
