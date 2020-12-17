@@ -71,16 +71,6 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
     else{
         console.log("------- CONNECTED ------");
 
-        const key = "jBh2jgHjGF4DZH2KQVj7bHqz1z8z253N";
-        const iv = crypto.randomBytes(16);
-        function roomName(user, friend){
-            let cipher = crypto.createCipheriv('aes256', key, iv);
-            const userCopy =  cipher.update(user, 'utf8', 'hex') + cipher.final();
-            cipher = crypto.createCipheriv('aes256', key, iv);
-            const friendCopy =  cipher.update(friend, 'utf8', 'hex') + cipher.final();
-            return (userCopy + friendCopy).toLowerCase().split('').sort().join('');
-        }
-
         io.on('connection', (socket)=>{
             let ioSession = socket.request.session;
             if(ioSession.pseudo !== undefined){
@@ -89,9 +79,9 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
                     let notif = {
                         'type': "onlineFriend",
                         'pseudo': ioSession.pseudo,
+                        "publicKey": ioSession.publicKey,
                         'date': new Date().toISOString()
                     };
-                    socket.join(roomName(ioSession.pseudo, friend.pseudo));
                     io.to(friend.pseudo).emit('notif', notif);
                 });
 
@@ -106,19 +96,18 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
                     });
                 });
 
-                socket.on('message', (message, recipient)=>{
+                socket.on('message', (message, to)=>{
                     let data = {
                         pseudo: ioSession.pseudo,
                         picture: ioSession.picture,
+                        date : new Date().toISOString(),
                         message: message
                     };
-                    // TODO crypt message
-                    io.to(roomName(ioSession.pseudo, recipient)).emit('message', data);
+                    io.to(to).emit('message', data);
                 });
 
                 socket.on('notif', (notif, to)=>{
                     ioSession = socket.request.session;
-                    ioSession.friends.map((friend)=>{socket.join(roomName(ioSession.pseudo, friend.pseudo));});
                     if (notif.type === "friendRequest" ||
                         notif.type === "friendAcceptation" ||
                         notif.type === "onlineResponse") {
