@@ -5,6 +5,7 @@ let session = require('express-session');
 let MongoClient = require('mongodb').MongoClient;
 let multer = require('multer');
 let upload = multer({});
+let crypto = require('crypto');
 let http = require('http');
 let https = require('https');
 let path = require('path');
@@ -70,8 +71,14 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
     else{
         console.log("------- CONNECTED ------");
 
+        const key = "jBh2jgHjGF4DZH2KQVj7bHqz1z8z253N";
+        const iv = crypto.randomBytes(16);
         function roomName(user, friend){
-            return (user+friend).toLowerCase().split('').sort().join();
+            let cipher = crypto.createCipheriv('aes256', key, iv);
+            const userCopy =  cipher.update(user, 'utf8', 'hex') + cipher.final();
+            cipher = crypto.createCipheriv('aes256', key, iv);
+            const friendCopy =  cipher.update(friend, 'utf8', 'hex') + cipher.final();
+            return (userCopy + friendCopy).toLowerCase().split('').sort().join('');
         }
 
         io.on('connection', (socket)=>{
@@ -105,7 +112,8 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
                         picture: ioSession.picture,
                         message: message
                     };
-                    io.to(roomName(ioSession.pseudo, recipient.pseudo)).emit('message', data);
+                    // TODO crypt message
+                    io.to(roomName(ioSession.pseudo, recipient)).emit('message', data);
                 });
 
                 socket.on('notif', (notif, to)=>{
