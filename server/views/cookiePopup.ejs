@@ -1,4 +1,4 @@
-<%if(!locals.cookie){%>
+<%if(!locals.cookie && locals.cookieShowed){%>
     <div class="cookie-popup alert" role="alert" id="cookie-popup">
         <button id="cookieBtn" type="button" class="close"
                 data-dismiss="alert" aria-label="Close"

@@ -220,7 +220,8 @@
                 let picture = notif.picture ? notif.picture : "images/userDefault.jpg"
 
                 let online = "<li id=\"" + notif.pseudo + "\">\n" +
-                    "    <div class=\"online-friend-container\" onclick=\"openChat(\'"+ notif.publicKey + "\', \'" + notif.pseudo + "\')\">\n" +
+                    "    <div class=\"online-friend-container\" onclick=\"openChat(\'"+ notif.publicKey.toString() + "\',\'" +
+                    notif.pseudo.toString() + "\')\">\n" +
                     "        <img class=\"online-friend-picture\" src=\"" + picture + "\" alt=\"\">\n" +
                     "        <p class=\"online-friend-pseudo\">" + notif.pseudo + "</p>\n" +
                     "    </div>\n" +
@@ -242,7 +243,7 @@
                 let pict = notif.picture ? notif.picture : "images/userDefault.jpg"
                 let on = "<li id=\"" + notif.pseudo + "\">\n" +
                     "    <div class=\"online-friend-container\" onclick=\"openChat(\'"+ notif.publicKey.toString() + "\',\'" +
-                                notif.pseudo.toString() + "\')\">\n" +
+                    notif.pseudo.toString() + "\')\">\n" +
                     "        <img class=\"online-friend-picture\" src=\"" + pict + "\" alt=\"\">\n" +
                     "        <p class=\"online-friend-pseudo\">" + notif.pseudo + "</p>\n" +
                     "    </div>\n" +
@@ -259,9 +260,9 @@
     });
 
     function openChat(publicKey, user){
-        if (document.getElementById('chat-'+user)) return
+        if (document.getElementById('chat-box-'+user)) return
         let div = ""+
-                "<div class=\"chat-container alert\" id=\"chat-container-"+user+"\">\n"+
+                "<div class=\"chat-container alert col-3\" id=\"chat-container-"+user+"\">\n"+
                 "    <div class=\"chat-header\" onclick=\"displayChat('"+user+"')\">\n"+
                 "        <img class=\”chat-header-picture\" src=\'\' alt\"\">\n"+
                 "        <p class=\"chat-header-pseudo\">"+ user +"</p>\n"+
@@ -273,7 +274,7 @@
                 "         <ul class=\“chat-list\" id=\"chat-"+user+"\"></ul>\n"
                 "    </div>\n"+
                 "</div>\n";
-        document.getElementsByTagName('footer')[0].insertAdjacentHTML('beforeend', div);
+        document.getElementById('chat-row').insertAdjacentHTML('afterbegin', div);
     }
 
     function displayChat(user){

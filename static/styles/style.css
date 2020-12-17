@@ -229,29 +229,28 @@ menu{
     font-size: 1.5rem;
 }
 
-footer{
+#chat-row{
     position: fixed;
     bottom: 0;
-    display: inline;
-    width: 100%;
+    display: inline-flex;
+    width: 80%;
     padding-left: 5%;
     padding-right: 15%;
-    align-content: end;
-    justify-content: end;
     overflow-x: hidden;
 }
 
 .chat-container{
+    display: inline;
     width: 20%;
     padding: 0;
-    margin: 0;
+    margin: 0 2% 0 0;
 }
 
 .chat-header{
     color: white;
     display: inline-flex;
     width: 100%;
-    height: 2%;
+    height: 15%;
     background-color: #1f2a43;
     border-radius: 10px 10px 0 0;
     padding: 2%;
