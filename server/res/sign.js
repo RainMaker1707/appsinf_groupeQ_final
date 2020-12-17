@@ -26,7 +26,7 @@ module.exports = function sign(req, res, db){
                                 bcrypt.hash(req.body.pseudo + Math.random() + req.body.mailIn + Math.random(), salt,
                                     (err, key)=>{
                                     if (err) throw err;
-                                    key = key.replace(/\$/g, '');
+                                    key = key.replace(/\$.\/-'"§`\?/g, '');
 
                                     generateKeyPair('rsa', {
                                         modulusLength: 8192,
