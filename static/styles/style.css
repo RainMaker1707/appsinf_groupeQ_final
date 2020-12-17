@@ -176,14 +176,15 @@ menu{
 }
 
 #online-list{
-    padding: 1%;
+    padding: .5%;
     color: white;
     display: flex;
     background-color: rgba(27, 37, 99, 0.75);
     border-radius: 15px;
-    width: 12%;
+    min-width: 5%;
+    max-width: 15%;
     position: fixed;
-    left: 87%;
+    right: 3%;
     bottom: 18%;
 }
 
@@ -195,32 +196,90 @@ menu{
     text-align: center;
 }
 
+#online-list ul li{
+    width: 100%;
+}
+
 .online-friend-container{
     width: 100%;
+    height: auto;
     display: inline-flex;
     border-radius: 10px;
     border: 1px solid wheat;
     padding: 5%;
+    margin-bottom: 2px;
 }
 
 .online-friend-picture{
-    width: 40px;
-    clip-path: circle(20px at center);
+    width: 30%;
+    clip-path: circle(25px at center);
     margin-right: 5%;
-
 }
 
 .online-friend-pseudo{
+    width: 70%;
     margin: 0;
     align-self: center;
-    justify-self: center;
+    text-align: left;
+    overflow: hidden;
+    padding-right: 3%;
 }
 
 .fa-users{
     font-size: 1.5rem;
 }
 
+footer{
+    position: fixed;
+    bottom: 0;
+    display: inline;
+    width: 100%;
+    padding-left: 5%;
+    padding-right: 15%;
+    align-content: end;
+    justify-content: end;
+    overflow-x: hidden;
+}
 
+.chat-container{
+    width: 20%;
+    padding: 0;
+    margin: 0;
+}
+
+.chat-header{
+    color: white;
+    display: inline-flex;
+    width: 100%;
+    height: 2%;
+    background-color: #1f2a43;
+    border-radius: 10px 10px 0 0;
+    padding: 2%;
+}
+
+.chat-header + button{
+    margin-right: 2%;
+}
+
+.chat-header-pseudo{
+    width: 85%;
+    padding: 3% 5% 3% 10%;
+    margin: 0;
+}
+
+.chat-box{
+    background-color: lightgray;
+    margin: 0;
+}
+
+.chat-box.open{
+    height: 35vh;
+    overflow-y: scroll;
+}
+
+.chat-box.close{
+    height: 0;
+}
 
 .offscreen{
     display: none;
