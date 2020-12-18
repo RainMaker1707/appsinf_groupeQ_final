@@ -271,7 +271,11 @@
                 "        </button>\n"+
                 "    </div>\n"+
                 "    <div class=\"chat-box open\" id=\"chat-box-"+user+"\">\n"+
-                "         <ul class=\“chat-list\" id=\"chat-"+user+"\"></ul>\n"
+                "        <ul class=\"chat-list\" id=\"chat-"+user+"\"></ul>\n" +
+                "        <form  class='chat-form' method=\"post\" action=\"#\" id=\"form-"+user+"\">\n" +
+                "            <input class=\"chat-input\" type=\"text\" name=\"form-"+user+"\" id=\"input-"+user+"\" autocomplete=\"off\" placeholder=\"Type here...\">\n"+
+                "            <button class=\"btn btn-dark chat-send\"><span class=\"fas fa-paper-plane\"></span></button>\n"+
+                "        </form>\n" +
                 "    </div>\n"+
                 "</div>\n";
         document.getElementById('chat-row').insertAdjacentHTML('afterbegin', div);
