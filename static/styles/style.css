@@ -272,12 +272,16 @@ menu{
     margin: 0;
 }
 
-.chat-box.open{
+.chat-box{
     height: 35vh;
 }
 
+.chat-box.open{
+    display: block;
+}
+
 .chat-box.close{
-    height: 0;
+    display: none;
 }
 
 .chat-list{

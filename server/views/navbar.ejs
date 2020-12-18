@@ -250,6 +250,9 @@
                     "</li>\n";
                 document.getElementById('inner-list').insertAdjacentHTML('afterbegin', on);
                 break;
+            case('message'):
+                //TODO get message here
+                break;
             default:
                 break;
         }
@@ -295,7 +298,7 @@
 
     function sendMessage(publicKey, user){
         publicKey = publicKey.replace(/\$/g, '\n');
-
+        //TODO send and encrypt message
     }
     <%}%>
 </script>
