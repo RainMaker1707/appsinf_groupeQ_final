@@ -10,12 +10,15 @@ let http = require('http');
 let https = require('https');
 let path = require('path');
 let fs= require('fs');
+const {getCountries} = require("country-state-picker/lib/index");
+let languages = require('langs');
 
 //DIM modules
 let login = require('./res/login.js');
 let sign = require('./res/sign.js');
 let confirm = require('./res/confirm.js');
 let userPage = require('./res/userPage.js');
+let editUser = require('./res/editUser');
 let loadForum = require('./res/loadForum.js');
 let forumPage = require('./res/forumPage.js');
 let forumPost = require('./res/forumPost.js');
@@ -142,8 +145,23 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
         });
 
         app.get('/edit-user', (req, res)=>{
+            let colors = ["yellow", "white", "lime", "green", "purple", "black", "brown", "blue", "cyan","pink", "red", "orange"];
+            let maps = ["the skeld", "polus", "mira hq"];
+            let countries = getCountries();
+
             if(!req.session.pseudo) res.redirect('back');
-            else res.render('editUser.ejs', {user: req.session});
+            else {
+                db.db('amagus').collection('users').findOne({pseudo: req.session.pseudo}, (err, doc) => {
+                    if (err) throw err;
+                    else {
+                        res.render('editUser.ejs', {user: req.session, doc: doc, colors: colors, maps: maps, countries: countries, languages: languages});
+                    }
+                });
+            }
+        });
+
+        app.post('/edit-user', (req, res) => {
+            editUser(req, res, db);
         });
 
         app.get('/forum', (req, res)=>{
