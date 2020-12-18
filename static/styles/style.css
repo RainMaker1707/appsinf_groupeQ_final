@@ -339,7 +339,7 @@ menu{
     display: inline-block;
     width: 1rem;
     height: 1rem;
-    background: #17266c;
+    background: #000;
     position: absolute;
     bottom: -1rem;
     left: 80%;
@@ -363,10 +363,10 @@ menu{
     display: inline-block;
     width: 1rem;
     height: 1rem;
-    background: #000;
+    background: #17266c;
     position: absolute;
     bottom: -1rem;
-    left: 80%;
+    left: 0;
     clip-path: polygon(60% 0, 120% -20%, 100% 100%);
 }
 
