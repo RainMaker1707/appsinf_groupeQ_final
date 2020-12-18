@@ -15,9 +15,17 @@
             <div class="user-infos">
                 <h1 class="user-name"><%= locals.doc.pseudo%></h1>
                 <p class="user-country">
-                   Belgium,
+                    <% if (locals.doc.country === null) {%>
+                        Belgium,
+                    <%} else {%>
+                        <%= locals.doc.country %>,
+                    <%}%>
                 <p class="user-language">
-                    FR
+                    <% if (locals.doc.language === null) {%>
+                        FR
+                    <%} else {%>
+                        <%= locals.doc.language.toUpperCase() %>
+                    <%}%>
                 </p>
             </div>
             <div class="friend-buttons" id="user-btn-container">
@@ -57,11 +65,19 @@
         <div class="user-pref">
             <img class="btn-fav" src="" alt="">
             <p class="user-map">
-                Unknown
+                <% if (locals.doc.favoriteMap === null) {%>
+                    Unknown
+                <%} else {%>
+                    <%= locals.doc.favoriteMap.charAt(0).toUpperCase() + locals.doc.favoriteMap.slice(1) %>
+                <%}%>
             </p>
             <img class="btn-fav" src="" alt="">
             <p class="user-colour">
-                Unknown
+                <% if (locals.doc.favoriteColor === null) {%>
+                    Unknown
+                <%} else {%>
+                    <%= locals.doc.favoriteColor.charAt(0).toUpperCase() + locals.doc.favoriteColor.slice(1) %>
+                <%}%>
             </p>
         </div>
     </div>
