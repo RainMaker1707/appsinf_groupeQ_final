@@ -11,7 +11,8 @@ module.exports = function confirm(req, res, db){
             db.db('amagus').collection('users').updateOne({_id: doc._id},
                 {$set:{activated: true}}, (err)=>{
                     if(err) throw err;
-                    else login(req, res, db);
+                    req.session.activated = true;
+                    res.redirect('/');
                     //TODO display message to inform about activation success
                 }
             );

@@ -146,6 +146,8 @@
             $('#notif-dd').append($('<li id=\"to-remove\">').append($('<p style=\"color:white;\">').html("No notification")));
         }
     </script>
+<label for="privateKey" class="offscreen"></label>
+<textarea id="privateKey" class="offscreen"><%=locals.user.privateKey%></textarea>
 <%}%>
 <script>
     let socket = io();
@@ -220,7 +222,7 @@
                 let picture = notif.picture ? notif.picture : "images/userDefault.jpg"
 
                 let online = "<li id=\"" + notif.pseudo + "\">\n" +
-                    "    <div class=\"online-friend-container\" onclick=\"openChat(\'"+ notif.publicKey.toString() + "\',\'" +
+                    "    <div class=\"online-friend-container\" onclick=\"openChat(\'"+ notif.publicKey + "\',\'" +
                     notif.pseudo.toString() + "\')\">\n" +
                     "        <img class=\"online-friend-picture\" src=\"" + picture + "\" alt=\"\">\n" +
                     "        <p class=\"online-friend-pseudo\">" + notif.pseudo + "</p>\n" +
@@ -242,7 +244,7 @@
                 if(document.getElementById('to-remove-online')) document.getElementById('to-remove-online').remove();
                 let pict = notif.picture ? notif.picture : "images/userDefault.jpg"
                 let on = "<li id=\"" + notif.pseudo + "\">\n" +
-                    "    <div class=\"online-friend-container\" onclick=\"openChat(\'"+ notif.publicKey.toString() + "\',\'" +
+                    "    <div class=\"online-friend-container\" onclick=\"openChat(\'"+ notif.publicKey + "\',\'" +
                     notif.pseudo.toString() + "\')\">\n" +
                     "        <img class=\"online-friend-picture\" src=\"" + pict + "\" alt=\"\">\n" +
                     "        <p class=\"online-friend-pseudo\">" + notif.pseudo + "</p>\n" +
@@ -250,19 +252,28 @@
                     "</li>\n";
                 document.getElementById('inner-list').insertAdjacentHTML('afterbegin', on);
                 break;
-            case('message'):
-                //TODO get message here
-                break;
             default:
                 break;
         }
     });
 
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
     socket.on('message', (data)=>{
-        alert(data);
+        if(!document.getElementById('chat-container-'+data.pseudo)) {
+            openChat(data.publicKey, data.pseudo, true);
+        }
+        let decrypt = new JSEncrypt();
+        decrypt.setPrivateKey($('#privateKey').val());
+        let message = decrypt.decrypt(data.message, undefined, undefined);
+        let li = "<li><div class=\"chat-received\"><p>"+message+"</p></div></li>\n";
+        $('#chat-'+ data.pseudo).append(li);
+
     });
 
-    function openChat(publicKey, user){
+    function openChat(publicKey, user, closed=false){
         if (document.getElementById('chat-box-'+user)) return
         let div = ""+
                 "<div class=\"chat-container alert col-3\" id=\"chat-container-"+user+"\">\n"+
@@ -275,12 +286,14 @@
                 "    </div>\n"+
                 "    <div class=\"chat-box open\" id=\"chat-box-"+user+"\">\n"+
                 "        <ul class=\"chat-list\" id=\"chat-"+user+"\"></ul>\n" +
-                "        <form  class='chat-form' method=\"post\" action=\"#\" id=\"form-"+user+"\">\n" +
-                "            <input class=\"chat-input\" type=\"text\" name=\"form-"+user+"\" id=\"input-"+user+"\" autocomplete=\"off\" placeholder=\"Type here...\">\n"+
+                "        <form  class='chat-form'  method=\"post\" action=\"\" id=\"form-"+user+"\" " +
+                "               onsubmit=\"return sendMessage('"+publicKey+"', '"+user+"')\">\n" +
+                "            <input class=\"chat-input\" type=\"text\" name=\"form-"+user+"-input\" id=\"input-"+user+"\" autocomplete=\"off\" placeholder=\"Type here...\">\n"+
                 "            <button class=\"btn btn-dark chat-send\"><span class=\"fas fa-paper-plane\"></span></button>\n"+
                 "        </form>\n" +
                 "    </div>\n"+
-                "</div>\n";
+                "</div>\n ";
+        if(closed) div = div.replace('open', 'close');
         document.getElementById('chat-row').insertAdjacentHTML('afterbegin', div);
     }
 
@@ -289,8 +302,7 @@
         if(chat.classList.contains('open')){
             chat.classList.remove('open');
             chat.classList.add('close');
-
-        }else{
+        }else {
             chat.classList.remove('close');
             chat.classList.add('open');
         }
@@ -298,7 +310,16 @@
 
     function sendMessage(publicKey, user){
         publicKey = publicKey.replace(/\$/g, '\n');
-        //TODO send and encrypt message
+        let input = $('#input-'+user);
+        let encrypt = new JSEncrypt();
+        let message = input.val();
+        encrypt.setPublicKey(publicKey)
+        let encrypted = encrypt.encrypt(message, undefined, undefined);
+        input.val('');
+        let li = "<li><div class=\"chat-send\"><p>"+message+"</p></div></li>\n";
+        $('#chat-'+user).append(li);
+        socket.emit('message', encrypted, user);
+        return false;
     }
     <%}%>
 </script>

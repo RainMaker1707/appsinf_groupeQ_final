@@ -101,6 +101,7 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
                         pseudo: ioSession.pseudo,
                         picture: ioSession.picture,
                         date : new Date().toISOString(),
+                        publicKey: ioSession.publicKey,
                         message: message
                     };
                     io.to(to).emit('message', data);

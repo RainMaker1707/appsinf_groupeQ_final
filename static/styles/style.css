@@ -270,9 +270,7 @@ menu{
 .chat-box{
     background-color: lightgray;
     margin: 0;
-}
-
-.chat-box{
+    color: black;
     height: 35vh;
 }
 
@@ -285,6 +283,7 @@ menu{
 }
 
 .chat-list{
+    list-style: none;
     overflow-y: scroll;
 }
 

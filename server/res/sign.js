@@ -37,8 +37,6 @@ module.exports = function sign(req, res, db){
                                         privateKeyEncoding: {
                                             type: 'pkcs8',
                                             format: 'pem',
-                                            cipher: 'aes-256-cbc',
-                                            passphrase: key
                                         }
                                     },
                                     (err, publicKey, privateKey) => {
