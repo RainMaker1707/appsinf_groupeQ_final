@@ -101,11 +101,11 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
 
                 socket.on('message', (message, to)=>{
                     let data = {
-                        pseudo: ioSession.pseudo,
-                        picture: ioSession.picture,
-                        date : new Date().toISOString(),
-                        publicKey: ioSession.publicKey,
-                        message: message
+                        'pseudo': ioSession.pseudo,
+                        'picture': ioSession.picture,
+                        'date' : new Date().toISOString(),
+                        'publicKey': ioSession.publicKey,
+                        'message': message
                     };
                     io.to(to).emit('message', data);
                 });

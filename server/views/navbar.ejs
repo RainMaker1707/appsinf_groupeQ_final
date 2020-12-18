@@ -263,12 +263,12 @@
 
     socket.on('message', (data)=>{
         if(!document.getElementById('chat-container-'+data.pseudo)) {
-            openChat(data.publicKey, data.pseudo, true);
+            openChat(data.publicKey.replace(/\n/g, '$'), data.pseudo, true);
         }
         let decrypt = new JSEncrypt();
         decrypt.setPrivateKey($('#privateKey').val());
         let message = decrypt.decrypt(data.message, undefined, undefined);
-        let li = "<li><div class=\"chat-received\"><p>"+message+"</p></div></li>\n";
+        let li = "<li><div class=\"chat-msg chat-received\"><p>"+message+"</p></div></li>\n";
         $('#chat-'+ data.pseudo).append(li);
 
     });
@@ -289,7 +289,7 @@
                 "        <form  class='chat-form'  method=\"post\" action=\"\" id=\"form-"+user+"\" " +
                 "               onsubmit=\"return sendMessage('"+publicKey+"', '"+user+"')\">\n" +
                 "            <input class=\"chat-input\" type=\"text\" name=\"form-"+user+"-input\" id=\"input-"+user+"\" autocomplete=\"off\" placeholder=\"Type here...\">\n"+
-                "            <button class=\"btn btn-dark chat-send\"><span class=\"fas fa-paper-plane\"></span></button>\n"+
+                "            <button class=\"btn btn-dark chat-send-btn\"><span class=\"fas fa-paper-plane\"></span></button>\n"+
                 "        </form>\n" +
                 "    </div>\n"+
                 "</div>\n ";
@@ -316,7 +316,7 @@
         encrypt.setPublicKey(publicKey)
         let encrypted = encrypt.encrypt(message, undefined, undefined);
         input.val('');
-        let li = "<li><div class=\"chat-send\"><p>"+message+"</p></div></li>\n";
+        let li = "<li><div class=\"chat-msg chat-send\">"+message+"</div></li>\n";
         $('#chat-'+user).append(li);
         socket.emit('message', encrypted, user);
         return false;

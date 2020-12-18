@@ -265,6 +265,7 @@ menu{
     width: 85%;
     padding: 3% 5% 3% 10%;
     margin: 0;
+    overflow: hidden;
 }
 
 .chat-box{
@@ -285,6 +286,13 @@ menu{
 .chat-list{
     list-style: none;
     overflow-y: scroll;
+    padding: 0;
+    margin: 0;
+    height: 85%;
+}
+
+.chat-list li{
+    min-height: 1.5rem;
 }
 
 .chat-form{
@@ -297,8 +305,69 @@ menu{
     width: 80%;
 }
 
-.chat-send{
+.chat-send-btn{
     width: 20%;
+}
+
+.chat-msg{
+    position: relative;
+    width: 90%;
+    max-height: 80%;
+    margin-bottom: 5%;
+    padding: 1% 5%;
+    border-radius: 10px;
+}
+
+.chat-msg:first-child{
+    margin-top: 2%;
+}
+
+.chat-send{
+    width: 90%;
+    margin-left: 7%;
+    margin-right: 3%;
+    background: #000;
+    position: relative;
+    color: #fff;
+    padding: 1rem;
+    text-align: left;
+    border-radius: 0.3rem;
+}
+
+.chat-send::after{
+    content: '';
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    background: #17266c;
+    position: absolute;
+    bottom: -1rem;
+    left: 80%;
+    clip-path: polygon(60% 0, 120% -20%, 100% 100%);
+}
+
+.chat-received{
+    width: 90%;
+    margin-left: 3%;
+    margin-right: 7%;
+    background: #17266c;
+    position: relative;
+    color: #fff;
+    padding: 1rem;
+    text-align: left;
+    border-radius: 0.3rem;
+}
+
+.chat-received::after{
+    content: '';
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    background: #000;
+    position: absolute;
+    bottom: -1rem;
+    left: 80%;
+    clip-path: polygon(60% 0, 120% -20%, 100% 100%);
 }
 
 .offscreen{
