@@ -155,6 +155,24 @@ menu{
     cursor: pointer;
 }
 
+#search-user{
+    z-index: 3;
+    position: fixed;
+    top: 7.5%;
+    right: 10%;
+    background-color: white;
+    padding: .2%;
+    width: 15%;
+    border-radius: 0 0 10px 10px;
+}
+
+#search-input{
+    width: 75%;
+}
+#search-user-btn{
+    width: 18%;
+}
+
 .online-friend{
     z-index: 10;
     display: flex;
@@ -415,6 +433,5 @@ menu{
 }
 @keyframes anim {
     0%{}
-    50%{background-color: #5270b2
-    }
+    50%{background-color: #5270b2;}
 }

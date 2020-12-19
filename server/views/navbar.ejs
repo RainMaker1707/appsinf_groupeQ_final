@@ -84,16 +84,7 @@
             <li>
                 <ul class="icon-bar">
                     <li>
-                        <div class="dropdown">
-                            <a id="messImg" data-toggle="dropdown">
-                                <img class="icon-bar-item" src="images/message.png" alt="">
-                            </a>
-                            <ul class="dropdown-menu drop-down-custom" aria-labelledby="messImg">
-                                <!-- TODO message system -->
-                                <li><button class="dropdown-item btn btn-dark" href="#">Menu item 1</button></li>
-                                <li><button class="dropdown-item btn btn-dark" href="#">Menu item 2</button></li>
-                            </ul>
-                        </div>
+                        <img class="icon-bar-item" src="images/user-search-icon.png" alt="" onclick="displaySearchUser()">
                     </li>
                     <li>
                         <div class="dropdown">
@@ -140,6 +131,13 @@
                 </ul>
             </li>
         </ul>
+    </div>
+    <div id="search-user" class="offscreen">
+        <form method="post" action="/">
+            <label for="search-input"></label>
+            <input type="text" id="search-input" name="search-input" required>
+            <button class="btn btn-dark" id="search-user-btn"><span class="fas fa-search"></span></button>
+        </form>
     </div>
     <script>
         if(document.getElementById('notif-dd') && document.getElementById('notif-dd').childElementCount === 0){
@@ -356,6 +354,12 @@
     window.addEventListener('beforeunload', (event)=>{
         $.post('/update-chat-bar', {data: document.getElementById('chat-row').innerHTML});
     });
+    function displaySearchUser(){
+        let div = document.getElementById('search-user');
+        if(div.classList.contains('offscreen'))div.classList.remove('offscreen');
+        else div.classList.add('offscreen');
+    }
+
     <%}%>
 </script>
 
