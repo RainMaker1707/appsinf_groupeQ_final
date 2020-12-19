@@ -1,3 +1,7 @@
+body{
+    height:100%;
+    overflow: hidden;
+}
 .main{
     margin-top: 5%;
     width: 100%;
@@ -18,7 +22,7 @@
 
 .about-us-container{
     position: absolute;
-    top: 25%;
+    top: 20%;
     background-color: rgba(20,25,46,0.91);
     width: 80%;
     margin-left: 10%;
@@ -71,12 +75,12 @@
 
 .black{
     background-image: url('../images/BlackAUS.png');
-    left: 10%;
+    left: 45%;
 }
 
 .white{
     background-image: url('../images/whiteAUS.png');
-    left: 45%;
+    left: 10%;
 }
 
 .red{
