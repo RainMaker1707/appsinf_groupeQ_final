@@ -41,6 +41,8 @@
         </div>
     </section>
     <%- include('onlineFriend.ejs') -%>
-    <section id="chat-row"></section>
+    <section id="chat-row">
+        <%if(locals.user){%><%-locals.user.chatBar%><%}%>
+    </section>
 </body>
 </html>

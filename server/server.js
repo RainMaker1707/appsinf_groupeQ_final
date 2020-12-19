@@ -256,6 +256,11 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
             else friends.update(req, res, db);
         });
 
+        app.post('/update-chat-bar', (req, res)=>{
+            if(!req.session.pseudo) res.redirect('back');
+            else req.session.chatBar = req.body.data; res.status(200).send();
+        });
+
         app.get('/news', (req, res)=>{
             if(req.session.master || req.session.admin) res.render('news.ejs', {user: req.session});
             else res.redirect('/');

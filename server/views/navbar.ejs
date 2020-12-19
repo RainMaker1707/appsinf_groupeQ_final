@@ -321,6 +321,11 @@
         socket.emit('message', encrypted, user);
         return false;
     }
+
+    window.addEventListener('beforeunload', (event)=>{
+        $.post('/update-chat-bar', {data: document.getElementById('chat-row').innerHTML});
+    });
+
     <%}%>
 </script>
 

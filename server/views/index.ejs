@@ -93,6 +93,8 @@
     </section>
     <%- include('onlineFriend.ejs') -%>
     <%- include('cookiePopup') -%>
-    <section id="chat-row"></section>
+    <section id="chat-row">
+        <%if(locals.user){%><%-locals.user.chatBar%><%}%>
+    </section>
 </body>
 </html>
