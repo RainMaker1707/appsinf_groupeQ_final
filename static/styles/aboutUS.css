@@ -16,6 +16,106 @@
     margin-right: 15%;
 }
 
+.aboutus{
+    position: absolute;
+    top: 25%;
+    background-color: rgba(20,25,46,0.91);
+    width: 80%;
+    margin-left: 10%;
+    min-width: 50%;
+    height: 70%;
+    border-radius: 15px;
+}
+
+.aboutus-textbox{
+    position: absolute;
+    color: white;
+    top: 5%;
+    width: 90%;
+    margin-left: 5%;
+    min-width: 50%;
+    height: 50%;
+}
+
+.aboutus-profilebox{
+    position: absolute;
+    color: white;
+    top: 65%;
+    width: 90%;
+    margin-left: 5%;
+    min-width: 50%;
+    height: 30%;
+}
+
+.aboutus-whitenamebox{
+    position: absolute;
+    color: white;
+    text-align: center;
+    top: 70%;
+    width: 50%;
+    min-width: 50%;
+    height: 10%;
+}
+
+.aboutus-blacknamebox{
+    position: absolute;
+    color: white;
+    text-align: center;
+    top: 70%;
+    width: 50%;
+    min-width: 50%;
+    height: 10%;
+}
+
+.aboutus-rednamebox{
+    position: absolute;
+    color: white;
+    text-align: center;
+    top: 70%;
+    width: 50%;
+    min-width: 50%;
+    height: 10%;
+}
+
+.aboutus-black{
+    position: absolute;
+    color: white;
+    font-size: small;
+    background-image: url('../images/BlackAUS.png');
+    background-size: 50%;
+    background-repeat: no-repeat;
+    top: 10%;
+    margin-left: 42%;
+    width: 25%;
+    height: 100%;
+}
+
+.aboutus-white{
+    position: absolute;
+    color: white;
+    font-size: small;
+    background-image: url('../images/whiteAUS.png');
+    background-size: 50%;
+    background-repeat: no-repeat;
+    top: 10%;
+    margin-left: 5%;
+    width: 25%;
+    height: 100%;
+}
+
+.aboutus-red{
+    position: absolute;
+    color: white;
+    font-size: small;
+    background-image: url('../images/RedAUS.png');
+    background-size: 50%;
+    background-repeat: no-repeat;
+    top: 10%;
+    margin-left: 82%;
+    width: 25%;
+    height: 100%;
+}
+
 .sidebar{
     height: 80vh;
     width: 20%;
