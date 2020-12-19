@@ -32,7 +32,7 @@
                 <% if(locals.doc.pseudo !== locals.user.pseudo){%>
                     <%if(locals.isFriend){%>
                         <button class="msg-btn btn btn-dark"
-                                onclick="openChat('<%=locals.doc.publicKey%>', '<%=locals.doc.pseudo%>')">
+                                onclick="openChat('<%=locals.doc.publicKey.replace(/\n/g, '$')%>', '<%=locals.doc.pseudo%>')">
                             Message
                             <span class="fa fa-comment"></span>
                         </button>
