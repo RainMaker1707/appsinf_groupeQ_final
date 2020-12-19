@@ -156,6 +156,7 @@ menu{
 }
 
 .online-friend{
+    z-index: 10;
     display: flex;
     color: white;
     background-color: rgba(27, 37, 99, 0.67);
@@ -176,6 +177,7 @@ menu{
 }
 
 #online-list{
+    z-index: 10;
     padding: .5%;
     color: white;
     display: flex;
@@ -201,6 +203,7 @@ menu{
 }
 
 .online-friend-container{
+    z-index: 10;
     width: 100%;
     height: auto;
     display: inline-flex;
@@ -230,6 +233,7 @@ menu{
 }
 
 #chat-row{
+    z-index: 10;
     position: fixed;
     bottom: 0;
     display: inline-flex;
@@ -404,4 +408,13 @@ menu{
     color: white;
     width: 100%;
     height: auto;
+}
+
+.blink{
+    animation: anim .7s infinite;
+}
+@keyframes anim {
+    0%{}
+    50%{background-color: #5270b2
+    }
 }

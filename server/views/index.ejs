@@ -11,6 +11,10 @@
     <header>
         <%- include('navbar') -%>
     </header>
+    <%- include('onlineFriend.ejs') -%>
+    <section id="chat-row">
+        <%if(locals.user){%><%-locals.user.chatBar%><%}%>
+    </section>
     <section class="main">
         <%if(locals.user && locals.user.admin){%>
             <button class="admin-news-btn btn btn-dark" onclick="location.href='/news';">Add news</button>
@@ -91,10 +95,6 @@
         </script>
         <%}%>
     </section>
-    <%- include('onlineFriend.ejs') -%>
     <%- include('cookiePopup') -%>
-    <section id="chat-row">
-        <%if(locals.user){%><%-locals.user.chatBar%><%}%>
-    </section>
 </body>
 </html>

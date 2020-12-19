@@ -150,6 +150,7 @@
 <textarea id="privateKey" class="offscreen"><%=locals.user.privateKey%></textarea>
 <%}%>
 <script>
+
     let socket = io();
     <% if(locals.notif !== undefined){%>
     window.onload =  ()=> {
@@ -269,15 +270,17 @@
         decrypt.setPrivateKey($('#privateKey').val());
         let message = decrypt.decrypt(data.message, undefined, undefined);
         let li = "<li><div class=\"chat-msg chat-received\"><p>"+message+"</p></div></li>\n";
-        $('#chat-'+ data.pseudo).append(li);
-
+       $('#chat-'+ data.pseudo).append(li);
+       document.getElementById('chat-'+data.pseudo).scrollTop = document.getElementById('chat-'+data.pseudo).scrollHeight;
+       let header = document.getElementById('chat-header-'+data.pseudo);
+       header.classList.add('blink');
     });
 
     function openChat(publicKey, user, closed=false){
         if (document.getElementById('chat-box-'+user)) return
         let div = ""+
                 "<div class=\"chat-container alert col-3\" id=\"chat-container-"+user+"\">\n"+
-                "    <div class=\"chat-header\" onclick=\"displayChat('"+user+"')\">\n"+
+                "    <div class=\"chat-header\" id=\"chat-header-"+user+"\" onclick=\"displayChat('"+user+"')\">\n"+
                 "        <img class=\”chat-header-picture\" src=\'\' alt\"\">\n"+
                 "        <p class=\"chat-header-pseudo\">"+ user +"</p>\n"+
                 "        <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n" +
@@ -287,8 +290,9 @@
                 "    <div class=\"chat-box open\" id=\"chat-box-"+user+"\">\n"+
                 "        <ul class=\"chat-list\" id=\"chat-"+user+"\"></ul>\n" +
                 "        <form  class='chat-form'  method=\"post\" action=\"\" id=\"form-"+user+"\" " +
-                "               onsubmit=\"return sendMessage('"+publicKey+"', '"+user+"')\">\n" +
-                "            <input class=\"chat-input\" type=\"text\" name=\"form-"+user+"-input\" id=\"input-"+user+"\" autocomplete=\"off\" placeholder=\"Type here...\">\n"+
+                "               onsubmit=\"return sendMessage('"+publicKey+"', '"+user+"')\" >\n" +
+                "            <input class=\"chat-input\" type=\"text\" name=\"form-"+user+"-input\" id=\"input-"+user+"\" " +
+                "                   autocomplete=\"off\" placeholder=\"Type here...\">\n"+
                 "            <button class=\"btn btn-dark chat-send-btn\"><span class=\"fas fa-paper-plane\"></span></button>\n"+
                 "        </form>\n" +
                 "    </div>\n"+
@@ -297,14 +301,23 @@
         document.getElementById('chat-row').insertAdjacentHTML('afterbegin', div);
     }
 
+    function stopBlink(user){
+        let header = document.getElementById('chat-header-'+user);
+        if(header.classList.contains('blink')) header.classList.remove('blink');
+    }
+
     function displayChat(user){
-        let chat = document.getElementById('chat-box-'+user);
-        if(chat.classList.contains('open')){
-            chat.classList.remove('open');
-            chat.classList.add('close');
+        let chat = document.getElementById('chat-box-' + user);
+        if (chat.classList.contains('close')) {
+                chat.classList.remove('close');
+                chat.classList.add('open');
+                stopBlink(user)
         }else {
-            chat.classList.remove('close');
-            chat.classList.add('open');
+            if(document.getElementById('chat-header-'+user).classList.contains('blink')) stopBlink(user);
+            else {
+                chat.classList.remove('open');
+                chat.classList.add('close');
+            }
         }
     }
 
@@ -319,6 +332,8 @@
         let li = "<li><div class=\"chat-msg chat-send\">"+message+"</div></li>\n";
         $('#chat-'+user).append(li);
         socket.emit('message', encrypted, user);
+        document.getElementById('chat-'+user).scrollTop = document.getElementById('chat-'+user).scrollHeight;
+        stopBlink(user);
         return false;
     }
 
