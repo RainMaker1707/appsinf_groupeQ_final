@@ -162,7 +162,22 @@
         }
         let to = "<%=locals.to%>";
         socket.emit('notif', notif, to);
+        let list = document.getElementsByClassName('chat-list');
+        if(document.getElementById('chat-row').hasChildNodes()){
+            for(let i=0; i<document.getElementById('chat-row').childElementCount; i++){
+                list[i].scrollTop = list[i].scrollHeight;
+            }
+        }
     };
+    <%}else{%>
+    window.onload = ()=>{
+        let list = document.getElementsByClassName('chat-list');
+        if(document.getElementById('chat-row').hasChildNodes()){
+            for(let i=0; i<document.getElementById('chat-row').childElementCount; i++){
+                list[i].scrollTop = list[i].scrollHeight;
+            }
+        }
+    }
     <%}if (locals.user){%>
     socket.on('notif', (notif) => {
         switch(notif.type) {
@@ -312,6 +327,7 @@
                 chat.classList.remove('close');
                 chat.classList.add('open');
                 stopBlink(user)
+                document.getElementById('chat-'+user).scrollTop = document.getElementById('chat-'+user).scrollHeight;
         }else {
             if(document.getElementById('chat-header-'+user).classList.contains('blink')) stopBlink(user);
             else {
