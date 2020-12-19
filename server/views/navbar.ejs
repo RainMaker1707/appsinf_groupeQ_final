@@ -245,7 +245,7 @@
                 let pict = notif.picture ? notif.picture : "images/userDefault.jpg"
                 let on = "<li id=\"" + notif.pseudo + "\">\n" +
                     "    <div class=\"online-friend-container\" onclick=\"openChat(\'"+ notif.publicKey + "\',\'" +
-                    notif.pseudo.toString() + "\')\">\n" +
+                    notif.pseudo + "\')\">\n" +
                     "        <img class=\"online-friend-picture\" src=\"" + pict + "\" alt=\"\">\n" +
                     "        <p class=\"online-friend-pseudo\">" + notif.pseudo + "</p>\n" +
                     "    </div>\n" +
@@ -325,7 +325,6 @@
     window.addEventListener('beforeunload', (event)=>{
         $.post('/update-chat-bar', {data: document.getElementById('chat-row').innerHTML});
     });
-
     <%}%>
 </script>
 

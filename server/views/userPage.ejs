@@ -32,7 +32,7 @@
                 <% if(locals.doc.pseudo !== locals.user.pseudo){%>
                     <%if(locals.isFriend){%>
                         <button class="msg-btn btn btn-dark"
-                                onclick="location.href='/message?user=<%=locals.doc.pseudo%>'">
+                                onclick="openChat('<%=locals.doc.publicKey%>', '<%=locals.doc.pseudo%>')">
                             Message
                             <span class="fa fa-comment"></span>
                         </button>
