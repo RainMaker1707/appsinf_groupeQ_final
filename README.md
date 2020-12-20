@@ -3,6 +3,8 @@
 #### Table des matières
 <ol>
     <li>Résumé</li>
+    <li>Préparation de la machine host</li>
+    <li>Initialisation du dossier et lancement de la base de donnée</li>
     <li>Installation des modules</li>
     <li>Préset de la base de données [optionnel]
     <ul><li>Préset</li><li>Utilisateurs</li><li>News</li><li>Forum</li></ul>
@@ -75,7 +77,7 @@ Ceci fait garder ce terminal ouvert et ouvrez en un autre pour le
 restant du setup car dans celui-ci tourne maintenant les 'listener'
 de mongodb dont nous aurons besoin afin de communqiuer avec la base de donnée.\
 
-###### Installation des modules
+#### Installation des modules
 Les modules peuvent être installer par une simple commande npm\
 
     npm install <module-name>
@@ -186,17 +188,20 @@ RainMaker17 | rootpass | activated
 
 Commande d'import : \
     
-    mongoimport -d amagus -c users path/to/APPSINF_final/server/database/users.json --legacy
+    mongoimport -d amagus -c users path/to/appsinf_groupeQ_final/server/database/users.json --legacy
 
 ###### 3° News
+Quelques news afin d'illustrer le fonctionnement et la disposition de celles-ci sont disponible dans le fichier ``news.json``.\
+Commande d'import :\
 
+    mongoimport -d amagus -c news path/to/appsinf_groupeQ_final/server/database/news.json --legacy
 
 ###### 4° Forum
 
 Quelques sujets de base pour le forum et uqelques post afin de remplir\
 Commande d'import : \
 
-     mongoimport -d amagus -c forum path/to/APPSINF_final/server/database/forum.json --legacy
+     mongoimport -d amagus -c forum path/to/appsinf_groupeQ_final/server/database/forum.json --legacy
 
 
 #### Lancement du serveur
@@ -215,7 +220,45 @@ Si tout se lance correctement la console affichera
 
 #### Pages du sites
 
+Home + News + lien jeu
+Forum + page de post + page pour lire un post en particulier.\
+Page utilisateur personelle (sert aux autres users: distinction selon la requete) + edition d'information.\
+Page about-us donnant le contexte et les noms des membres de l'équipe + lien gitHub + widget discord.
+
 
 #### Fonctionnalitées
+###### Possibilités pour user non connecté ou user non activé:
+<ul>
+    <li>Lire les news</li>
+    <li>Lire le forum</li>
+</ul>
+
+###### Possibilités des users connectés et activés:
+<ul>
+    <li>Lire les news</li>
+    <li>Lire le forum</li>
+    <li>Poster sur le forum</li>
+    <li>Répondre à un post sur le forum</li>
+    <li>Ajouter un ami</li>
+    <li>Envoyer un message à un ami</li>
+</ul>
+
+
+###### Possibilitées des administrateurs : 
+<ul>
+    <li>Possibilités des user connectés et activés + </li>
+    <li><ul>
+        <li>Ajout de news sur la page principle</li>
+        <li>Ajout de sujet dans le forum</li>
+        <li>Promouvoir un administrateur TODO</li>
+    </ul></li>
+</ul>
+
+###### Possibilités des master:
+<ul>
+    <li>Possibilités des administrateurs +</li>
+    <li><ul>
+        <li>Démote un amdministrateur TODO </li>
+    </ul></li>
 
 
