@@ -140,8 +140,7 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
         });
 
         app.get('/user-page', (req, res)=>{
-            if(!req.session.pseudo) res.redirect('back');
-            else userPage(req, res, db, req.session.pseudo===req.query.user);
+            userPage(req, res, db, req.session.pseudo===req.query.user);
         });
 
         app.get('/edit-user', (req, res)=>{
@@ -231,7 +230,6 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
         app.get('/refuseFriend', (req, res)=>{
             if(!req.session) res.redirect('/');
             else if(!req.session.pseudo) res.redirect('/'); //TODO render message 'login please'
-            else if(!req.session.activated) res.redirect('back'); // TODO display message 'active your account please' + resend mail link
             else if(req.query===undefined || req.query.user===undefined) res.redirect('back');
             else friends.refuse(req, res, db);
         });
@@ -247,8 +245,8 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
         app.post('/cookieDump', (req, res)=>{
             if(!req.session.cookieShowed){
                 req.session.cookieShowed = true;
-                res.status(200).send('ok');
-            }else res.status(300).send('error');
+                res.status(200).send(true);
+            }else res.status(300).send(false);
         });
 
         app.post('/update-friends', (req,res)=>{
@@ -259,6 +257,11 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
         app.post('/update-chat-bar', (req, res)=>{
             if(!req.session.pseudo) res.redirect('back');
             else req.session.chatBar = req.body.data; res.status(200).send();
+        });
+
+        app.post('/search-user', (req, res)=>{
+            if(!req.session.pseudo) res.status(300).send(); //send failed status
+            res.status(200).send({data: 'test ok'}); //send success status
         });
 
         app.get('/news', (req, res)=>{

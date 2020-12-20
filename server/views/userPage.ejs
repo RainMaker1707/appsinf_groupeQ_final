@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <%- include('allLink'); -%>
-    <title><%= locals.user.pseudo%> | A-Mag Us </title>
+    <title><%= locals.doc.pseudo%> | A-Mag Us </title>
     <link rel="stylesheet" type="text/css" href="/styles/userPage.css">
 </head>
 <body>
@@ -29,7 +29,7 @@
                 </p>
             </div>
             <div class="friend-buttons" id="user-btn-container">
-                <% if(locals.doc.pseudo !== locals.user.pseudo){%>
+                <% if(locals.user && locals.doc.pseudo !== locals.user.pseudo){%>
                     <%if(locals.isFriend){%>
                         <button class="msg-btn btn btn-dark"
                                 onclick="openChat('<%=locals.doc.publicKey.replace(/\n/g, '$')%>', '<%=locals.doc.pseudo%>')">
@@ -54,7 +54,7 @@
                             <span class="fa fa-user-plus"></span>
                         </button>
                     <%}%>
-                <%}else{%>
+                <%}else if(locals.user && locals.user.pseudo){%>
                     <button class="edit-btn btn btn-dark" onclick="location.href='/edit-user'">
                         Edit
                         <span class="far fa-user-edit"></span>

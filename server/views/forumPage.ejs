@@ -14,7 +14,7 @@
         <div class="post-container">
             <div class="post-frame">
                 <div class="post-header">
-                    <p class="post-author"><%=locals.doc.author%></p>
+                    <p class="post-author"><a href="/user-page?user=<%=locals.doc.author%>"><%=locals.doc.author%></a></p>
                     <p class="post-date ml-auto"><%=locals.doc.date%></p>
                 </div>
                 <p class="inner-text"><%- locals.doc.content.replace(/(?:\r\n|\r|\n)/g, ' <br> ')%></p>
@@ -25,7 +25,7 @@
             <%locals.doc.answers.map((answer)=>{%>
                 <div class="answer-frame">
                     <div class="answer-header">
-                        <p class="answer-author"><%=answer.author%></p>
+                        <p class="answer-author"><a href="/user-page?user=<%=answer.author%>"><%=answer.author%></a></p>
                         <p class="answer-date ml-auto"><%=answer.date%></p>
                     </div>
                     <p class="answer-content"><%-answer.content.replace(/(?:\r\n|\r|\n)/g, ' <br> ')%></p>
