@@ -133,11 +133,12 @@
         </ul>
     </div>
     <div id="search-user" class="offscreen">
-        <form method="post" action="/">
+        <form method="post" action="/" id="search-user-form">
             <label for="search-input"></label>
             <input type="text" id="search-input" name="search-input" required>
             <button class="btn btn-dark" id="search-user-btn"><span class="fas fa-search"></span></button>
         </form>
+        <ul class="search-res"></ul>
     </div>
     <script>
         if(document.getElementById('notif-dd') && document.getElementById('notif-dd').childElementCount === 0){
@@ -351,14 +352,25 @@
         return false;
     }
 
-    window.addEventListener('beforeunload', (event)=>{
+    window.addEventListener('beforeunload', ()=>{
         $.post('/update-chat-bar', {data: document.getElementById('chat-row').innerHTML});
     });
+
     function displaySearchUser(){
         let div = document.getElementById('search-user');
         if(div.classList.contains('offscreen'))div.classList.remove('offscreen');
         else div.classList.add('offscreen');
     }
+
+    $('#search-user-form').submit((event)=>{
+        event.preventDefault();
+        $.post('/search-user', {user: $('#search-input').val()}, (data, state)=>{
+            if(state === 'success') {
+                //TODO add list of response under search bar
+                alert(data);
+            }
+        })
+    });
 
     <%}%>
 </script>
