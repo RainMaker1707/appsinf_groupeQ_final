@@ -20,6 +20,7 @@ Il a pour but de prouver les connaissances d'un groupe de 3 élèves sur les
  Nous avons donc décidé d'implémenter un site dédié à la communauté d'un jeu vidéo 
  du moment: <a href="https://www.innersloth.com/gameAmongUs.php">AmongUs</a>
  
+ #### Préparation de la machine host
  Pour ce projet veillez donc a bien avoir installer <a href="https://nodejs.org/en/download/">NodeJs</a> et 
  <a href="https://www.mongodb.com/try/download/community">MongoDB</a> sur votre machine.
  Si vous ne pouvez pas executer les commande <a href="https://www.npmjs.com/get-npm">npm</a> 
@@ -43,16 +44,50 @@ Il a pour but de prouver les connaissances d'un groupe de 3 élèves sur les
     <li>crypto</li>
     <li>nodemailer</li>
     <li>socket.io</li>
+    <li>langs</li>
+    <li>country-state-picker</li>
  </ol>
  
-#### Installation des modules
+###### Initialisation du dossier et lancement de la base de donnée
+Une fois nodeJs et mongoDB installer sur votre machine vous pourrez passez à cette partie:\
+Si une des commandes cité ne fonctionne pas veuillez vérifier votre installation nodeJS et mongoDB.\
+<br>
+Une fois ce dossier téléchargé accéder à un terminal / shell / powerShell / bash
+afin d'accéder à ce dossier en tapant la commande 
+
+    cd path/to/this/dir/appsinf_groupeQ_final/
+    
+puis taper la commande
+
+    npm init
+    
+celle-ci a initialisé votre dossier pour accueillir et lancer les différents 
+modules utilisé par nodeJS.\
+vous aller ensuite créer un dossier afin de faire tourner mongodb 
+(ce dossier contiendra après commande beaucoup de fichiers veuillez 
+donc à ne pas lancer cette commande dans n'importe quel dossier).
+
+    touch mongodir && cd mongodir //création du dossier
+    mongod --dbpath . //lancement de la db
+    
+
+Ceci fait garder ce terminal ouvert et ouvrez en un autre pour le 
+restant du setup car dans celui-ci tourne maintenant les 'listener'
+de mongodb dont nous aurons besoin afin de communqiuer avec la base de donnée.\
+
+###### Installation des modules
 Les modules peuvent être installer par une simple commande npm\
-    ````npm install <module-name>````\
-    par exemple : ```npm install express-session```
+
+    npm install <module-name>
+    
+par exemple :
+    
+    npm install express-session
     
 Veuillez installer tous les modules requis avant d'essayer de lancer le serveur,
 celui-ci pourrait ne pas correctement tourné, voir ne pas se lancer du tout, si tous
 les modules ne lui sont pas fournis!
+
 
 #### Présets de la base de données [optionnel]
 Les présets ne sont pas obligatoire mais sachez que sans un utilisateur administrateur
@@ -132,18 +167,51 @@ ensuite taper la commande suivante en remplaçant \<pseudo\> par le pseudo de vo
 ```
 
 ###### 1° Présets
+Les présets ont pour but de remplir le site (partie news et forum) et d'obtenir des utilisateurs presets au plus haut
+d'administration (master) le seul moyen d'obtenir ce grade est en passant par la base de données manuellement. \
+Nous ne pouvons donc pas vous assurez de l'accès à toutes les fonctionnalitées si vous n'utilisez pas de compte préset.\
+En réalité une seule fonctionnalitée est indisponible au administrateur par rapport au master : la possibilité de 
+derank un admin au simple rôle d'utilisateur.
 
 ###### 2° Utilisateurs
+Quatre utilisateurs sont disponible :
 
+
+| Pseudo | mot de passe | rôle |
+:-------:|:------------:|:----:|
+RainMaker| rootpass | master
+GGisOnline| rootpass | master
+Czacio | rootpass | admin
+RainMaker17 | rootpass | activated
+
+Commande d'import : \
+    
+    mongoimport -d amagus -c users path/to/APPSINF_final/server/database/users.json --legacy
 
 ###### 3° News
 
 
 ###### 4° Forum
 
+Quelques sujets de base pour le forum et uqelques post afin de remplir\
+Commande d'import : \
+
+     mongoimport -d amagus -c forum path/to/APPSINF_final/server/database/forum.json --legacy
+
 
 #### Lancement du serveur
 
+Si vous avez correctement suivit les étapes jusqu'ici il vous suffira d'aller à la racine du projet:
+
+    cd path/to/dir/appsinf_groupeQ_final/
+    
+et de lancer cette commande afin de lancer le server
+
+    node server/server.js
+
+Si tout se lance correctement la console affichera 
+
+    ------CONNECTED------
 
 #### Pages du sites
 
