@@ -48,7 +48,7 @@ Il a pour but de prouver les connaissances d'un groupe de 3 élèves sur les
     <li>country-state-picker</li>
  </ol>
  
-###### Initialisation du dossier et lancement de la base de donnée
+#### Initialisation du dossier et lancement de la base de donnée
 Une fois nodeJs et mongoDB installer sur votre machine vous pourrez passez à cette partie:\
 Si une des commandes cité ne fonctionne pas veuillez vérifier votre installation nodeJS et mongoDB.\
 <br>
