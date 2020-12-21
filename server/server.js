@@ -261,7 +261,13 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
 
         app.post('/search-user', (req, res)=>{
             if(!req.session.pseudo) res.status(300).send(); //send failed status
-            res.status(200).send({data: 'test ok'}); //send success status
+            let search = req.body.user.replace(/[&\/\\#,+()$~%'":*?<>{}\[\]]/g, ' ').trim();
+            db.db('amagus').collection('users').find(
+                {pseudo: {$regex: search, $options: '$i'}}
+                ).toArray((err, doc)=>{
+                if(err) throw err;
+                res.status(200).send(doc); //send success status
+            });
         });
 
         app.get('/news', (req, res)=>{

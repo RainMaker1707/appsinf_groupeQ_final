@@ -77,74 +77,75 @@
     <div class="user-menu">
         <img src="images/userDefault.jpg" alt="user picture" class="user-image-nav circle70"
              onclick="location.href='/user-page?user=<%=locals.user.pseudo%>';">
-        <ul class="user-info-nav">
-            <li>
-                <p id="user_id" class="no-select"><%=locals.user.pseudo%></p>
-            </li>
-            <li>
-                <ul class="icon-bar">
-                    <li>
-                        <img class="icon-bar-item" src="images/user-search-icon.png" alt="" onclick="displaySearchUser()">
-                    </li>
-                    <li>
-                        <div class="dropdown">
-                            <a id="notifImg" data-toggle="dropdown">
-                                <img class="icon-bar-item" src="images/notif.png" alt="">
-                            </a>
-                            <ul class="dropdown-menu drop-down-custom" aria-labelledby="notifImg" id="notif-dd">
-                                <%locals.user.notifications.reverse().map((notif)=>{%>
-                                    <li>
-                                        <div class="notif <%=notif.type%>">
-                                            <img class="notif-img" src="<%=notif.picture%>" alt="">
-                                            <% if(notif.type === 'friendRequest'){%>
-                                                <p class="notif-p"><%=notif.pseudo%> invited you as friend!</p>
-                                                <button class="btn btn-dark"
-                                                        onclick="location.href='/acceptFriend?user=<%=notif.pseudo%>'" >
-                                                    Accept
-                                                </button>
-                                                <button class="btn btn-dark"
-                                                        onclick="location.href='/refuse?user=<%=notif.pseudo%>'" >
-                                                    Refuse
-                                                </button>
-                                            <%}else if(notif.type === "friendAcceptation"){%>
-                                                <p class="notif-p"><%=notif.pseudo%> accepted your invitation!</p>
-                                            <%}else if(notif.type === "acceptTrace"){%>
-                                                <p class="notif-p"><%=notif.pseudo%> and you are friend now!</p>
-                                            <%}%>
-                                        </div>
-                                    </li>
-                                <%})%>
-                            </ul>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="dropdown">
-                            <a id="paramImg" data-toggle="dropdown">
-                                <img class="icon-bar-item" src="images/param.png" alt="">
-                            </a>
-                            <ul class="dropdown-menu drop-down-custom" aria-labelledby="paramImg">
-                                <li><button class="dropdown-item btn btn-dark" onclick="location.href='/edit-user';">Editer Profil</button></li>
-                                <li><button class="dropdown-item btn btn-dark" onclick="location.href='/disconnect';">Déconnection</button></li>
-                            </ul>
-                        </div>
-                    </li>
-                </ul>
-            </li>
-        </ul>
+        <div class="to-block">
+            <ul class="user-info-nav">
+                <li>
+                    <p id="user_id" class="no-select"><%=locals.user.pseudo%></p>
+                </li>
+                <li>
+                    <ul class="icon-bar">
+                        <li>
+                            <div class="dropdown">
+                                <a id="search-user-img" class="dropdown-to" data-toggle="dropdown">
+                                    <img class="icon-bar-item" src="images/user-search-icon.png" alt="" >
+                                </a>
+                                <div id="search-user" class="dropdown-menu">
+                                    <form method="post" action="/" id="search-user-form">
+                                        <label for="search-input"></label>
+                                        <input type="text" id="search-input" name="search-input" required>
+                                        <button class="btn btn-dark" id="search-user-btn"><span class="fas fa-search"></span></button>
+                                    </form>
+                                    <ul id="search-res"></ul>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="dropdown">
+                                <a id="notifImg" class="dropdown-to" data-toggle="dropdown">
+                                    <img class="icon-bar-item" src="images/notif.png" alt="">
+                                </a>
+                                <ul class="dropdown-menu drop-down-custom" aria-labelledby="notifImg" id="notif-dd">
+                                    <%locals.user.notifications.reverse().map((notif)=>{%>
+                                        <li>
+                                            <div class="notif <%=notif.type%>">
+                                                <img class="notif-img" src="<%=notif.picture%>" alt="">
+                                                <% if(notif.type === 'friendRequest'){%>
+                                                    <p class="notif-p"><%=notif.pseudo%> invited you as friend!</p>
+                                                    <button class="btn btn-dark"
+                                                            onclick="location.href='/acceptFriend?user=<%=notif.pseudo%>'" >
+                                                        Accept
+                                                    </button>
+                                                    <button class="btn btn-dark"
+                                                            onclick="location.href='/refuse?user=<%=notif.pseudo%>'" >
+                                                        Refuse
+                                                    </button>
+                                                <%}else if(notif.type === "friendAcceptation"){%>
+                                                    <p class="notif-p"><%=notif.pseudo%> accepted your invitation!</p>
+                                                <%}else if(notif.type === "acceptTrace"){%>
+                                                    <p class="notif-p"><%=notif.pseudo%> and you are friend now!</p>
+                                                <%}%>
+                                            </div>
+                                        </li>
+                                    <%})%>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="dropdown">
+                                <a id="paramImg" class="dropdown-to" data-toggle="dropdown">
+                                    <img class="icon-bar-item" src="images/param.png" alt="">
+                                </a>
+                                <ul class="dropdown-menu drop-down-custom" aria-labelledby="paramImg">
+                                    <li><button class="dropdown-item btn btn-dark" onclick="location.href='/edit-user';">Editer Profil</button></li>
+                                    <li><button class="dropdown-item btn btn-dark" onclick="location.href='/disconnect';">Déconnection</button></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
     </div>
-    <div id="search-user" class="offscreen">
-        <form method="post" action="/" id="search-user-form">
-            <label for="search-input"></label>
-            <input type="text" id="search-input" name="search-input" required>
-            <button class="btn btn-dark" id="search-user-btn"><span class="fas fa-search"></span></button>
-        </form>
-        <ul class="search-res"></ul>
-    </div>
-    <script>
-        if(document.getElementById('notif-dd') && document.getElementById('notif-dd').childElementCount === 0){
-            $('#notif-dd').append($('<li id=\"to-remove\">').append($('<p style=\"color:white;\">').html("No notification")));
-        }
-    </script>
 <label for="privateKey" class="offscreen"></label>
 <textarea id="privateKey" class="offscreen"><%=locals.user.privateKey%></textarea>
 <%}%>
@@ -366,8 +367,22 @@
         event.preventDefault();
         $.post('/search-user', {user: $('#search-input').val()}, (data, state)=>{
             if(state === 'success') {
-                //TODO add list of response under search bar
-                alert(data);
+                data.map((user)=>{
+                    if(user.pseudo !== '<%=locals.user.pseudo%>'){
+                        let pic = user.picture?user.picture:'images/userDefault.jpg';
+                        let div = ""+
+                                "<li>\n"+
+                                "    <div class=\"search-user-container\">\n"+
+                                "        <img class=\"search-user-img\" src=\""+ pic +"\" alt=\"\">\n"+
+                                "        <p class=\"search-user-pseudo\">\n"+
+                                "            <a href=\"/user-page?user="+user.pseudo+"\">"+user.pseudo+"</a>\n"+
+                                "        </p>\n"+
+                                "    </div>\n"+
+                                "</li>\n";
+                        document.getElementById('search-res').innerHTML = "";
+                        document.getElementById('search-res').insertAdjacentHTML('beforeend', div)
+                    }
+                });
             }
         })
     });

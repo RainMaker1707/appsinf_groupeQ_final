@@ -109,6 +109,10 @@ menu{
     clip-path: circle(250px at center);
 }
 
+.to-block{
+    display: block;
+}
+
 .user-menu{
     z-index: 2;
     position: fixed;
@@ -120,8 +124,14 @@ menu{
 .user-info-nav{
     list-style: none;
     margin-top: 1%;
+    margin-bottom: 0;
     padding-left: 3%;
 }
+.user-info-nav li{
+    margin:0;
+    padding: 0;
+}
+
 .user-image-nav{
     cursor: pointer;
     width: 70px;
@@ -136,6 +146,7 @@ menu{
     color: whitesmoke;
     background-color: rgba(53, 58, 64, 0.94);
     margin-top: 2%;
+    margin-bottom: 0;
     min-width: 150px;
     text-align: center;
     border-radius: 5px;
@@ -144,33 +155,70 @@ menu{
 .icon-bar{
     display: inline-flex;
     padding-left: 5%;
-    margin-top: -15px;
     list-style: none;
 }
 
 .icon-bar-item{
     max-width: 25px;
-    max-height: 25px;
-    margin: -30px 10px 0 10px;
+    max-height: 22px;
+    margin: 0 10px 0 10px;
     cursor: pointer;
 }
 
+.dropdown-to{
+    font-size: 1.2rem;
+}
+
 #search-user{
-    z-index: 3;
     position: fixed;
-    top: 7.5%;
-    right: 10%;
-    background-color: white;
-    padding: .2%;
-    width: 15%;
+    top: 0;
+    background-color: #f8f9fa;
+    padding: 20% 2% 2% 2%;
+    width: 80%;
     border-radius: 0 0 10px 10px;
+    border: none;
 }
 
 #search-input{
-    width: 75%;
+    width: 65%;
 }
 #search-user-btn{
-    width: 18%;
+    font-size: .8rem;
+    width: 23%;
+}
+
+#search-res{
+    list-style: none;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+#search-res li{
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.search-user-container{
+    display: inline-flex;
+    width: 100%;
+}
+
+.search-user-img{
+    width : 30%;
+    border-radius: 50%;
+    border: 2px solid lightskyblue;
+    margin: 3%;
+    clip-path: circle(20px at center);
+}
+
+.search-user-pseudo{
+    width: 70%;
+    padding-bottom: 0;
+    margin-bottom: 0;
+    justify-self: center;
+    align-self: center;
 }
 
 .online-friend{
