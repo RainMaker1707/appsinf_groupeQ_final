@@ -5,7 +5,6 @@ let session = require('express-session');
 let MongoClient = require('mongodb').MongoClient;
 let multer = require('multer');
 let upload = multer({});
-let crypto = require('crypto');
 let http = require('http');
 let https = require('https');
 let path = require('path');
@@ -168,7 +167,7 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
         });
 
         app.get('/forum-page', (req, res)=>{
-            if(req.query.subject && req.query.conv) forumPage(req, res, db);
+            if(req.query.subject && req.query.post) forumPage(req, res, db);
             else res.redirect('/forum'); //TODO display 'no post found'
         });
 
