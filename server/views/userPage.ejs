@@ -29,7 +29,7 @@
                 </p>
             </div>
             <div class="friend-buttons" id="user-btn-container">
-                <% if(locals.user && locals.doc.pseudo !== locals.user.pseudo){%>
+                <%if(locals.user && locals.doc.pseudo !== locals.user.pseudo){%>
                     <%if(locals.isFriend){%>
                         <button class="msg-btn btn btn-dark"
                                 onclick="openChat('<%=locals.doc.publicKey.replace(/\n/g, '$')%>', '<%=locals.doc.pseudo%>')">
@@ -47,7 +47,7 @@
                             Accept invitation
                             <span class="fa fa-user-plus"></span>
                         </button>
-                    <%}else {%>
+                    <%}else{%>
                         <button class="friend-btn btn btn-dark"
                                 onclick="location.href='/friendReq?user=<%=locals.doc.pseudo%>'">
                             Add Friend
@@ -59,6 +59,20 @@
                         Edit
                         <span class="far fa-user-edit"></span>
                     </button>
+                <%}%>
+                <%if(locals.user && locals.user.pseudo && (locals.user.master || locals.user.admin) &&
+                            locals.user.pseudo !== locals.doc.pseudo){%>
+                    <%if(locals.doc.admin && locals.user.master && !locals.doc.master){%>
+                        <button className="demote-btn btn btn-dark"
+                                onClick="location.href='/rank?up=false&user=<%= locals.doc.pseudo%>'">
+                            Demote
+                        </button>
+                    <%}else if(!locals.doc.admin || !locals.doc.master){%>
+                        <button className="promote-btn btn btn-dark"
+                                onClick="location.href='/rank?up=true&user=<%= locals.doc.pseudo%>'">
+                            Promote
+                        </button>
+                    <%}%>
                 <%}%>
             </div>
         </div>

@@ -286,8 +286,36 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
             else news.removeNews(req, res, db);
         });
 
+        app.get('/rank', (req, res)=>{
+            if(!(req.session.pseudo && req.session.admin && req.query.up && req.query.user)) res.redirect('back');
+            else if(!req.session.master && req.query.up === 'false') res.redirect('back'); //TODO Return error
+            else{
+                db.db('amagus').collection('users').updateOne(
+                    {pseudo: req.query.user}, {$set: {admin: (req.query.up === 'true')}},
+                    (err)=>{
+                        if(err) throw err;
+                        let notif = {
+                            "type": "rankChanged",
+                            "up": (req.query.up === true),
+                            "date": new Date().toISOString()
+                        };
+                        userPage(req, res, db, false, notif, req.query.user);
+                    });
+            }
+
+        });
+
+        app.post('/rank', (req, res)=>{
+            db.db('amagus').collection('users').findOne({pseudo: req.session.pseudo}, (err, doc)=>{
+                if (err) res.status(300).send;
+                req.session.admin = doc.admin;
+                res.status(200).send();
+            });
+        });
+
         app.get('/*', (req, res)=>{
             res.render('error404.ejs', {user: req.session.pseudo?req.session:undefined});
         });
     }
 });
+
