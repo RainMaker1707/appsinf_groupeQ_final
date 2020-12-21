@@ -63,13 +63,13 @@
                 <%if(locals.user && locals.user.pseudo && (locals.user.master || locals.user.admin) &&
                             locals.user.pseudo !== locals.doc.pseudo){%>
                     <%if(locals.doc.admin && locals.user.master && !locals.doc.master){%>
-                        <button className="demote-btn btn btn-dark"
-                                onClick="location.href='/rank?up=false&user=<%= locals.doc.pseudo%>'">
+                        <button class="demote-btn btn btn-dark"
+                                onclick="location.href='/rank?up=false&user=<%= locals.doc.pseudo%>'">
                             Demote
                         </button>
                     <%}else if(!locals.doc.admin || !locals.doc.master){%>
-                        <button className="promote-btn btn btn-dark"
-                                onClick="location.href='/rank?up=true&user=<%= locals.doc.pseudo%>'">
+                        <button class="promote-btn btn btn-dark"
+                                onclick="location.href='/rank?up=true&user=<%= locals.doc.pseudo%>'">
                             Promote
                         </button>
                     <%}%>

@@ -74,13 +74,25 @@
                     if (status === 'success') {
                         let div = document.getElementById('user-btn-container');
                         if (div) div.innerHTML = "<button class=\"msg-btn btn btn-dark\" onclick=\"location.href='" +
-                            "/message?user=" + notif.pseudo + "'\">Message <span class=\"fa fa-comment\"></span></button>"; // TODO change loc.href by function
+                            "/message?user=" + notif.pseudo + "'\">Message <span class=\"fa fa-comment\"></span></button>\n"; // TODO change loc.href by function
                         let li = "<li>\n" +
                             "<div class=\"notif" + notif.type + "\">\n" +
                             "    <img class=\"notif-img\" src=\"" + notif.picture + "\" alt=\"\">\n" +
                             "    <p class=\"notif-p\">" + notif.pseudo + " accepted your invitation</p>\n" +
                             "</div>\n" +
                             "</li>\n"
+                        <%if(locals.doc){%>
+                            let user = '<%= locals.doc.pseudo %>';
+                            <%if((locals.user.admin || locals.user.master) && locals.doc.admin && !locals.doc.master){%>
+                            div.innerHTML += "<button class=\"demote-btn btn btn-dark\" onclick=\"location.href='/rank?up=false&user="+user+"'\">\n" +
+                                             "    Demote\n" +
+                                             "</button>\n"
+                            <%}else if ((locals.user.admin || locals.user.master) && !locals.doc.admin && !locals.doc.master){%>
+                            div.innerHTML += "<button class=\"promote-btn btn btn-dark\" onclick=\"location.href='/rank?up=true&user="+user+"'\">\n" +
+                                             "    Promote\n" +
+                                             "</button>\n"
+                            <%}%>
+                        <%}%>
                         document.getElementById('notif-dd').insertAdjacentHTML('afterbegin', li);
                     }
                 });
