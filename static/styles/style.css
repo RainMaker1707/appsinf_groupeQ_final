@@ -221,6 +221,12 @@ menu{
     align-self: center;
 }
 
+.no-result{
+    text-align: center;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
 .online-friend{
     z-index: 10;
     display: flex;

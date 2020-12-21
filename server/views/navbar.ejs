@@ -92,7 +92,7 @@
                                 <div id="search-user" class="dropdown-menu">
                                     <form method="post" action="/" id="search-user-form">
                                         <label for="search-input"></label>
-                                        <input type="text" id="search-input" name="search-input" required>
+                                        <input type="text" id="search-input" name="search-input" placeholder="Type here..." required>
                                         <button class="btn btn-dark" id="search-user-btn"><span class="fas fa-search"></span></button>
                                     </form>
                                     <ul id="search-res"></ul>
@@ -367,6 +367,7 @@
         event.preventDefault();
         $.post('/search-user', {user: $('#search-input').val()}, (data, state)=>{
             if(state === 'success') {
+                document.getElementById('search-res').innerHTML = "";
                 data.map((user)=>{
                     if(user.pseudo !== '<%=locals.user.pseudo%>'){
                         let pic = user.picture?user.picture:'images/userDefault.jpg';
@@ -379,10 +380,20 @@
                                 "        </p>\n"+
                                 "    </div>\n"+
                                 "</li>\n";
-                        document.getElementById('search-res').innerHTML = "";
                         document.getElementById('search-res').insertAdjacentHTML('beforeend', div)
                     }
                 });
+                if(!document.getElementById('search-res').hasChildNodes()){
+                    let div = ""+
+                        "<li>\n"+
+                        "    <div class=\"search-user-container\">\n"+
+                        "        <p class=\"no-result\">\n"+
+                        "            Sorry, no user found\n"+
+                        "        </p>\n"+
+                        "    </div>\n"+
+                        "</li>\n";
+                    document.getElementById('search-res').insertAdjacentHTML('beforeend', div)
+                }
             }
         })
     });
