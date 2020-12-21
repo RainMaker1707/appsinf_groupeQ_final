@@ -73,6 +73,7 @@ module.exports = friends = {
                     "type": "friendAcceptation",
                     "pseudo": receiverData.pseudo,
                     "picture": receiverData.picture,
+                    "publicKey": receiverData.publicKey,
                     "date": new Date().toISOString()
                 };
                 let acceptTrace = {

@@ -73,8 +73,8 @@
                 $.post('/update-friends', {}, (data, status) => {
                     if (status === 'success') {
                         let div = document.getElementById('user-btn-container');
-                        if (div) div.innerHTML = "<button class=\"msg-btn btn btn-dark\" onclick=\"location.href='" +
-                            "/message?user=" + notif.pseudo + "'\">Message <span class=\"fa fa-comment\"></span></button>\n"; // TODO change loc.href by function
+                        if (div) div.innerHTML = "<button class=\"msg-btn btn btn-dark\" onclick=\"openChat('"+notif.publicKey.replace(/\n/g, '$') + "', '"+ notif.pseudo +"')\">" +
+                        "Message <span class=\"fa fa-comment\"></span></button>\n";
                         let li = "<li>\n" +
                             "<div class=\"notif" + notif.type + "\">\n" +
                             "    <img class=\"notif-img\" src=\"" + notif.picture + "\" alt=\"\">\n" +
