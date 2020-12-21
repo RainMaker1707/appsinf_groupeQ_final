@@ -208,9 +208,9 @@ menu{
 .search-user-img{
     width : 30%;
     border-radius: 50%;
-    border: 2px solid lightskyblue;
+    border: 1px solid lightskyblue;
     margin: 3%;
-    clip-path: circle(20px at center);
+    clip-path: circle(25px at center);
 }
 
 .search-user-pseudo{
