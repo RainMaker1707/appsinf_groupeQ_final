@@ -1,5 +1,10 @@
 <script>
     let socket = io();
+
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+    <%# Window listeners start%>
     <% if(locals.notif !== undefined){%>
     window.onload =  ()=> {
         let notif = {
@@ -27,8 +32,15 @@
         }
     }
     <%}if (locals.user){%>
+
+    window.addEventListener('beforeunload', ()=>{
+        $.post('/update-chat-bar', {data: document.getElementById('chat-row').innerHTML});
+    })
+    <%# window listener end%>
+    <%# socket listeners start%>
     socket.on('notif', (notif) => {
         switch(notif.type) {
+
             case("friendRequest"):
                 if (document.getElementById('to-remove') !== null) document.getElementById('to-remove').remove();
                 $.post('/update-friends', {}, (data, status) => {
@@ -121,10 +133,6 @@
         }
     });
 
-    function sleep(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
-    }
-
     socket.on('message', (data)=>{
         if(!document.getElementById('chat-container-'+data.pseudo)) {
             openChat(data.publicKey.replace(/\n/g, '$'), data.pseudo, true);
@@ -138,6 +146,7 @@
         let header = document.getElementById('chat-header-'+data.pseudo);
         header.classList.add('blink');
     });
+    <%# socket listener end%>
 
     function openChat(publicKey, user, closed=false){
         if (document.getElementById('chat-box-'+user)) return
@@ -200,17 +209,7 @@
         stopBlink(user);
         return false;
     }
-
-    window.addEventListener('beforeunload', ()=>{
-        $.post('/update-chat-bar', {data: document.getElementById('chat-row').innerHTML});
-    });
-
-    function displaySearchUser(){
-        let div = document.getElementById('search-user');
-        if(div.classList.contains('offscreen'))div.classList.remove('offscreen');
-        else div.classList.add('offscreen');
-    }
-
+    <%# ajax search user call%>
     $('#search-user-form').submit((event)=>{
         event.preventDefault();
         $.post('/search-user', {user: $('#search-input').val()}, (data, state)=>{
