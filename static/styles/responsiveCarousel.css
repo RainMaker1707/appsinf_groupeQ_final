@@ -60,13 +60,12 @@
     }
     /* right or prev direction */
     .active.carousel-item-right + .carousel-item-prev.carousel-item-right,
-    .carousel-item-prev.carousel-item-right + .carousel-item,
-    .carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item {
+    .carousel-item-prev.carousel-item-right + .news-container,
+    .carousel-item-prev.carousel-item-right + .news-container + .news-container {
         position: relative;
         transform: translate3d(100%, 0, 0);
         visibility: visible;
         display: block;
-        visibility: visible;
     }
 }
 /* MD */
@@ -94,7 +93,6 @@
         transform: translate3d(100%, 0, 0);
         visibility: visible;
         display: block;
-        visibility: visible;
     }
 }
 /* LG */

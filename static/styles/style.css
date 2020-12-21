@@ -203,6 +203,7 @@ menu{
 .search-user-container{
     display: inline-flex;
     width: 100%;
+    height: auto;
 }
 
 .search-user-img{
