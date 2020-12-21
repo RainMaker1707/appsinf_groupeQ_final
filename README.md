@@ -186,20 +186,20 @@ GGisOnline| rootpass | master
 Czacio | rootpass | admin
 RainMaker17 | rootpass | activated
 
-Commande d'import : \
+Commande d'import : 
     
     mongoimport -d amagus -c users path/to/appsinf_groupeQ_final/server/database/users.json --legacy
 
 ###### 3° News
 Quelques news afin d'illustrer le fonctionnement et la disposition de celles-ci sont disponible dans le fichier ``news.json``.\
-Commande d'import :\
+Commande d'import :
 
     mongoimport -d amagus -c news path/to/appsinf_groupeQ_final/server/database/news.json --legacy
 
 ###### 4° Forum
 
 Quelques sujets de base pour le forum et uqelques post afin de remplir\
-Commande d'import : \
+Commande d'import : 
 
      mongoimport -d amagus -c forum path/to/appsinf_groupeQ_final/server/database/forum.json --legacy
 
@@ -258,7 +258,7 @@ Page about-us donnant le contexte et les noms des membres de l'équipe + lien gi
 <ul>
     <li>Possibilités des administrateurs +</li>
     <li><ul>
-        <li>Démote un amdministrateur TODO </li>
+        <li>Démote un administrateur TODO </li>
     </ul></li>
 
 
