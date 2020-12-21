@@ -4,7 +4,6 @@
     <%- include('allLink'); -%>
     <title>Accueil | A-Mag Us</title>
     <link rel="stylesheet" type="text/css" href="/styles/index.css"/>
-    <link rel="stylesheet" type="text/css" href="/styles/responsiveCarousel.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jcarousel/0.3.5/jquery.jcarousel.min.js"></script>
 </head>
 <body class="container-fluid">
@@ -68,10 +67,16 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <h2 class="news-popup-title"><%=item.title%></h2>
-                <img src="<%=item.picture%>" alt="" class="news-popup-img">
-                <p class="news-popup-date"><%=item.date%></p>
-                <p class="news-popup-content"><%=item.content%></p>
-                <p class="news-popup-author"><%=item.author%></p>
+                <div class="news-inner-popup">
+                    <div class="news-popup-content">
+                        <div class="float-container">
+                            <img src="<%=item.picture%>" alt="" class="news-popup-img">
+                            <p class="news-popup-date"><%=item.date%></p>
+                        </div>
+                        <%=item.content%>
+                    </div>
+                    <p class="news-popup-author"><%=item.author%></p>
+                </div>
             </div>
         <%});%>
         <script>
