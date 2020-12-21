@@ -113,7 +113,8 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
                     ioSession = socket.request.session;
                     if (notif.type === "friendRequest" ||
                         notif.type === "friendAcceptation" ||
-                        notif.type === "onlineResponse") {
+                        notif.type === "onlineResponse" ||
+                        notif.type === "rankChanged") {
                         io.to(to).emit('notif', notif);
                     }else console.log('notif error');
                 });
@@ -290,15 +291,15 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
             if(!(req.session.pseudo && req.session.admin && req.query.up && req.query.user)) res.redirect('back');
             else if(!req.session.master && req.query.up === 'false') res.redirect('back'); //TODO Return error
             else{
+                let notif = {
+                    "type": "rankChanged",
+                    "up": (req.query.up === 'true'),
+                    "date": new Date().toISOString()
+                };
                 db.db('amagus').collection('users').updateOne(
-                    {pseudo: req.query.user}, {$set: {admin: (req.query.up === 'true')}},
-                    (err)=>{
+                    {pseudo: req.query.user}, {$set: {admin: (req.query.up === 'true')},
+                        $addToSet:{notifications: notif}}, (err)=>{
                         if(err) throw err;
-                        let notif = {
-                            "type": "rankChanged",
-                            "up": (req.query.up === true),
-                            "date": new Date().toISOString()
-                        };
                         userPage(req, res, db, false, notif, req.query.user);
                     });
             }
@@ -307,8 +308,9 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
 
         app.post('/rank', (req, res)=>{
             db.db('amagus').collection('users').findOne({pseudo: req.session.pseudo}, (err, doc)=>{
-                if (err) res.status(300).send;
+                if (err) res.redirect('back');
                 req.session.admin = doc.admin;
+                req.session.notifications = doc.notifications;
                 res.status(200).send();
             });
         });

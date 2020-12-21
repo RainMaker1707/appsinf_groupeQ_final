@@ -123,6 +123,8 @@
                                                     <p class="notif-p"><%=notif.pseudo%> accepted your invitation!</p>
                                                 <%}else if(notif.type === "acceptTrace"){%>
                                                     <p class="notif-p"><%=notif.pseudo%> and you are friend now!</p>
+                                                <%}else if(notif.type === 'rankChanged'){%>
+                                                    <p class="notif-p"><%= notif.up?"You were promote to admin":"Due to your comportment you've been removed from admin team"%></p>
                                                 <%}%>
                                             </div>
                                         </li>

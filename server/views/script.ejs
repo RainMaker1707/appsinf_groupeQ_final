@@ -74,7 +74,7 @@
                     if (status === 'success') {
                         let div = document.getElementById('user-btn-container');
                         if (div) div.innerHTML = "<button class=\"msg-btn btn btn-dark\" onclick=\"location.href='" +
-                            "/message?user=" + notif.pseudo + "'\">Message <span class=\"fa fa-comment\"></span></button>";
+                            "/message?user=" + notif.pseudo + "'\">Message <span class=\"fa fa-comment\"></span></button>"; // TODO change loc.href by function
                         let li = "<li>\n" +
                             "<div class=\"notif" + notif.type + "\">\n" +
                             "    <img class=\"notif-img\" src=\"" + notif.picture + "\" alt=\"\">\n" +
@@ -127,6 +127,11 @@
                     "    </div>\n" +
                     "</li>\n";
                 document.getElementById('inner-list').insertAdjacentHTML('afterbegin', on);
+                break;
+            case("rankChanged"):
+                $.post('/rank', {}, (data, state)=>{
+                    if (state === 'success') document.location.reload();
+                });
                 break;
             default:
                 break;
