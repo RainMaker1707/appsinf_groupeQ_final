@@ -9,7 +9,7 @@ module.exports = function editUser(req, res, db){
                 bcrypt.compare(req.body.password, doc.password, (err, check) => {
                     if (err) throw err;
                     else if (!check) {
-                        res.redirect("/user-page?user="+req.session.user+"&error=bad+password");
+                        res.redirect("/edit-user?&error=bad+password");
                     } else {
                         db.db('amagus').collection('users').updateOne({pseudo: req.session.pseudo},
                             {$set: {favoriteMap: req.body.maps, favoriteColor: req.body.colors, country: req.body.country, language: req.body.language}});
@@ -18,7 +18,7 @@ module.exports = function editUser(req, res, db){
                 });
             } else {
                 if (req.body.password !== req.body.rpassword) {
-                    res.redirect("/user-edit?user="+req.session.user+"&error=password+must+be+same");
+                    res.redirect("/edit-user?error=password+must+be+same");
                 } else {
                     bcrypt.genSalt(10, (err, salt) => {
                         if (err) throw err;
