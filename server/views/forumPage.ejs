@@ -33,6 +33,7 @@
                 </div>
             <%});}%>
             </div>
+            <%if(locals.user && locals.user.pseudo){%>
             <form class="answer-input-frame text-center" method="post" action="/answer-post?subject=<%=locals.subject%>&title=<%=locals.doc.title%>&author=<%=locals.doc.author%>&date=<%=locals.doc.date%>">
                 <label for="answer"></label>
                 <textarea placeholder="Type your answer here" name="answer" id="answer"
@@ -43,6 +44,7 @@
                 </div>
                 <input class="btn btn-dark" type="submit" value="Post your answer">
             </form>
+            <%}%>
         </div>
     </section>
     <%- include('onlineFriend.ejs') -%>
