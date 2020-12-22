@@ -30,8 +30,6 @@ module.exports = function editUser(req, res, db){
                             if (err) throw err;
                                 db.db('amagus').collection('users').updateOne({pseudo: req.session.pseudo},
                                     {$set: {password: hash, favoriteMap: req.body.maps, favoriteColor: req.body.colors, country: req.body.country, language: req.body.language}});
-                                // doc.activated = false;
-                                // login(req, res, db, true);
                                 res.redirect('/user-page?user=' + req.session.pseudo);
                         });
                     });
