@@ -124,11 +124,15 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
         app.get('/', (req, res)=>{
             db.db('amagus').collection('news').find({}).toArray((err, news)=>{
                 if (err) throw err;
-                if(!req.session.pseudo) res.render('index.ejs', {cookie: req.session.cookieShowed, news: news});
-                else if(req.query.error){
-                    res.render('index.ejs', {user: req.session, cookie: req.session.cookieShowed, news: news,
-                                            errorResponse: req.query.error, valid: req.query.valid === 'true'});
-                } else{
+                if(req.query.error || !req.session.pseudo) {
+                    res.render('index.ejs', {
+                        user: req.session.pseudo?req.session:undefined,
+                        cookie: req.session.cookieShowed,
+                        news: news,
+                        errorResponse: req.query.error?req.query.error:undefined,
+                        valid: req.query.valid === 'true'
+                    });
+                }else{
                     res.render('index.ejs', {user: req.session, cookie: req.session.cookieShowed, news: news});
                 }
             });
