@@ -112,8 +112,7 @@
     display: block;
     position: absolute;
     top: 0;
-    transform: none;
-    transition: none;
+    transition: transform 0.0s ease;
 }
 
 .news-container.active + .news-container{
