@@ -115,6 +115,10 @@
     transition: transform 0.0s ease;
 }
 
+.active{
+    transition: transform 0.0s ease;
+}
+
 .news-container.active + .news-container{
     left: 25%;
 }
@@ -136,6 +140,7 @@
     transition: transform 1s ease-in;
 }
 
+
 .news-container.active.carousel-item-right,
 .news-container.active.carousel-item-right + .news-container,
 .news-container.active.carousel-item-right + .news-container + .news-container,
@@ -144,3 +149,8 @@
     transition: transform 1s ease;
 }
 
+.news-container.active.carousel-item-left + .news-container.carousel-item-next{
+    transform: translate3d(-5%, 0, 0);
+    transition: transform 1s ease-in;
+    left: 3%;
+}
