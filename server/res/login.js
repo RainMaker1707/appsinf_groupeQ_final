@@ -4,12 +4,12 @@ module.exports = function login(req, res, db, justSigned=false){
     db.db('amagus').collection('users').findOne({pseudo: req.body.pseudoIn}, (err, doc)=>{
         if(err) throw err;
         else if(doc === null) {
-            res.redirect('/?error=pseudo+not+registered&valid=false');
+            res.redirect(req.headers.referer.split('?')[0]+'?error=pseudo+not+registered&valid=false');
         }else{
             bcrypt.compare(req.body.passIn, doc.password, (err, check)=>{
                 if(err) throw err;
                 else if (!check) {
-                    res.redirect('/?error=Password+dont+match&valid=false');
+                    res.redirect(req.headers.referer.split('?')[0]+'?error=Password+dont+match&valid=false');
                 }else {
                     req.session._id = doc._id;
                     req.session.mail = doc.mail;
