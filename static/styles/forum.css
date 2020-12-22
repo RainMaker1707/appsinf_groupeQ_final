@@ -79,9 +79,16 @@ h1{
 }
 
 .search-forum {
-    margin-top: -2%;
-    margin-left: 37%;
+    width: 100%;
     margin-bottom: 2%;
+}
+
+.search-forum form{
+    margin-left: 25%;
+    width: 50%;
+    align-content: center;
+    justify-content: center;
+    display: inline-flex;
 }
 
 #search {
@@ -92,4 +99,10 @@ h1{
     border: none;
     font-size: 1.2em;
     width: 45%;
+    height: 40px;
+}
+
+.search-forum button{
+    height: 40px;
+    margin-left: 1%;
 }
