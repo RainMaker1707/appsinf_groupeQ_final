@@ -16,7 +16,7 @@ module.exports =(req, res, db)=>{
     db.db('amagus').collection('forum').updateOne({subject: subject},
         {$addToSet: {'conversations.$[item].answers': answer}},
         {arrayFilters: [{'item.title': postTitle, 'item.author': postAuthor, 'item.date': postDate}]}, (err)=>{
-            if(err) throw err;
+            if(err) res.redirect('/error404');
             res.redirect('back');
         });
 };

@@ -490,3 +490,31 @@ menu{
     0%{}
     50%{background-color: #5270b2;}
 }
+
+.error{
+    background-color: orangered;
+    position: fixed;
+    top: 9%;
+    left: 30%;
+    width: 40%;
+    z-index: 1;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    border: 2px solid navajowhite;
+}
+
+#error-inner{
+    color: white;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 0;
+}
+
+.valid{
+    background-color: rgba(41, 162, 25, 0.89);
+}
+
+.valid #error-inner{
+    color: black;
+}

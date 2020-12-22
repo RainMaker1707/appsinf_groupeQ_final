@@ -20,7 +20,7 @@ module.exports = {
         };
         db.db('amagus').collection('news').insertOne(news, (err)=>{
             if (err) throw err;
-            res.redirect('/'); //TODO add mesage 'correctly add or something like
+            res.redirect("/?error=news+correctly+added&valid=true");
         });
     },
 

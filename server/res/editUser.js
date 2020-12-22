@@ -10,8 +10,7 @@ module.exports = function editUser(req, res, db){
                 bcrypt.compare(req.body.password, doc.password, (err, check) => {
                     if (err) throw err;
                     else if (!check) {
-                        console.log("does not matches"); //TODO debug
-                        res.redirect('back');
+                        res.redirect("/user-page?user="+req.session.user+"&error=bad+password");
                     } else {
                         db.db('amagus').collection('users').updateOne({pseudo: req.session.pseudo},
                             {$set: {favoriteMap: req.body.maps, favoriteColor: req.body.colors, country: req.body.country, language: req.body.language}});
@@ -19,10 +18,8 @@ module.exports = function editUser(req, res, db){
                     }
                 });
             } else {
-                // change password
                 if (req.body.password !== req.body.rpassword) {
-                    console.log("different password"); //TODO debug
-                    res.redirect('back');
+                    res.redirect("/user-edit?user="+req.session.user+"&error=password+must+be+same");
                 } else {
                     bcrypt.genSalt(10, (err, salt) => {
                         if (err) throw err;
@@ -30,7 +27,7 @@ module.exports = function editUser(req, res, db){
                             if (err) throw err;
                                 db.db('amagus').collection('users').updateOne({pseudo: req.session.pseudo},
                                     {$set: {password: hash, favoriteMap: req.body.maps, favoriteColor: req.body.colors, country: req.body.country, language: req.body.language}});
-                                res.redirect('/user-page?user=' + req.session.pseudo);
+                                res.redirect('/user-page?user=' + req.session.pseudo + '&error=change+saved&valid=true');
                         });
                     });
                 }

@@ -2,8 +2,9 @@ module.exports = function userPage(req, res, db, owner=false, notif=undefined, t
     let user = owner?req.session.pseudo:req.query.user;
     db.db('amagus').collection('users').findOne({pseudo: user}, (err, doc)=>{
       if(err || doc === null)  res.redirect('/error404');
-      else if(owner) res.render('userPage.ejs', {user: req.session, doc: doc, notif: notif, to: to});
-      else{
+      else if(owner) {
+          res.render('userPage.ejs', {user: req.session, doc: doc, notif: notif, to: to});
+      } else{
           // user is the user which one we see the page
           let isRequested = [];
           let isReceived = [];
@@ -29,7 +30,9 @@ module.exports = function userPage(req, res, db, owner=false, notif=undefined, t
                   to: to,
                   isFriend: isFriend,
                   isRequested: isRequested,
-                  isReceived: isReceived
+                  isReceived: isReceived,
+                  error: req.query.error?req.query.error:undefined,
+                  valid: req.query.valid === 'true'
             }
           );
       }

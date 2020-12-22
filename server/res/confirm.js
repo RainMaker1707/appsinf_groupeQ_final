@@ -12,8 +12,7 @@ module.exports = function confirm(req, res, db){
                 {$set:{activated: true}}, (err)=>{
                     if(err) throw err;
                     req.session.activated = true;
-                    res.redirect('/');
-                    //TODO display message to inform about activation success
+                    res.redirect('/?error='+req.query.user+'+account+is+now+activated&valid=true');
                 }
             );
         }

@@ -125,8 +125,11 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
             db.db('amagus').collection('news').find({}).toArray((err, news)=>{
                 if (err) throw err;
                 if(!req.session.pseudo) res.render('index.ejs', {cookie: req.session.cookieShowed, news: news});
-                else{
-                    res.render('index.ejs', {user: req.session, cookie: req.session.cookieShowed, news: news})
+                else if(req.query.error){
+                    res.render('index.ejs', {user: req.session, cookie: req.session.cookieShowed, news: news,
+                                            errorResponse: req.query.error, valid: req.query.valid === 'true'});
+                } else{
+                    res.render('index.ejs', {user: req.session, cookie: req.session.cookieShowed, news: news});
                 }
             });
         });
@@ -153,7 +156,9 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
                 db.db('amagus').collection('users').findOne({pseudo: req.session.pseudo}, (err, doc) => {
                     if (err) throw err;
                     else {
-                        res.render('editUser.ejs', {user: req.session, doc: doc, colors: colors, maps: maps, countries: countries, languages: languages});
+                        if(req.query.error) res.render('editUser.ejs', {user: req.session, doc: doc, colors: colors,
+                            maps: maps, countries: countries, languages: languages, errorResponse: req.query.error});
+                        else res.render('editUser.ejs', {user: req.session, doc: doc, colors: colors, maps: maps, countries: countries, languages: languages});
                     }
                 });
             }
@@ -174,14 +179,14 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
 
         app.post('/answer-post', (req, res)=>{
             if(!req.session.pseudo) res.redirect('back');
-            else if(!req.session.activated) res.redirect('back'); // TODO display message 'active your account please' + resend mail link
+            else if(!req.session.activated) res.redirect('/forum?error=active+your+account+please');
             else if(!(req.query.subject && req.query.title && req.query.author && req.query.date)) res.redirect('/err404');
             else answerPost(req, res, db);
         });
 
         app.get('/forum-post', (req, res)=>{
-            if(!req.session.pseudo) res.redirect('/forum');
-            else if(!req.session.activated) res.redirect('back'); // TODO display message 'active your account please' + resend mail link
+            if(!req.session.pseudo) res.redirect('/forum?error=login+or+signup+please');
+            else if(!req.session.activated) res.redirect('/forum?error=active+your+account+please');
             else {
                 db.db('amagus').collection('forum').find({}).toArray((err, doc)=> {
                     if(err) throw err;
@@ -191,8 +196,8 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
         });
 
         app.post('/forum-post', (req, res)=>{
-            if(!req.session.pseudo) res.redirect('/forum'); //TODO display message 'please login'
-            else if(!req.session.activated) res.redirect('back'); // TODO display message 'active your account please' + resend mail link
+            if(!req.session.pseudo) res.redirect('/forum?error=login+or+signup+please');
+            else if(!req.session.activated) res.redirect('/forum?error=active+your+account+please');
             else forumPost(req, res, db);
         });
 
@@ -240,23 +245,23 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
 
         app.get('/friendReq', (req, res)=>{
             if(!req.session) res.redirect('/');
-            else if(!req.session.pseudo) res.redirect('/'); //TODO render message 'login please'
-            else if(!req.session.activated) res.redirect('back'); // TODO display message 'active your account please' + resend mail link
+            else if(!req.session.pseudo) res.redirect('/?error=login+or+signup+please');
+            else if(!req.session.activated) res.redirect('/?error=active+your+account+please');
             else if(req.query===undefined || req.query.user===undefined) res.redirect('back');
             else friends.requested(req, res, db);
         });
 
         app.get('/refuseFriend', (req, res)=>{
-            if(!req.session) res.redirect('/');
-            else if(!req.session.pseudo) res.redirect('/'); //TODO render message 'login please'
+            if(!req.session) res.redirect('back');
+            else if(!req.session.pseudo) res.redirect('/?error=login+or+signup+please');
             else if(req.query===undefined || req.query.user===undefined) res.redirect('back');
             else friends.refuse(req, res, db);
         });
 
         app.get('/acceptFriend', (req, res)=>{
-            if(!req.session) res.redirect('/');
-            else if(!req.session.pseudo) res.redirect('/'); //TODO render message 'login please'
-            else if(!req.session.activated) res.redirect('back'); // TODO display message 'active your account please'
+            if(!req.session) res.redirect('back');
+            else if(!req.session.pseudo) res.redirect('/?error=login+or+signup+please');
+            else if(!req.session.activated) res.redirect('/?error=active+your+account+please');
             else if(req.query===undefined || req.query.user===undefined) res.redirect('back');
             else friends.accept(req, res, db);
         });
