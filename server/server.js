@@ -196,6 +196,28 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
             else forumPost(req, res, db);
         });
 
+        app.post('/search-forum', (req, res) => {
+            let search = req.body.searchInput.replace(/[&\/\\#,+()$~%'":*?<>{}\[\]]/g, ' ').trim();
+            db.db('amagus').collection('forum').find(
+                {$or:
+                        [
+                            {subject: {$regex: search, $options: '$i'}},
+                            {'conversations.title': {$regex: search, $options: '$i'}},
+                            {'conversations.content': {$regex: search, $options: '$i'}},
+                            {'conversations.author': {$regex: search, $options: '$i'}},
+                            {'conversations.date': {$regex: search, $options: '$i'}},
+                            {'conversations.answers.author': {$regex: search, $options: '$i'}}
+                            // add more ??
+                        ]
+                }
+            ).toArray((err, doc) => {
+                if (err) throw err;
+                res.render('forum.ejs', {user: req.session.pseudo?req.session:undefined, subjects: doc});
+
+                //res.status(200).send(doc); //send success status
+            });
+        });
+
         app.get('/about-us', (req, res)=>{
             res.render('aboutUs.ejs', {user: req.session.pseudo?req.session:undefined, cookie: req.session.cookieShowed});
         });

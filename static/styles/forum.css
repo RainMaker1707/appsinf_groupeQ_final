@@ -77,3 +77,19 @@ h1{
 .post-btn{
     height: 50px;
 }
+
+.search-forum {
+    margin-top: -2%;
+    margin-left: 37%;
+    margin-bottom: 2%;
+}
+
+#searchInput {
+    background-color: rgba(53, 58, 64, 0.94);
+    color: white;
+    text-align: center;
+    border-radius: 5px;
+    border: none;
+    font-size: 1.2em;
+    width: 45%;
+}

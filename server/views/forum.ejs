@@ -21,6 +21,12 @@
                         type="button" onclick="location.href='/forum-post'" >Add post</button>
             <%}%>
         </section>
+        <div class="search-forum" id="search-forum">
+            <form action="/search-forum" method="post" id="search-forum-form">
+                <label for="searchInput" class="form-label offscreen">Search: </label>
+                <input type="search" id="searchInput" name="searchInput" size="100" placeholder="Search"/>
+            </form>
+        </div>
         <div class="subjects-block">
         <%locals.subjects.reverse().map((subject)=>{%>
             <div class="subject-container" id="<%=subject._id%>">
