@@ -9,7 +9,11 @@ module.exports = (req, res, db)=>{
         let conv = doc.conversations;
         let result = conv.map((item)=>{
             if(item.title === title && item.author === author && item.date === date){
-                res.render('forumPage.ejs', {user: req.session.pseudo?req.session:undefined, doc: item, subject: subject})
+                res.render('forumPage.ejs', {
+                    user: req.session.pseudo?req.session:undefined,
+                    doc: item,
+                    subject: subject,
+                })
             }
         });
         if(!result) res.redirect('/forum');
