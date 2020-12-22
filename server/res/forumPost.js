@@ -21,6 +21,6 @@ module.exports = (req, res, db)=>{
                 if(err) throw err;
                 res.redirect('/forum');
             })
-        }else res.redirect('/forum-post'); //TODO display message error missing arguments
+        }else res.redirect('/error404');
     }
 };

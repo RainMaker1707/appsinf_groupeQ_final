@@ -169,18 +169,18 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
 
         app.get('/forum-page', (req, res)=>{
             if(req.query.subject && req.query.post) forumPage(req, res, db);
-            else res.redirect('/forum'); //TODO display 'no post found'
+            else res.redirect('/err404');
         });
 
         app.post('/answer-post', (req, res)=>{
-            if(!req.session.pseudo) res.redirect('back'); // TODO display message 'login please'
+            if(!req.session.pseudo) res.redirect('back');
             else if(!req.session.activated) res.redirect('back'); // TODO display message 'active your account please' + resend mail link
             else if(!(req.query.subject && req.query.title && req.query.author && req.query.date)) res.redirect('/err404');
             else answerPost(req, res, db);
         });
 
         app.get('/forum-post', (req, res)=>{
-            if(!req.session.pseudo) res.redirect('/forum'); //TODO display message 'please login'
+            if(!req.session.pseudo) res.redirect('/forum');
             else if(!req.session.activated) res.redirect('back'); // TODO display message 'active your account please' + resend mail link
             else {
                 db.db('amagus').collection('forum').find({}).toArray((err, doc)=> {
@@ -197,7 +197,7 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
         });
 
         app.post('/search-forum', (req, res) => {
-            let search = req.body.searchInput.replace(/[&\/\\#,+()$~%'":*?<>{}\[\]]/g, ' ').trim();
+            let search = req.body.search.replace(/[&\/\\#,+()$~%'":*?<>{}\[\]]/g, ' ').trim();
             db.db('amagus').collection('forum').find(
                 {$or:
                         [
@@ -207,14 +207,11 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
                             {'conversations.author': {$regex: search, $options: '$i'}},
                             {'conversations.date': {$regex: search, $options: '$i'}},
                             {'conversations.answers.author': {$regex: search, $options: '$i'}}
-                            // add more ??
                         ]
                 }
             ).toArray((err, doc) => {
                 if (err) throw err;
                 res.render('forum.ejs', {user: req.session.pseudo?req.session:undefined, subjects: doc});
-
-                //res.status(200).send(doc); //send success status
             });
         });
 
@@ -287,7 +284,7 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
             db.db('amagus').collection('users').find(
                 {pseudo: {$regex: search, $options: '$i'}}
                 ).toArray((err, doc)=>{
-                if(err) throw err;
+                if(err) res.redirect('/error404');
                 res.status(200).send(doc); //send success status
             });
         });
@@ -311,17 +308,18 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
 
         app.get('/rank', (req, res)=>{
             if(!(req.session.pseudo && req.session.admin && req.query.up && req.query.user)) res.redirect('back');
-            else if(!req.session.master && req.query.up === 'false') res.redirect('back'); //TODO Return error
+            else if(!req.session.master && req.query.up === 'false') res.redirect('back');
             else{
                 let notif = {
                     "type": "rankChanged",
                     "up": (req.query.up === 'true'),
                     "date": new Date().toISOString()
                 };
+
                 db.db('amagus').collection('users').updateOne(
                     {pseudo: req.query.user}, {$set: {admin: (req.query.up === 'true')},
                         $addToSet:{notifications: notif}}, (err)=>{
-                        if(err) throw err;
+                        if(err) res.redirect('/error404');
                         userPage(req, res, db, false, notif, req.query.user);
                     });
             }
@@ -330,7 +328,7 @@ MongoClient.connect(dbUrl, {useUnifiedTopology: true}, (err, db)=>{
 
         app.post('/rank', (req, res)=>{
             db.db('amagus').collection('users').findOne({pseudo: req.session.pseudo}, (err, doc)=>{
-                if (err) res.redirect('back');
+                if (err) res.redirect('/error404');
                 req.session.admin = doc.admin;
                 req.session.notifications = doc.notifications;
                 res.status(200).send();

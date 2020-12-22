@@ -54,8 +54,7 @@ module.exports = friends = {
             });
         });
     },
-    accept: (req, res, db)=>{ // TODO** add checker before update because of get request user can manually type
-                              // TODO** the url request /acceptFriend?user=<pseudo>
+    accept: (req, res, db)=>{
         let dbo = db.db('amagus').collection('users');
         dbo.findOne({pseudo: req.query.user}, (err, requesterData)=>{
             if(err) throw err;

@@ -1,8 +1,7 @@
 module.exports = function userPage(req, res, db, owner=false, notif=undefined, to=undefined){
     let user = owner?req.session.pseudo:req.query.user;
     db.db('amagus').collection('users').findOne({pseudo: user}, (err, doc)=>{
-      if(err) throw err;
-      else if(doc === null) res.redirect('/error404');
+      if(err || doc === null)  res.redirect('/error404');
       else if(owner) res.render('userPage.ejs', {user: req.session, doc: doc, notif: notif, to: to});
       else{
           // user is the user which one we see the page
