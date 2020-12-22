@@ -12,7 +12,7 @@ module.exports =(req, res, db)=>{
         "author": req.session.pseudo,
         "content": req.body.answer,
         "date": date
-    }
+    };
     db.db('amagus').collection('forum').updateOne({subject: subject},
         {$addToSet: {'conversations.$[item].answers': answer}},
         {arrayFilters: [{'item.title': postTitle, 'item.author': postAuthor, 'item.date': postDate}]}, (err)=>{

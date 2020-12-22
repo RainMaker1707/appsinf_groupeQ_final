@@ -1,5 +1,4 @@
 let bcrypt = require('bcrypt');
-let login = require('./login');
 
 module.exports = function editUser(req, res, db){
     db.db('amagus').collection('users').findOne({pseudo: req.session.pseudo}, (err, doc) => {

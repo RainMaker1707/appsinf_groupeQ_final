@@ -1,5 +1,3 @@
-let login = require('./login.js');
-
 module.exports = function confirm(req, res, db){
     db.db('amagus').collection('users').findOne({pseudo: req.query.user}, (err, doc)=>{
         if(err) throw err;
